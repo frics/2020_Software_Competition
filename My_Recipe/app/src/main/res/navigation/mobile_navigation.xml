@@ -22,4 +22,9 @@
         android:name="com.example.my_recipe.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_accounts"
+        android:name="com.example.my_recipe.ui.accounts.AccountsFragment"
+        android:label="@string/title_accounts"
+        tools:layout="@layout/fragment_accounts" />
 </navigation>
