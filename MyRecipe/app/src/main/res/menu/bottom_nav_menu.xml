@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_undefined"
+        android:icon="@drawable/ic_question_24dp"
+        android:title="미정" />
+    <item
+        android:id="@+id/blank"/>
+
+    <item
+        android:id="@+id/navigation_refrigerator"
+        android:icon="@drawable/ic_refrigerator_24dp"
+        android:title="@string/title_refrigerator"/>
+    <item
+        android:id="@+id/navigation_account"
+        android:icon="@drawable/ic_assignment_ind_black_24dp"
+        android:title="@string/title_account" />
+
+</menu>
