@@ -10,8 +10,10 @@
         android:id="@+id/navigation_undefined"
         android:icon="@drawable/ic_question_24dp"
         android:title="미정" />
+
     <item
-        android:id="@+id/blank"/>
+        android:id="@+id/blank"
+        android:title="blank"/>
 
     <item
         android:id="@+id/navigation_refrigerator"
