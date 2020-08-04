@@ -1,20 +1,22 @@
 package kr.ac.ssu.myrecipe;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
+        actionBar.setDisplayHomeAsUpEnabled(true);
         // FAB 기본 세팅 (수정필요)
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -37,30 +45,12 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-    }
-
-    class ItemSelectedListener implements BottomNavigationView.OnNavigationItemReselectedListener{
-
-        @Override
-        public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
-            switch(menuItem.getItemId())
-            {
-                case R.id.navigation_home:
-                    transaction.replace(R.id.nav_host_fragment, homeFragment).commitAllowingStateLoss();
-                    break;
-                case R.id.navigation_undefined:
-                    Log.v("check","undefined");
-                    transaction.replace(R.id.nav_host_fragment, undefinedFragment).commitAllowingStateLoss();
-                    break;
-                case R.id.navigation_refrigerator:
-                    transaction.replace(R.id.nav_host_fragment, refrigeratorFragment).commitAllowingStateLoss();
-                    break;
-                case R.id.navigation_account:
-                    transaction.replace(R.id.nav_host_fragment, accountFragment).commitAllowingStateLoss();
-                    break;
-            }
-
-        }
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_undefined, R.id.navigation_refrigerator, R.id.navigation_account)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.fragment_layout);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
     }
 
     @Override
@@ -83,15 +73,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
-    }
-
-/*
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_undefined, R.id.navigation_refrigerator, R.id.navigation_account)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.fragment_layout);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
     }
 
 }
