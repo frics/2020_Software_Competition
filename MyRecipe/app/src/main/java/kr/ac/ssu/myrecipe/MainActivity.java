@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
+class ItemSelectedListener implements BottomNavigationView.OnNavigationItemReselectedListener{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
