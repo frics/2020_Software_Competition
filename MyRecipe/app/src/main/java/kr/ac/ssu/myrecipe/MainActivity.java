@@ -2,7 +2,6 @@ package kr.ac.ssu.myrecipe;
 
 import android.os.Bundle;
 import android.view.Menu;
-
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,7 +17,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,13 +24,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // 액션바 세팅
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+
         // FAB 기본 세팅 (수정필요)
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // 바텀 네비게이션 바 세팅
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -52,16 +53,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
-    /*
-    class ItemSelectedListener implements BottomNavigationView.OnNavigationItemReselectedListener{
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.toolbar_menu, menu);
 
-            SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
-            searchView.setMaxWidth(Integer.MAX_VALUE);
-            searchView.setQueryHint("레시피를 검색합니다.");
+    // 검색툴 구현 함수
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -76,6 +73,4 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
-
-     */
 }
