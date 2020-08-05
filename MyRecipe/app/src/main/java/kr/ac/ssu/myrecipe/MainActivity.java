@@ -60,20 +60,17 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
 
-        SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setQueryHint("레시피를 검색합니다.");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-        return true;
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    return false;
+                }
+            });
+            return true;
+        }
     }
 }
