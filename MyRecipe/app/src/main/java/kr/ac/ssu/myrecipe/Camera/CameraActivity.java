@@ -1,8 +1,6 @@
 package kr.ac.ssu.myrecipe.Camera;
 
 
-
-
 import android.Manifest;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -11,11 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
 import java.util.List;
 
 import kr.ac.ssu.myrecipe.R;
-
-import static android.Manifest.*;
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -24,7 +21,6 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_camera);
-
 
 
 

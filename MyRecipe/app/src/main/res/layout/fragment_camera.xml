@@ -6,6 +6,7 @@
 
 
 
+
     <kr.ac.ssu.myrecipe.Camera.AutoFitTextureView
         android:id="@+id/texture"
         android:layout_width="wrap_content"
