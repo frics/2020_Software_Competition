@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recipe_view"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    android:layout_width="128dp"
+    android:layout_height="164dp"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_viewpager_childimage"
+            android:layout_width="match_parent"
+            android:layout_height="128dp" />
+
+        <TextView
+            android:layout_width="128dp"
+            android:layout_height="36dp"
+            android:layout_below="@id/img_viewpager_childimage"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="음식명"
+            android:textSize="16dp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
