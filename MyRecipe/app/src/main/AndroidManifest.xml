@@ -27,8 +27,7 @@
             android:name=".Camera.CameraActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_camera"
-            android:theme="@style/FullscreenTheme">
+            android:label="@string/title_activity_camera">
         </activity>
         <activity
             android:name=".MainActivity"

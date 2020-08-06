@@ -39,6 +39,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -396,8 +398,23 @@ public class CameraFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_camera, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_camera, container, false);
+        Toolbar toolbar =  view.findViewById(R.id.cam_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.bringToFront(); //툴바를 강제로 앞으로 끌어옴
+/*
+        //for create home button
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+*/
+        return view;
     }
+
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
@@ -719,6 +736,7 @@ public class CameraFragment extends Fragment
      * Initiate a still image capture.
      */
     private void takePicture() {
+        Log.d(TAG, "in takePicture()");
         lockFocus();
     }
 
@@ -727,6 +745,7 @@ public class CameraFragment extends Fragment
      */
     private void lockFocus() {
         try {
+            Log.d(TAG, "suc in lockfocus");
             // This is how to tell the camera to lock focus.
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
                     CameraMetadata.CONTROL_AF_TRIGGER_START);
@@ -735,6 +754,7 @@ public class CameraFragment extends Fragment
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
                     mBackgroundHandler);
         } catch (CameraAccessException e) {
+            Log.d(TAG, "exeception in lockfocus");
             e.printStackTrace();
         }
     }
@@ -826,6 +846,7 @@ public class CameraFragment extends Fragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.capture_btn: {
+                Log.d(TAG, "찰칵");
                 takePicture();
                 break;
             }

@@ -1,16 +1,10 @@
 package kr.ac.ssu.myrecipe.Camera;
 
 
-import android.Manifest;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-
-import java.util.List;
 
 import kr.ac.ssu.myrecipe.R;
 
@@ -23,14 +17,6 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
 
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setDeniedMessage("영수증 인식을 위해 권한이 필요합니다.\n")
-                .setPermissions(Manifest.permission.CAMERA)
-                //.setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .check();
-
         //카메라 프리뷰를 프래그먼트로 넘겨서 뷰 생성
         if (null == savedInstanceState) {
             getSupportFragmentManager().beginTransaction()
@@ -38,21 +24,17 @@ public class CameraActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
-
-
-
-
-    PermissionListener permissionListener = new PermissionListener() {
-        @Override
-        public void onPermissionGranted() {
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
         }
+        return super.onOptionsItemSelected(item);
+    }
 
-        @Override
-        public void onPermissionDenied(List<String> deniedPermissions) {
-            Toast.makeText(CameraActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-            onBackPressed();
-        }
-    };
+
+
 }
