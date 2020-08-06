@@ -517,7 +517,7 @@ public class CameraFragment extends Fragment
                 int maxPreviewWidth = displaySize.x;
                 int maxPreviewHeight = displaySize.y;
 
-
+/*
                 rotatedPreviewWidth = height;
                 rotatedPreviewHeight = width;
                 maxPreviewWidth = displaySize.y;
@@ -531,7 +531,7 @@ public class CameraFragment extends Fragment
                 if (maxPreviewHeight > MAX_PREVIEW_HEIGHT) {
                     maxPreviewHeight = MAX_PREVIEW_HEIGHT;
                 }
-
+*/
                 // Danger, W.R.! Attempting to use too large a preview size could  exceed the camera
                 // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                 // garbage capture data.
@@ -798,7 +798,7 @@ public class CameraFragment extends Fragment
             setAutoFlash(captureBuilder);
 
 
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, 0);
+            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, 90);
 
             CameraCaptureSession.CaptureCallback CaptureCallback
                     = new CameraCaptureSession.CaptureCallback() {
