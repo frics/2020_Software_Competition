@@ -19,26 +19,27 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="16dp">
 
             <TextView
                 android:id="@+id/recommand_recipe"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="레시피 추천"
-                android:textSize="14dp" />
+                android:textStyle="bold"
+                android:textSize="16dp" />
 
             <ImageView
                 android:id="@+id/setting_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginRight="8dp"
                 android:layout_alignParentTop="true"
                 android:layout_gravity="right"
+                android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@id/plus_icon"
                 android:src="@drawable/ic_setting" />
 
@@ -46,19 +47,22 @@
                 android:id="@+id/plus_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
+                android:layout_marginRight="16dp"
                 android:src="@drawable/ic_plus" />
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/pager"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_listview"
                 android:layout_width="match_parent"
-                android:layout_height="164dp"
+                android:layout_height="196dp"
                 android:layout_below="@id/recommand_recipe"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"/>
+                app:cardElevation="0dp"
+                android:scrollbars="horizontal" />
 
         </RelativeLayout>
 
