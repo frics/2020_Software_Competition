@@ -1,5 +1,6 @@
 package kr.ac.ssu.myrecipe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -17,12 +18,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import kr.ac.ssu.myrecipe.Camera.CameraActivity;
+
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        
 
         // 액션바 세팅
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -37,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "카메라", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    /*
     // 검색툴 구현 함수
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,4 +84,7 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
+
+ */
+
 }
