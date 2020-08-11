@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.ui;
+package kr.ac.ssu.myrecipe.MajorFragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +21,8 @@ import java.util.List;
 
 import kr.ac.ssu.myrecipe.AddActivity;
 import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.myrecipe.ui.ExpandableListAdapter;
+
 public class RefrigeratorFragment extends Fragment {
     private ExpandableListAdapter adapter;
     private RecyclerView recyclerview;

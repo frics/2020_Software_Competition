@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:layout_below="@id/img_viewpager_childimage"
             android:layout_centerHorizontal="true"
-            android:background="@color/testBackground"
+            android:background="@color/colorWhite"
             android:gravity="center"
             android:textStyle="bold"
             android:text="음식명"
@@ -34,7 +34,7 @@
             android:layout_height="18dp"
             android:layout_below="@id/recipe_name"
             android:layout_centerHorizontal="true"
-            android:background="@color/testBackground"
+            android:background="@color/colorWhite"
             android:gravity="top|center"
             android:text="추가할 내용"
             android:textSize="8dp"/>
