@@ -1,7 +1,6 @@
 package kr.ac.ssu.myrecipe.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.loader.Recipe;
+import kr.ac.ssu.myrecipe.Recipe;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 

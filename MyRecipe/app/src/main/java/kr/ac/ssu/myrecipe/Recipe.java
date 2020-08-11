@@ -1,9 +1,10 @@
-package kr.ac.ssu.myrecipe.loader;
+package kr.ac.ssu.myrecipe;
 
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+// 레시피 클래스
 public class Recipe {
     public int num; // 번호
     public String name; // 음식명
