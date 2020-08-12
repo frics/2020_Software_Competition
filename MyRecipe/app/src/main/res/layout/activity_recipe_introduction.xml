@@ -6,65 +6,90 @@
     android:layout_height="match_parent"
     tools:context=".recipe.RecipeIntroduction">
 
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
-        sothree:umanoPanelHeight="240dp"
-        sothree:umanoShadowHeight="0dp">
+        app:umanoPanelHeight="240dp"
+        app:umanoShadowHeight="0dp">
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/food_image"
-                android:layout_width="450dp"
-                android:layout_height="450dp"
+                android:layout_width="500dp"
+                android:layout_height="500dp"
                 android:layout_gravity="center|top"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/food_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="280dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="340dp"
                 android:text="음식명"
                 android:textColor="@color/white"
-                android:textSize="40dp" />
+                android:textSize="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/food_image" />
 
             <TextView
                 android:id="@+id/food_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="330dp"
                 android:text="100%"
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/food_name" />
 
 
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.cardview.widget.CardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/toolbar_margin"
-            android:gravity="center|top"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
+            android:background="@color/transparent"
+            android:gravity="center|top">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_gravity="center|top"
-                android:text="The Awesome Sliding Up Panel"
-                android:textSize="16sp" />
+            <View
+                android:id="@+id/view0"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.cardview.widget.CardView>
+            <View
+                android:id="@+id/view1"
+                android:layout_width="2dp"
+                android:layout_height="16dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view0" />
+            <View
+                android:id="@+id/view2"
+                android:layout_width="2dp"
+                android:layout_height="16dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
