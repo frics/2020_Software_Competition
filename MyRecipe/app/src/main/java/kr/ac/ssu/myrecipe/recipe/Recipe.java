@@ -1,11 +1,12 @@
-package kr.ac.ssu.myrecipe;
+package kr.ac.ssu.myrecipe.recipe;
 
 import android.widget.ImageView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // 레시피 클래스
-public class Recipe {
+public class Recipe implements Serializable {
     public int num; // 번호
     public String name; // 음식명
     public ImageView image; // 추후 url로 교체가능하면 교체

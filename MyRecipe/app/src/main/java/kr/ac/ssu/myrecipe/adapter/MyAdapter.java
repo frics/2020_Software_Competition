@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.Recipe;
+import kr.ac.ssu.myrecipe.recipe.Recipe;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
@@ -39,8 +39,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         Recipe item = itemList.get(position);
         holder.textview.setText(item.name);
-        holder.textview.setTag(item);
-        holder.textview.setOnClickListener(onClickItem);
+        holder.itemView.setTag(Integer.toString(position));
+        holder.itemView.setOnClickListener(onClickItem);
         holder.imageview.setImageResource(R.drawable.soup0+position);
     }
 

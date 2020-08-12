@@ -1,6 +1,8 @@
 package kr.ac.ssu.myrecipe.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +20,11 @@ import java.util.ArrayList;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.MyAdapter;
 import kr.ac.ssu.myrecipe.adapter.MyListDecoration;
-import kr.ac.ssu.myrecipe.Recipe;
+import kr.ac.ssu.myrecipe.recipe.Recipe;
+import kr.ac.ssu.myrecipe.recipe.RecipeIntroduction;
 
 public class HomeFragment extends Fragment {
+    private ArrayList<Recipe> itemList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class HomeFragment extends Fragment {
                 LinearLayoutManager.HORIZONTAL,false);
         listview.setLayoutManager(layoutManager);
 
-        ArrayList<Recipe> itemList = new ArrayList<>();
+        itemList = new ArrayList<>();
         Recipe recipe = new Recipe(0, "육개장", null, null);
         itemList.add(recipe);
         recipe = new Recipe(1,"어묵탕", null, null);
@@ -55,7 +59,6 @@ public class HomeFragment extends Fragment {
         itemList.add(recipe);
         recipe = new Recipe(3,"쇠고기가지볶음", null, null);
         itemList.add(recipe);
-
 
         MyAdapter m_adapter = new MyAdapter(getContext(), itemList, onClickItem);
         listview.setAdapter(m_adapter);
@@ -72,6 +75,11 @@ public class HomeFragment extends Fragment {
         public void onClick(View v) {
             String str = (String) v.getTag();
             Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getContext(), RecipeIntroduction.class);
+            intent.putExtra("itemlist", itemList.get(Integer.parseInt(str)));
+            startActivity(intent);
+
         }
     };
 }
