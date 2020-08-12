@@ -2,6 +2,7 @@ package kr.ac.ssu.myrecipe.Camera;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.TextureView;
 
 public class AutoFitTextureView extends TextureView {
@@ -46,11 +47,8 @@ public class AutoFitTextureView extends TextureView {
         if (0 == mRatioWidth || 0 == mRatioHeight) {
             setMeasuredDimension(width, height);
         } else {
-            if (width < height * mRatioWidth / mRatioHeight) {
-                setMeasuredDimension(width, width * mRatioHeight / mRatioWidth);
-            } else {
+            Log.d("비율 조정", "들어옴");
                 setMeasuredDimension(height * mRatioWidth / mRatioHeight, height);
-            }
         }
     }
 
