@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.ui;
+package kr.ac.ssu.myrecipe.MajorFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import kr.ac.ssu.myrecipe.R;
 
-public class RefrigeratorFragment extends Fragment {
+public class AccountFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_refrigerator, container, false);
+        return inflater.inflate(R.layout.fragment_account, container, false);
     }
 }

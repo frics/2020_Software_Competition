@@ -4,8 +4,20 @@
     <item
         android:id="@+id/navigation_home"
         android:enabled="true"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_home"
         android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_refrigerator"
+        android:enabled="true"
+        android:icon="@drawable/ic_refrigerator"
+        android:title="@string/title_refrigerator"/>
+
+    <item
+        android:id="@+id/blank"
+        android:enabled="false"
+        android:title=""/>
+
 
     <item
         android:id="@+id/navigation_undefined"
@@ -14,19 +26,9 @@
         android:title="미정" />
 
     <item
-        android:id="@+id/blank"
-        android:enabled="false"
-        android:title=""/>
-
-    <item
-        android:id="@+id/navigation_refrigerator"
-        android:enabled="true"
-        android:icon="@drawable/ic_refrigerator_24dp"
-        android:title="@string/title_refrigerator"/>
-    <item
         android:id="@+id/navigation_account"
         android:enabled="true"
-        android:icon="@drawable/ic_assignment_ind_black_24dp"
+        android:icon="@drawable/ic_account"
         android:title="@string/title_account" />
 
 </menu>
