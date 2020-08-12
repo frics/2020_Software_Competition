@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.ui;
+package kr.ac.ssu.myrecipe.MajorFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
