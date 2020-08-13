@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.recipe.Recipe;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolder> {
 
     private ArrayList<Recipe> itemList;
     private Context context;
     private View.OnClickListener onClickItem;
 
-    public MyAdapter(Context context, ArrayList<Recipe> itemList, View.OnClickListener onClickItem) {
+    public RecipeListAdapter(Context context, ArrayList<Recipe> itemList, View.OnClickListener onClickItem) {
         this.context = context;
         this.itemList = itemList;
         this.onClickItem = onClickItem;
@@ -40,7 +40,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Recipe item = itemList.get(position);
         holder.textview.setText(item.name);
         holder.itemView.setTag(Integer.toString(position));
-        holder.itemView.setOnClickListener(onClickItem);
         holder.imageview.setImageResource(R.drawable.soup0+position);
     }
 
@@ -54,6 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ImageView imageview;
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(onClickItem);
             textview = itemView.findViewById(R.id.recipe_name);
             imageview = itemView.findViewById(R.id.img_viewpager_childimage);
         }

@@ -12,69 +12,11 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         app:umanoOverlay="true"
-        app:umanoPanelHeight="240dp"
+        app:umanoPanelHeight="240px"
+        app:umanoScrollableView="@id/scrollView"
         app:umanoShadowHeight="0dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/food_image"
-                android:layout_width="450dp"
-                android:layout_height="450dp"
-                android:layout_gravity="center|top"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/intro_arrow"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ic_arrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/food_image" />
-
-            <ImageView
-                android:id="@+id/intro_heart"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="32dp"
-                android:src="@drawable/ic_grey_heart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/food_image" />
-
-            <TextView
-                android:id="@+id/food_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="270dp"
-                android:text="음식명"
-                android:textColor="@color/white"
-                android:textSize="40dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/food_image" />
-
-            <TextView
-                android:id="@+id/food_percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="36dp"
-                android:text="100%"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/food_name" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include layout="@layout/introduction_main" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sliding_panel"
@@ -83,259 +25,31 @@
             android:layout_marginTop="@dimen/toolbar_margin"
             android:gravity="center|top">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/titles"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_edge"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <View
-                    android:layout_width="80dp"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/round_bar"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <TextView
-                    android:id="@+id/ingredients_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:text="재료"
-                    android:textColor="@color/black"
-                    android:textSize="28dp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/recipe_title"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:id="@+id/ingredients_bar"
-                    android:layout_width="60dp"
-                    android:layout_height="1.5dp"
-                    android:background="@color/black"
-                    app:layout_constraintLeft_toLeftOf="@id/ingredients_title"
-                    app:layout_constraintRight_toRightOf="@id/ingredients_title"
-                    app:layout_constraintTop_toBottomOf="@id/ingredients_title" />
-
-                <TextView
-                    android:id="@+id/recipe_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:text="레시피"
-                    android:textColor="@color/grey"
-                    android:textSize="28dp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toRightOf="@+id/ingredients_title"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:id="@+id/recipe_bar"
-                    android:layout_width="80dp"
-                    android:layout_height="1.5dp"
-                    android:background="@color/black"
-                    android:visibility="invisible"
-                    app:layout_constraintLeft_toLeftOf="@id/recipe_title"
-                    app:layout_constraintRight_toRightOf="@id/recipe_title"
-                    app:layout_constraintTop_toBottomOf="@id/recipe_title" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <include layout="@layout/introduction_menu" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:paddingTop="32dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:paddingTop="32dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titles">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraint_ingredients"
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/scrollView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never">
 
-                    <TextView
-                        android:id="@+id/title_kcal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="칼로리"
-                        android:textSize="@dimen/introduction_title_size"
-                        app:layout_constraintBottom_toTopOf="@id/content_kcal"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="@id/title_carbon"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <include layout="@layout/introduction_ingredient" />
 
-                    <TextView
-                        android:id="@+id/title_carbon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="탄수화물"
-                        android:textSize="@dimen/introduction_title_size"
-                        app:layout_constraintLeft_toLeftOf="@id/title_kcal"
-                        app:layout_constraintRight_toRightOf="@id/title_protein"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/title_protein"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="단백질"
-                        android:textSize="@dimen/introduction_title_size"
-                        app:layout_constraintLeft_toLeftOf="@id/title_carbon"
-                        app:layout_constraintRight_toRightOf="@id/title_fat"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/title_fat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="지방"
-                        android:textSize="@dimen/introduction_title_size"
-                        app:layout_constraintLeft_toLeftOf="@id/title_protein"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/content_kcal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="242"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/introduction_content_size"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="@id/title_carbon"
-                        app:layout_constraintTop_toBottomOf="@id/title_kcal" />
-
-                    <View
-                        android:id="@+id/intro_content_divider1"
-                        android:layout_width="1.5dp"
-                        android:layout_height="45dp"
-                        android:background="@color/grey"
-                        app:layout_constraintBottom_toBottomOf="@id/content_kcal"
-                        app:layout_constraintLeft_toLeftOf="@id/content_kcal"
-                        app:layout_constraintRight_toRightOf="@id/content_carbon"
-                        app:layout_constraintTop_toTopOf="@id/content_kcal" />
-
-                    <TextView
-                        android:id="@+id/content_carbon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="36.6"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/introduction_content_size"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="@id/title_kcal"
-                        app:layout_constraintRight_toRightOf="@id/title_protein"
-                        app:layout_constraintTop_toBottomOf="@id/title_carbon" />
-
-                    <View
-                        android:id="@+id/intro_content_divider2"
-                        android:layout_width="1.5dp"
-                        android:layout_height="45dp"
-                        android:background="@color/grey"
-                        app:layout_constraintBottom_toBottomOf="@id/content_carbon"
-                        app:layout_constraintLeft_toLeftOf="@id/content_carbon"
-                        app:layout_constraintRight_toRightOf="@id/content_protein"
-                        app:layout_constraintTop_toTopOf="@id/content_carbon" />
-
-                    <TextView
-                        android:id="@+id/content_protein"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="6.5"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/introduction_content_size"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="@id/title_carbon"
-                        app:layout_constraintRight_toRightOf="@id/title_fat"
-                        app:layout_constraintTop_toBottomOf="@id/title_protein" />
-
-                    <View
-                        android:id="@+id/intro_content_divider3"
-                        android:layout_width="1.5dp"
-                        android:layout_height="45dp"
-                        android:background="@color/grey"
-                        app:layout_constraintBottom_toBottomOf="@id/content_protein"
-                        app:layout_constraintLeft_toLeftOf="@id/content_protein"
-                        app:layout_constraintRight_toRightOf="@id/content_fat"
-                        app:layout_constraintTop_toTopOf="@id/content_protein" />
-
-                    <TextView
-                        android:id="@+id/content_fat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="7.8"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/introduction_content_size"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="@id/title_protein"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/title_fat" />
-
-                    <TextView
-                        android:id="@+id/measure_kcal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Kcal"
-                        android:textSize="@dimen/introduction_title_size"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="@id/title_carbon"
-                        app:layout_constraintTop_toBottomOf="@id/content_kcal" />
-
-                    <TextView
-                        android:id="@+id/measure_carbon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Gram"
-                        android:textSize="@dimen/introduction_title_size"
-                        app:layout_constraintLeft_toLeftOf="@id/title_kcal"
-                        app:layout_constraintRight_toRightOf="@id/title_protein"
-                        app:layout_constraintTop_toBottomOf="@id/content_carbon" />
-
-                    <TextView
-                        android:id="@+id/measure_protein"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Gram"
-                        android:textSize="@dimen/introduction_title_size"
-                        app:layout_constraintLeft_toLeftOf="@id/title_carbon"
-                        app:layout_constraintRight_toRightOf="@id/title_fat"
-                        app:layout_constraintTop_toBottomOf="@id/content_protein" />
-
-                    <TextView
-                        android:id="@+id/measure_fat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Gram"
-                        android:textSize="@dimen/introduction_title_size"
-                        app:layout_constraintLeft_toLeftOf="@id/title_protein"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/content_fat" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.core.widget.NestedScrollView>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraint_recipe"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

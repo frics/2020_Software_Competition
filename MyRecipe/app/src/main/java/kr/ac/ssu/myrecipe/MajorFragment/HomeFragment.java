@@ -2,7 +2,6 @@ package kr.ac.ssu.myrecipe.MajorFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.adapter.MyAdapter;
+import kr.ac.ssu.myrecipe.adapter.RecipeListAdapter;
 import kr.ac.ssu.myrecipe.adapter.MyListDecoration;
 import kr.ac.ssu.myrecipe.recipe.Recipe;
 import kr.ac.ssu.myrecipe.recipe.RecipeIntroduction;
@@ -51,16 +50,28 @@ public class HomeFragment extends Fragment {
         listview.setLayoutManager(layoutManager);
 
         itemList = new ArrayList<>();
-        Recipe recipe = new Recipe(0, "육개장", null, null);
+        ArrayList<Recipe.Ingredient> tmp = new ArrayList<>();
+        Recipe.Ingredient ingredient= new Recipe.Ingredient("고구마", "100g(2/3개)");
+        tmp.add(ingredient);
+        ingredient= new Recipe.Ingredient("설탕", "2g(1/3 작은술)");
+        tmp.add(ingredient);
+        ingredient= new Recipe.Ingredient("찹쌀가루", "3g(2/3 작은술)");
+        tmp.add(ingredient);
+        ingredient= new Recipe.Ingredient("물", "200ml(1컵)");
+        tmp.add(ingredient);
+        ingredient= new Recipe.Ingredient("잣", "8g(8알)");
+        tmp.add(ingredient);
+
+        Recipe recipe = new Recipe(0, "육개장", null, tmp);
         itemList.add(recipe);
-        recipe = new Recipe(1,"어묵탕", null, null);
+        recipe = new Recipe(1,"어묵탕", null, tmp);
         itemList.add(recipe);
-        recipe = new Recipe(2,"떡국", null, null);
+        recipe = new Recipe(2,"떡국", null, tmp);
         itemList.add(recipe);
-        recipe = new Recipe(3,"쇠고기가지볶음", null, null);
+        recipe = new Recipe(3,"쇠고기가지볶음", null, tmp);
         itemList.add(recipe);
 
-        MyAdapter m_adapter = new MyAdapter(getContext(), itemList, onClickItem);
+        RecipeListAdapter m_adapter = new RecipeListAdapter(getContext(), itemList, onClickItem);
         listview.setAdapter(m_adapter);
 
         MyListDecoration decoration = new MyListDecoration();

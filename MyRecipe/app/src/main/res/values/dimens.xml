@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="toolbar_margin">60dp</dimen>
 
-    <dimen name="introduction_title_size">9dp</dimen>
-    <dimen name="introduction_content_size">13dp</dimen>
+    <dimen name="introduction_title_size">12dp</dimen>
+    <dimen name="introduction_content_size">15dp</dimen>
+    <dimen name="introduction_information_title__size">13dp</dimen>
 </resources>
