@@ -6,6 +6,27 @@
     android:layout_height="match_parent">
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/cam_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:background="@color/colorTint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/cam_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="영수증 스캔"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
     <kr.ac.ssu.myrecipe.Camera.AutoFitTextureView
         android:id="@+id/texture"
         android:layout_width="wrap_content"
@@ -14,6 +35,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageButton
         android:id="@+id/capture_btn"

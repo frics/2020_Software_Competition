@@ -2,11 +2,11 @@ package kr.ac.ssu.myrecipe.Camera;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,19 +15,13 @@ import kr.ac.ssu.myrecipe.R;
 
 public class CameraActivity extends AppCompatActivity {
 
+    private static final String TAG = "CameraActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        hideNavigationBar();
         setContentView(R.layout.activity_camera);
-
-
-        Toolbar toolbar =  findViewById(R.id.cam_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        toolbar.bringToFront(); //툴바를 강제로 앞으로 끌어옴
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -54,5 +48,21 @@ public class CameraActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment).commit();
+    }
+
+    private void hideNavigationBar() {
+        int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+        int newUiOptions = uiOptions;
+        boolean isImmersiveModeEnabled =
+                ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
+        if (isImmersiveModeEnabled) {
+            Log.d(TAG, "Turning immersive mode mode off. ");
+        } else {
+            Log.d(TAG, "Turning immersive mode mode on.");
+        }
+        newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 }

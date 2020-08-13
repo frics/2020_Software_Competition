@@ -38,6 +38,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -364,6 +366,8 @@ public class CameraFragment extends Fragment
         List<Size> notBigEnough = new ArrayList<>();
         int w = aspectRatio.getWidth();
         int h = aspectRatio.getHeight();
+        Log.d(TAG, String.valueOf(w));
+        Log.d(TAG, String.valueOf(h));
         for (Size option : choices) {
             if (option.getWidth() <= maxWidth && option.getHeight() <= maxHeight &&
                     option.getHeight() == option.getWidth() * h / w) {
@@ -398,12 +402,12 @@ public class CameraFragment extends Fragment
 
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
 
-/*
-        //for create home button
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-*/
+        Toolbar toolbar =  view.findViewById(R.id.cam_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.bringToFront();
+
         return view;
     }
 
@@ -807,13 +811,14 @@ public class CameraFragment extends Fragment
                                                @NonNull TotalCaptureResult result) {
                     Log.d(TAG, "Saved: " + mFile.toString());
                     unlockFocus();
-                    ((CameraActivity)getActivity()).replaceFragment(CapturedFragment.newInstance());
+
                 }
             };
 
             mCaptureSession.stopRepeating();
             mCaptureSession.abortCaptures();
             mCaptureSession.capture(captureBuilder.build(), CaptureCallback, null);
+            ((CameraActivity)getActivity()).replaceFragment(CapturedFragment.newInstance());
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -846,6 +851,7 @@ public class CameraFragment extends Fragment
             case R.id.capture_btn: {
                 Log.d(TAG, "찰칵");
                 takePicture();
+                //picCapture();
 
                 break;
             }
@@ -981,5 +987,31 @@ public class CameraFragment extends Fragment
                     .create();
         }
     }
+
+
+    /*
+    public void picCapture(){   // 버튼 onClick 리스너
+        // WRITE_EXTERNAL_STORAGE 외부 공간 사용 권한 허용
+        mTextureView.buildDrawingCache();   // 캡처할 뷰를 지정하여 buildDrawingCache() 한다
+        Bitmap captureView = mTextureView.getDrawingCache();   // 캡쳐할 뷰를 지정하여 getDrawingCache() 한다
+
+        FileOutputStream fos;   // FileOutputStream 이용 파일 쓰기 한다
+        File strFolderPath = getActivity().getExternalFilesDir(null);
+
+
+        String strFilePath = strFolderPath + "/pic2.jpg";
+        File fileCacheItem = new File(strFilePath);
+
+        try {
+            fos = new FileOutputStream(fileCacheItem);
+            captureView.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            Log.d(TAG, "crop suc");
+        }
+    }
+
+     */
 
 }

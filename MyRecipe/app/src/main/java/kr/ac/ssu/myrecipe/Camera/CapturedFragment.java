@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import java.io.File;
@@ -38,6 +40,12 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_captured, container,
                 false);
 
+        Toolbar toolbar =  view.findViewById(R.id.capture_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.bringToFront();
+
         imageView=(ImageView)view.findViewById(R.id.captured_img);
         view.findViewById(R.id.recapture_btn).setOnClickListener(this);
         view.findViewById(R.id.scanning_btn).setOnClickListener(this);
@@ -59,6 +67,8 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
             matrix.postRotate(90);
 
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            int width = myBitmap.getWidth();
+            int height = myBitmap.getHeight();
             Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
             imageView.setImageBitmap(rotatedBitmap);
         }

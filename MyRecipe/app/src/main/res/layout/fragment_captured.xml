@@ -6,11 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".Camera.CapturedFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/capture_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:background="@color/colorTint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/capture_toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="영수증 스캔"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
     <!-- TODO: Update blank fragment layout -->
     <ImageView
         android:id="@+id/captured_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
