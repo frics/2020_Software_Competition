@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.IngredientListAdapter;
+import kr.ac.ssu.myrecipe.adapter.RecipeOrderListAdapter;
 
 public class RecipeIntroduction extends AppCompatActivity {
 
@@ -76,7 +77,6 @@ public class RecipeIntroduction extends AppCompatActivity {
         ingredientTitle.setOnClickListener(onClickIntro);
         recipeTitle.setOnClickListener(onClickIntro);
 
-
         // 반응형 UI 생성 코드
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -88,17 +88,26 @@ public class RecipeIntroduction extends AppCompatActivity {
         foodimage.getLayoutParams().width = (int) (size.y * 0.68);
         foodimage.requestLayout();
 
+        // listview들 세팅
         ArrayList<Recipe.Ingredient> datalist = recipe.ingredient;
+        RecyclerView ingredientRecyclerView = (RecyclerView) findViewById(R.id.ingredient_list);
+        RecyclerView recipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_list);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.ingredient_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,
+        LinearLayoutManager ingredientLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        LinearLayoutManager recipeLayoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false);
+
+        ingredientRecyclerView.setLayoutManager(ingredientLayoutManager);
+        recipeRecyclerView.setLayoutManager(recipeLayoutManager);
+
         IngredientListAdapter adapter = new IngredientListAdapter(this, datalist);
+        RecipeOrderListAdapter adapter1 = new RecipeOrderListAdapter(this, recipe.recipe_order);
 
-       recyclerView.setAdapter(adapter);
+        ingredientRecyclerView.setAdapter(adapter);
+        recipeRecyclerView.setAdapter(adapter1);
 
-        mScrollableView =(NestedScrollView)findViewById(R.id.scrollView);
+        mScrollableView = (NestedScrollView) findViewById(R.id.scrollView);
         NestedScrollableViewHelper helper = new NestedScrollableViewHelper();
         slidingPaneLayout.setScrollableViewHelper(helper);
 

@@ -46,29 +46,35 @@ public class HomeFragment extends Fragment {
 */
         RecyclerView listview = view.findViewById(R.id.main_listview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL,false);
+                LinearLayoutManager.HORIZONTAL, false);
         listview.setLayoutManager(layoutManager);
 
         itemList = new ArrayList<>();
         ArrayList<Recipe.Ingredient> tmp = new ArrayList<>();
-        Recipe.Ingredient ingredient= new Recipe.Ingredient("고구마", "100g(2/3개)");
+        Recipe.Ingredient ingredient = new Recipe.Ingredient("고구마", "100g(2/3개)");
         tmp.add(ingredient);
-        ingredient= new Recipe.Ingredient("설탕", "2g(1/3 작은술)");
+        ingredient = new Recipe.Ingredient("설탕", "2g(1/3 작은술)");
         tmp.add(ingredient);
-        ingredient= new Recipe.Ingredient("찹쌀가루", "3g(2/3 작은술)");
+        ingredient = new Recipe.Ingredient("찹쌀가루", "3g(2/3 작은술)");
         tmp.add(ingredient);
-        ingredient= new Recipe.Ingredient("물", "200ml(1컵)");
+        ingredient = new Recipe.Ingredient("물", "200ml(1컵)");
         tmp.add(ingredient);
-        ingredient= new Recipe.Ingredient("잣", "8g(8알)");
+        ingredient = new Recipe.Ingredient("잣", "8g(8알)");
         tmp.add(ingredient);
 
-        Recipe recipe = new Recipe(0, "육개장", null, tmp);
+        ArrayList<String> tmp1 = new ArrayList<>();
+        tmp1.add("고구마는 깨끗이 씻어서 껍질을 벗기고 4cm 정도로 잘라준다.");
+        tmp1.add("찜기에 고구마를 넣고 20~30분 정도 삶아 주고, 블렌더나 체를 이용하여 잘 으깨어 곱게 만든다.");
+        tmp1.add("고구마와 물을 섞어 끓이면서 찹쌀가루로 농도를 맞추고 설탕을 넣어 맛을 낸다.");
+        tmp1.add("잣을 팬에 노릇하게 볶아 다져서 고구마 죽에 섞는다. 기호에 따라 고구마를 튀겨 얹어 먹어도 좋다");
+
+        Recipe recipe = new Recipe(0, "육개장", null, tmp, tmp1);
         itemList.add(recipe);
-        recipe = new Recipe(1,"어묵탕", null, tmp);
+        recipe = new Recipe(1, "어묵탕", null, tmp, tmp1);
         itemList.add(recipe);
-        recipe = new Recipe(2,"떡국", null, tmp);
+        recipe = new Recipe(2, "떡국", null, tmp, tmp1);
         itemList.add(recipe);
-        recipe = new Recipe(3,"쇠고기가지볶음", null, tmp);
+        recipe = new Recipe(3, "쇠고기가지볶음", null, tmp, tmp1);
         itemList.add(recipe);
 
         RecipeListAdapter m_adapter = new RecipeListAdapter(getContext(), itemList, onClickItem);
