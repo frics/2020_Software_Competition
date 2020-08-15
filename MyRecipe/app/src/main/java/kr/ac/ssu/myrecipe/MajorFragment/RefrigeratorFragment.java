@@ -21,12 +21,9 @@ import java.util.List;
 
 import kr.ac.ssu.myrecipe.AddActivity;
 import kr.ac.ssu.myrecipe.R;
-<<<<<<< Updated upstream:MyRecipe/app/src/main/java/kr/ac/ssu/myrecipe/MajorFragment/RefrigeratorFragment.java
-import kr.ac.ssu.myrecipe.ui.ExpandableListAdapter;
-=======
+
 import kr.ac.ssu.myrecipe.ReceiptListActivity;
 import kr.ac.ssu.myrecipe.adapter.RefrigeratorListAdapter;
->>>>>>> Stashed changes:MyRecipe/app/src/main/java/kr/ac/ssu/myrecipe/ui/RefrigeratorFragment.java
 
 public class RefrigeratorFragment extends Fragment {
     private RefrigeratorListAdapter adapter;
