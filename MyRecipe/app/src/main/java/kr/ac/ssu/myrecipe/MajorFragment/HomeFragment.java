@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -21,9 +22,12 @@ import kr.ac.ssu.myrecipe.adapter.RecipeListAdapter;
 import kr.ac.ssu.myrecipe.adapter.MyListDecoration;
 import kr.ac.ssu.myrecipe.recipe.Recipe;
 import kr.ac.ssu.myrecipe.recipe.RecipeIntroduction;
+import kr.ac.ssu.myrecipe.recipe.RecipeList;
 
 public class HomeFragment extends Fragment {
     private ArrayList<Recipe> itemList;
+
+    private ImageView listbutton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,13 +41,10 @@ public class HomeFragment extends Fragment {
                 .placeholder(R.drawable.basic)
                 .error(R.drawable.basic)
                 .into(imageview);
-
-
-       /* ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
-        CustomAdapter adapter = new CustomAdapter(getLayoutInflater());
-
-        pager.setAdapter(adapter);
 */
+        listbutton = (ImageView)view.findViewById(R.id.plus_icon);
+        listbutton.setOnClickListener(onClickMenu);
+
         RecyclerView listview = view.findViewById(R.id.main_listview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
@@ -83,7 +84,6 @@ public class HomeFragment extends Fragment {
         MyListDecoration decoration = new MyListDecoration();
         listview.addItemDecoration(decoration);
 
-
         return view;
     }
 
@@ -95,6 +95,16 @@ public class HomeFragment extends Fragment {
 
             Intent intent = new Intent(getContext(), RecipeIntroduction.class);
             intent.putExtra("itemlist", itemList.get(Integer.parseInt(str)));
+            startActivity(intent);
+
+        }
+    };
+
+    private View.OnClickListener onClickMenu = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getContext(), RecipeList.class);
+            intent.putExtra("itemlist", itemList);
             startActivity(intent);
 
         }

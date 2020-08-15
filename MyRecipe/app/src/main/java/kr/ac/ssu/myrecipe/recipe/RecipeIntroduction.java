@@ -10,40 +10,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sothree.slidinguppanel.ScrollableViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import java.util.ArrayList;
-
-import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.IngredientListAdapter;
 import kr.ac.ssu.myrecipe.adapter.RecipeOrderListAdapter;
 
 public class RecipeIntroduction extends AppCompatActivity {
 
-    private SlidingUpPanelLayout slidingPaneLayout;
-    private View recipeBar, ingredientBar;
-    private ConstraintLayout ingredientLayout, recipeLayout;
-    private ImageView backButton, scrapButton, foodimage;
-    private TextView textView, recipeTitle, ingredientTitle;
     private boolean check = false;
 
+    private View recipeBar, ingredientBar;
+    private TextView textView, recipeTitle, ingredientTitle;
+    private ImageView backButton, scrapButton, foodimage;
+
+    private ConstraintLayout ingredientLayout, recipeLayout;
+    private SlidingUpPanelLayout slidingPaneLayout;
     private NestedScrollView mScrollableView;
 
     @Override

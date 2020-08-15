@@ -17,7 +17,7 @@
         android:id="@+id/content_recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         android:textSize="@dimen/introduction_title_size" />
 
 </LinearLayout>
