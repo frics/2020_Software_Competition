@@ -11,7 +11,6 @@ import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
-import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -367,6 +366,8 @@ public class CameraFragment extends Fragment
         List<Size> notBigEnough = new ArrayList<>();
         int w = aspectRatio.getWidth();
         int h = aspectRatio.getHeight();
+        Log.d(TAG, String.valueOf(w));
+        Log.d(TAG, String.valueOf(h));
         for (Size option : choices) {
             if (option.getWidth() <= maxWidth && option.getHeight() <= maxHeight &&
                     option.getHeight() == option.getWidth() * h / w) {
@@ -400,18 +401,13 @@ public class CameraFragment extends Fragment
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
+
         Toolbar toolbar =  view.findViewById(R.id.cam_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.bringToFront();
 
-        toolbar.bringToFront(); //툴바를 강제로 앞으로 끌어옴
-/*
-        //for create home button
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-*/
         return view;
     }
 
@@ -712,10 +708,12 @@ public class CameraFragment extends Fragment
         if (null == mTextureView || null == mPreviewSize || null == activity) {
             return;
         }
-        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+       // int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         Matrix matrix = new Matrix();
+        /*
         RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
         RectF bufferRect = new RectF(0, 0, mPreviewSize.getHeight(), mPreviewSize.getWidth());
+
         float centerX = viewRect.centerX();
         float centerY = viewRect.centerY();
         if (Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation) {
@@ -728,7 +726,7 @@ public class CameraFragment extends Fragment
             matrix.postRotate(90 * (rotation - 2), centerX, centerY);
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
-        }
+        }*/
         mTextureView.setTransform(matrix);
     }
 
@@ -811,15 +809,16 @@ public class CameraFragment extends Fragment
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                                @NonNull CaptureRequest request,
                                                @NonNull TotalCaptureResult result) {
-                    showToast("Saved: " + mFile);
-                    Log.d(TAG, mFile.toString());
+                    Log.d(TAG, "Saved: " + mFile.toString());
                     unlockFocus();
+
                 }
             };
 
             mCaptureSession.stopRepeating();
             mCaptureSession.abortCaptures();
             mCaptureSession.capture(captureBuilder.build(), CaptureCallback, null);
+            ((CameraActivity)getActivity()).replaceFragment(CapturedFragment.newInstance());
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -852,6 +851,8 @@ public class CameraFragment extends Fragment
             case R.id.capture_btn: {
                 Log.d(TAG, "찰칵");
                 takePicture();
+                //picCapture();
+
                 break;
             }
 
@@ -986,5 +987,31 @@ public class CameraFragment extends Fragment
                     .create();
         }
     }
+
+
+    /*
+    public void picCapture(){   // 버튼 onClick 리스너
+        // WRITE_EXTERNAL_STORAGE 외부 공간 사용 권한 허용
+        mTextureView.buildDrawingCache();   // 캡처할 뷰를 지정하여 buildDrawingCache() 한다
+        Bitmap captureView = mTextureView.getDrawingCache();   // 캡쳐할 뷰를 지정하여 getDrawingCache() 한다
+
+        FileOutputStream fos;   // FileOutputStream 이용 파일 쓰기 한다
+        File strFolderPath = getActivity().getExternalFilesDir(null);
+
+
+        String strFilePath = strFolderPath + "/pic2.jpg";
+        File fileCacheItem = new File(strFilePath);
+
+        try {
+            fos = new FileOutputStream(fileCacheItem);
+            captureView.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            Log.d(TAG, "crop suc");
+        }
+    }
+
+     */
 
 }
