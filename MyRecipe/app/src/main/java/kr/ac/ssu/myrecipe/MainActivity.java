@@ -55,9 +55,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragment_layout);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
     }
 
-    /*
+
     // 검색툴 구현 함수
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,6 +83,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
- */
+
 
 }
