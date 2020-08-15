@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,8 +11,6 @@
         android:id="@+id/cam_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:paddingBottom="30dp"
         android:background="@color/colorTint"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -27,6 +26,7 @@
             android:textSize="20dp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
+
     <kr.ac.ssu.myrecipe.Camera.AutoFitTextureView
         android:id="@+id/texture"
         android:layout_width="wrap_content"
@@ -37,14 +37,47 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageButton
-        android:id="@+id/capture_btn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/left_tint"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:background="@color/colorTint"
+        app:layout_constraintTop_toBottomOf="@id/cam_toolbar"
+        app:layout_constraintBottom_toTopOf="@id/btn_view"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/right_tint"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:background="@color/colorTint"
+        app:layout_constraintTop_toBottomOf="@id/cam_toolbar"
+        app:layout_constraintBottom_toTopOf="@id/btn_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/ic_capture_btn_states"
+        android:background="@color/colorTint"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/capture_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_capture_btn_states"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
