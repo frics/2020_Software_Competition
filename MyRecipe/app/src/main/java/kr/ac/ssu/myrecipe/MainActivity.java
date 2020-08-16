@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_home, fragment).commit();      // Fragment로 사용할 MainActivity내의 layout공간을 선택합니다.
     }
-
+}
     /*
     // 검색툴 구현 함수
     @Override
@@ -96,3 +96,4 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 }
+*/
