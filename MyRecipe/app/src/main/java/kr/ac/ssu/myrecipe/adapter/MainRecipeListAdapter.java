@@ -18,10 +18,12 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
 
     private ArrayList<Recipe> itemList;
     private Context context;
+    private View.OnClickListener onClickItem;
 
-    public MainRecipeListAdapter(Context context, ArrayList<Recipe> itemList) {
+    public MainRecipeListAdapter(Context context, ArrayList<Recipe> itemList, View.OnClickListener onClickItem) {
         this.context = context;
         this.itemList = itemList;
+        this.onClickItem = onClickItem;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
     @Override
     public void onBindViewHolder(MainRecipeListAdapter.ViewHolder holder, int position) {
         Recipe item = itemList.get(position);
+        holder.itemView.setTag(Integer.toString(position));
         holder.food_image.setImageResource(R.drawable.soup0 + position);
         holder.food_name.setText(item.name);
         holder.food_percent.setText("100%");
@@ -53,6 +56,7 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(onClickItem);
             food_image = itemView.findViewById(R.id.main_food_image);
             food_name = itemView.findViewById(R.id.main_food_title);
             food_percent = itemView.findViewById(R.id.main_food_percent);

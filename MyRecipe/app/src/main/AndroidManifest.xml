@@ -41,9 +41,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_camera"
             android:screenOrientation="portrait" />
-        <activity android:name=".recipe.RecipeIntroduction">
-            android:theme="@style/Transparent">
-        </activity>
+        <activity android:name=".recipe.RecipeIntroduction"></activity>
         <activity android:name=".recipe.RecipeList"></activity>
 
 

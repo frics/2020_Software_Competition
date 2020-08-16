@@ -28,6 +28,11 @@ public class RefrigeratorFragment extends Fragment {
     private RecyclerView recyclerview;
     private ImageButton add_button;
     private List<ExpandableListAdapter.Item> data = new ArrayList<>();
+
+    public static  RefrigeratorFragment newInstance() {
+        return new  RefrigeratorFragment();
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_refrigerator, container, false);
         recyclerview = (RecyclerView)v.findViewById(R.id.refri_recycler);

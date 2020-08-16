@@ -1,11 +1,13 @@
 package kr.ac.ssu.myrecipe.MajorFragment;
 
+import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,17 +19,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.RecipeListAdapter;
 import kr.ac.ssu.myrecipe.adapter.MyListDecoration;
 import kr.ac.ssu.myrecipe.recipe.Recipe;
 import kr.ac.ssu.myrecipe.recipe.RecipeIntroduction;
-import kr.ac.ssu.myrecipe.recipe.RecipeList;
+import kr.ac.ssu.myrecipe.recipe.RecipeListFragment;
+import kr.ac.ssu.myrecipe.recipe.test;
 
 public class HomeFragment extends Fragment {
     private ArrayList<Recipe> itemList;
 
-    private ImageView listbutton;
+    private TextView listbutton;
+
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,7 +50,7 @@ public class HomeFragment extends Fragment {
                 .error(R.drawable.basic)
                 .into(imageview);
 */
-        listbutton = (ImageView)view.findViewById(R.id.plus_icon);
+        listbutton = (TextView) view.findViewById(R.id.plus);
         listbutton.setOnClickListener(onClickMenu);
 
         RecyclerView listview = view.findViewById(R.id.main_listview);
@@ -103,9 +111,10 @@ public class HomeFragment extends Fragment {
     private View.OnClickListener onClickMenu = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getContext(), RecipeList.class);
-            intent.putExtra("itemlist", itemList);
-            startActivity(intent);
+            ((MainActivity) getActivity()).replaceFragment(RecipeListFragment.newInstance());
+            // Intent intent = new Intent(getContext(), RecipeList.class);
+            // intent.putExtra("itemlist", itemList);
+            //  startActivity(intent);
 
         }
     };
