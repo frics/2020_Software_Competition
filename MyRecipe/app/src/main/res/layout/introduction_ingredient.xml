@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_ingredients"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/ingre_info_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:text="재료 정보 (1인분 기준)"
+        android:textColor="@color/black"
+        android:textSize="@dimen/introduction_information_title__size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/ingredient_list"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ingredient_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        android:overScrollMode="never"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingre_info_one" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="32dp"
+        android:background="@color/grey"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingredient_list" />
+
+    <TextView
+        android:id="@+id/ingre_nutrition_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="20dp"
+        android:text="영양 정보"
+        android:textColor="@color/black"
+        android:textSize="@dimen/introduction_information_title__size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+    <TextView
+        android:id="@+id/title_kcal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="칼로리"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintBottom_toTopOf="@id/content_kcal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider1"
+        app:layout_constraintTop_toBottomOf="@id/ingre_nutrition_title" />
+
+    <TextView
+        android:id="@+id/title_carbon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="탄수화물"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider1"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider2"
+        app:layout_constraintTop_toBottomOf="@id/ingre_nutrition_title" />
+
+    <TextView
+        android:id="@+id/title_protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="단백질"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider2"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider3"
+        app:layout_constraintTop_toBottomOf="@id/ingre_nutrition_title" />
+
+    <TextView
+        android:id="@+id/title_fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="지방"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingre_nutrition_title" />
+
+    <TextView
+        android:id="@+id/content_kcal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="242"
+        android:textColor="@color/black"
+        android:textSize="@dimen/introduction_content_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider1"
+        app:layout_constraintTop_toBottomOf="@id/title_kcal" />
+
+    <View
+        android:id="@+id/intro_content_divider1"
+        android:layout_width="1.5dp"
+        android:layout_height="45dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@id/content_kcal"
+        app:layout_constraintLeft_toRightOf="@id/content_kcal"
+        app:layout_constraintRight_toLeftOf="@id/content_carbon"
+        app:layout_constraintTop_toTopOf="@id/content_kcal" />
+
+    <TextView
+        android:id="@+id/content_carbon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="36.6"
+        android:textColor="@color/black"
+        android:textSize="@dimen/introduction_content_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider1"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider2"
+        app:layout_constraintTop_toBottomOf="@id/title_carbon" />
+
+    <View
+        android:id="@+id/intro_content_divider2"
+        android:layout_width="1.5dp"
+        android:layout_height="45dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@id/content_carbon"
+        app:layout_constraintLeft_toLeftOf="@id/content_carbon"
+        app:layout_constraintRight_toRightOf="@id/content_protein"
+        app:layout_constraintTop_toTopOf="@id/content_carbon" />
+
+    <TextView
+        android:id="@+id/content_protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="6.5"
+        android:textColor="@color/black"
+        android:textSize="@dimen/introduction_content_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider2"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider3"
+        app:layout_constraintTop_toBottomOf="@id/title_protein" />
+
+    <View
+        android:id="@+id/intro_content_divider3"
+        android:layout_width="1.5dp"
+        android:layout_height="45dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@id/content_protein"
+        app:layout_constraintLeft_toLeftOf="@id/content_protein"
+        app:layout_constraintRight_toRightOf="@id/content_fat"
+        app:layout_constraintTop_toTopOf="@id/content_protein" />
+
+    <TextView
+        android:id="@+id/content_fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="7.8"
+        android:textColor="@color/black"
+        android:textSize="@dimen/introduction_content_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_fat" />
+
+    <TextView
+        android:id="@+id/measure_kcal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Kcal"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider1"
+        app:layout_constraintTop_toBottomOf="@id/content_kcal" />
+
+    <TextView
+        android:id="@+id/measure_carbon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Gram"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider1"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider2"
+        app:layout_constraintTop_toBottomOf="@id/content_carbon" />
+
+    <TextView
+        android:id="@+id/measure_protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Gram"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider2"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider3"
+        app:layout_constraintTop_toBottomOf="@id/content_protein" />
+
+    <TextView
+        android:id="@+id/measure_fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Gram"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content_fat" />
+
+    <TextView
+        android:id="@+id/warning_nutrition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:text="주의해야 할 성분 (1회 제공량 당)"
+        android:textColor="@color/black"
+        android:textSize="@dimen/introduction_information_title__size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/measure_kcal" />
+
+    <TextView
+        android:id="@+id/sugar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="20dp"
+        android:text="당류"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warning_nutrition" />
+
+    <View
+        android:id="@+id/sugar_bar"
+        android:layout_width="10dp"
+        android:layout_height="@dimen/introduction_title_size"
+        android:layout_marginLeft="12dp"
+        android:background="@color/colorPrimaryLight"
+        app:layout_constraintBottom_toTopOf="@id/sugar_title"
+        app:layout_constraintLeft_toRightOf="@id/transfat_title"
+        app:layout_constraintTop_toBottomOf="@id/sugar_title" />
+
+    <TextView
+        android:id="@+id/sugar_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:text="7g"
+        android:textSize="6dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/sugar_title"
+        app:layout_constraintLeft_toRightOf="@id/sugar_bar"
+        app:layout_constraintTop_toBottomOf="@id/sugar_title" />
+
+    <TextView
+        android:id="@+id/sodium_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="4dp"
+        android:text="나트륨"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sugar_title" />
+
+    <View
+        android:id="@+id/sodium_bar"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/introduction_title_size"
+        android:layout_marginLeft="12dp"
+        android:background="#29d2a2"
+        app:layout_constraintBottom_toTopOf="@id/sodium_title"
+        app:layout_constraintLeft_toRightOf="@id/transfat_title"
+        app:layout_constraintTop_toBottomOf="@id/sodium_title" />
+
+    <TextView
+        android:id="@+id/sodium_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:text="500.3mg"
+        android:textSize="6dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/sodium_title"
+        app:layout_constraintLeft_toRightOf="@id/sodium_bar"
+        app:layout_constraintTop_toBottomOf="@id/sodium_title" />
+
+    <TextView
+        android:id="@+id/cholesterol_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="4dp"
+        android:text="콜레스테롤"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sodium_title" />
+
+    <View
+        android:id="@+id/cholesterol_bar"
+        android:layout_width="42dp"
+        android:layout_height="@dimen/introduction_title_size"
+        android:layout_marginLeft="12dp"
+        android:background="#e15229"
+        app:layout_constraintBottom_toTopOf="@id/cholesterol_title"
+        app:layout_constraintLeft_toRightOf="@id/transfat_title"
+        app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
+
+    <TextView
+        android:id="@+id/cholesterol_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:text="4.5g"
+        android:textSize="6dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/cholesterol_title"
+        app:layout_constraintLeft_toRightOf="@id/cholesterol_bar"
+        app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
+
+    <TextView
+        android:id="@+id/saturated_fatty_acid_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="4dp"
+        android:text="포화지방산"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
+
+    <View
+        android:id="@+id/saturated_fatty_acid_bar"
+        android:layout_width="33dp"
+        android:layout_height="@dimen/introduction_title_size"
+        android:layout_marginLeft="12dp"
+        android:background="#e152e1"
+        app:layout_constraintBottom_toTopOf="@id/saturated_fatty_acid_title"
+        app:layout_constraintLeft_toRightOf="@id/transfat_title"
+        app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
+
+    <TextView
+        android:id="@+id/saturated_fatty_acid_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:text="3.2g"
+        android:textSize="6dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/saturated_fatty_acid_title"
+        app:layout_constraintLeft_toRightOf="@id/saturated_fatty_acid_bar"
+        app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
+
+    <TextView
+        android:id="@+id/transfat_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="4dp"
+        android:text="트랜스지방"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
+
+    <View
+        android:id="@+id/transfat_bar"
+        android:layout_width="13dp"
+        android:layout_height="@dimen/introduction_title_size"
+        android:layout_marginLeft="12dp"
+        android:background="#a1c301"
+        app:layout_constraintBottom_toTopOf="@id/transfat_title"
+        app:layout_constraintLeft_toRightOf="@id/transfat_title"
+        app:layout_constraintTop_toBottomOf="@id/transfat_title" />
+
+    <TextView
+        android:id="@+id/transfat_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:text="2.7g"
+        android:textSize="6dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/transfat_title"
+        app:layout_constraintLeft_toRightOf="@id/transfat_bar"
+        app:layout_constraintTop_toBottomOf="@id/transfat_title" />
+
+    <View
+        android:id="@+id/graph_x"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@color/grey"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transfat_title" />
+
+    <TextView
+        android:id="@+id/good"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="양호"
+        android:textSize="7dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/sugar_bar"
+        app:layout_constraintTop_toBottomOf="@id/graph_x" />
+
+    <TextView
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="주의"
+        android:textSize="7dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/good"
+        app:layout_constraintRight_toLeftOf="@id/error"
+        app:layout_constraintTop_toBottomOf="@id/graph_x" />
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="경고"
+        android:textSize="7dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/warning"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/graph_x" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/graph_x"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

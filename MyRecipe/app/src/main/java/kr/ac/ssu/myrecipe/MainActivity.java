@@ -2,11 +2,16 @@ package kr.ac.ssu.myrecipe;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,6 +21,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import kr.ac.ssu.myrecipe.Camera.CameraActivity;
+import kr.ac.ssu.myrecipe.MajorFragment.HomeFragment;
+import kr.ac.ssu.myrecipe.MajorFragment.UndefinedFragment;
+import kr.ac.ssu.myrecipe.recipe.test;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,8 +62,15 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragment_layout);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
     }
 
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_home, fragment).commit();      // Fragment로 사용할 MainActivity내의 layout공간을 선택합니다.
+    }
+}
     /*
     // 검색툴 구현 함수
     @Override
@@ -80,7 +95,5 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
-
- */
-
 }
+*/

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".recipe.RecipeIntroduction">
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        app:umanoOverlay="true"
+        app:umanoPanelHeight="240px"
+        app:umanoScrollableView="@id/scrollView"
+        app:umanoShadowHeight="0dp">
+
+        <include layout="@layout/introduction_main" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sliding_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/toolbar_margin"
+            android:gravity="center|top">
+
+            <include layout="@layout/introduction_menu" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingTop="32dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titles">
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/scrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never">
+
+                    <include layout="@layout/introduction_ingredient" />
+
+                </androidx.core.widget.NestedScrollView>
+
+                <include layout="@layout/introduction_recipe" />
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

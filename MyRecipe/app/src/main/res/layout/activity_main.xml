@@ -7,26 +7,26 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:text="Recipe"
             android:textSize="20dp"
-            android:text="Recipe">
-        </TextView>
+            android:textColor="@color/colorPrimary"/>
 
     </androidx.appcompat.widget.Toolbar>
-
 
     <FrameLayout
         android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -37,10 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="?android:attr/windowBackground"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav_menu" />
     </FrameLayout>
 
@@ -51,12 +51,12 @@
         android:layout_height="match_parent"
         android:layout_marginVertical="@dimen/toolbar_margin"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/mobile_navigation"
         app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/mobile_navigation" />
 
     <LinearLayout
         android:id="@+id/layout_bottom_2"
@@ -66,7 +66,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
