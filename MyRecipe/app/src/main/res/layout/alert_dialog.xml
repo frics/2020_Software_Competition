@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    android:id="@+id/alert_Cardview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,11 +19,18 @@
             android:layout_margin="20dp"
             android:text="원하는 카테고리 선택하세요"
             android:textSize="17dp"/>
-        <ListView
+        <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@null"
             android:dividerHeight="10dp"
-            android:id="@+id/listview_alterdialog_list"/>
+            android:id="@+id/gridview_alterdialog_list"/>
+        <Button
+            android:id="@+id/button_alerdialog_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="취소"
+            android:background="#e8e2d1"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

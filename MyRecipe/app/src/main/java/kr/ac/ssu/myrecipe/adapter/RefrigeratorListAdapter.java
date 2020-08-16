@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.ui;
+package kr.ac.ssu.myrecipe.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,12 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 import kr.ac.ssu.myrecipe.R;
 
-public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RefrigeratorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int HEADER = 0;
     public static final int CHILD = 1;
     private List<Item> data;
-
-    public ExpandableListAdapter(List<Item> data) {
+    private Integer[] iconList = {
+            R.drawable.category_1, R.drawable.category_2,
+            R.drawable.category_3, R.drawable.category_4,
+            R.drawable.category_5, R.drawable.category_6,
+            R.drawable.category_7, R.drawable.category_8,
+            R.drawable.category_9, R.drawable.category_10,
+            R.drawable.category_11, R.drawable.category_12,
+            R.drawable.category_13, R.drawable.category_14,
+            R.drawable.category_15
+    };
+    private String[] textList = {
+            "과일", "채소","쌀/잡곡","견과/건과",
+            "축산/계란", "수산물/건어물","생수/음료","커피/차",
+            "초콜릿/시리얼", "면/통조림","반찬/샐러드","냉동/간편요리",
+            "유제품", "가루/오일","소스"
+    };
+    public RefrigeratorListAdapter(List<Item> data) {
         this.data = data;
     }
 
@@ -55,12 +70,10 @@ public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 final ListHeaderViewHolder itemController = (ListHeaderViewHolder) holder;
                 itemController.refferalItem = item;
                 itemController.header_title.setText(item.text);
-                if(item.text == " 과일")
-                    itemController.header_image.setImageResource(R.drawable.fruit);
-                else if(item.text == " 축산/계란")
-                    itemController.header_image.setImageResource(R.drawable.meat);
-                else if(item.text == " 채소")
-                    itemController.header_image.setImageResource(R.drawable.vegetables);
+                for(int i = 0; i <15; i++){
+                    if(item.text == textList[i])
+                        itemController.header_image.setImageResource(iconList[i]);
+                }
                 if (item.invisibleChildren == null) {
                     itemController.btn_expand_toggle.setImageResource(R.drawable.circle_minus);
                 } else {

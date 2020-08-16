@@ -21,22 +21,23 @@ import java.util.List;
 
 import kr.ac.ssu.myrecipe.AddActivity;
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.ui.ExpandableListAdapter;
+
+import kr.ac.ssu.myrecipe.ReceiptListActivity;
+import kr.ac.ssu.myrecipe.adapter.RefrigeratorListAdapter;
 
 public class RefrigeratorFragment extends Fragment {
-    private ExpandableListAdapter adapter;
+    private RefrigeratorListAdapter adapter;
     private RecyclerView recyclerview;
     private ImageButton add_button;
-    private List<ExpandableListAdapter.Item> data = new ArrayList<>();
-
+    private List<RefrigeratorListAdapter.Item> data = new ArrayList<>();
     public static  RefrigeratorFragment newInstance() {
         return new  RefrigeratorFragment();
     }
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_refrigerator, container, false);
         recyclerview = (RecyclerView)v.findViewById(R.id.refri_recycler);
         add_button = (ImageButton)v.findViewById(R.id.refri_add);
+        ImageButton temp = (ImageButton)v.findViewById(R.id.refri_temp);
         recyclerview.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         setRecyclerviewData();
         recyclerview.setAdapter(adapter);
@@ -109,25 +110,32 @@ public class RefrigeratorFragment extends Fragment {
                 // getActivity().finish();
             }
         });
+        temp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ReceiptListActivity.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
     public void setRecyclerviewData(){
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER, " 과일"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " 나주배"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " 아삭 세척 사과"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " 농협 하우스 감귤"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " 깨비농원 황금향"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " 제스프리 골든 키위"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER, " 채소"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " " + "풀무원 1등급 콩나물"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " "+ "국산 우리 콩두부"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " " + "곰곰 국내산 당근"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " " + "국내산 양파"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER, " 축산/계란"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " " + "소고기 안창살"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " " + "곰곰 대패 삼겹살"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " " + "무항생제 햇살계란"));
-        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, " " + "하림 닭가슴살"));
-        adapter = new ExpandableListAdapter(data);
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.HEADER, "과일"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, "나주배"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, "아삭 세척 사과"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, "농협 하우스 감귤"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, "깨비농원 황금향"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, "제스프리 골든 키위"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.HEADER, "채소"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, " " + "풀무원 1등급 콩나물"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, " "+ "국산 우리 콩두부"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, " " + "곰곰 국내산 당근"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, " " + "국내산 양파"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.HEADER, "축산/계란"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, " " + "소고기 안창살"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, " " + "곰곰 대패 삼겹살"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, " " + "무항생제 햇살계란"));
+        data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, " " + "하림 닭가슴살"));
+        adapter = new RefrigeratorListAdapter(data);
     }
 }

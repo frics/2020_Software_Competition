@@ -2,10 +2,12 @@ package kr.ac.ssu.myrecipe;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -31,13 +33,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-      //  FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-      //  fragmentTransaction.add(R.id.fragment_layout, test.newInstance()).commit();
-
-
         // 액션바 세팅
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);
@@ -96,7 +95,4 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
-
- */
-
 }

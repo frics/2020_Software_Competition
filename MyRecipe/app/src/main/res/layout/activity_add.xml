@@ -107,6 +107,7 @@
             android:layout_weight="0.7"
             android:layout_marginRight="30dp"
             android:layout_gravity="center"
+            android:inputType="datetime"
             android:hint="수량을 입력하세요"/>
     </LinearLayout>
 
