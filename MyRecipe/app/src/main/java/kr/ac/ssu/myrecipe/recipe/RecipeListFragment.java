@@ -7,13 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import kr.ac.ssu.myrecipe.Camera.CameraActivity;
+import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.IngredientListAdapter;
 import kr.ac.ssu.myrecipe.adapter.MainRecipeListAdapter;
@@ -21,6 +28,9 @@ import kr.ac.ssu.myrecipe.adapter.MainRecipeListAdapter;
 public class RecipeListFragment extends Fragment {
 
     private ArrayList<Recipe> itemList;
+    EditText editText;
+    MainRecipeListAdapter adapter;
+
     public static RecipeListFragment newInstance() {
         return new RecipeListFragment();
     }
@@ -34,7 +44,7 @@ public class RecipeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_recipe_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
         itemList = new ArrayList<>();
         ArrayList<Recipe.Ingredient> tmp = new ArrayList<>();
@@ -68,16 +78,45 @@ public class RecipeListFragment extends Fragment {
         recipe = new Recipe(5, "쇠고기가지볶음", null, tmp, tmp1);
         itemList.add(recipe);
 
-        RecyclerView RecyclerView = (RecyclerView) view.findViewById(R.id.main_recipe_list);
+        final RecyclerView RecyclerView = (RecyclerView) view.findViewById(R.id.main_recipe_list);
 
         LinearLayoutManager LayoutManager = new LinearLayoutManager(view.getContext(),
                 LinearLayoutManager.VERTICAL, false);
         RecyclerView.setLayoutManager(LayoutManager);
 
-        MainRecipeListAdapter adapter = new MainRecipeListAdapter(view.getContext(), itemList, onClickItem);
+        adapter = new MainRecipeListAdapter(view.getContext(), itemList, onClickItem);
         RecyclerView.setAdapter(adapter);
+
+        editText = (EditText) view.findViewById(R.id.edittext);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        // FAB 기본 세팅 (수정필요)
+        FloatingActionButton fab = view.findViewById(R.id.go_to_top);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RecyclerView.smoothScrollToPosition(0);
+            }
+        });
+
         return view;
     }
+
 
     private View.OnClickListener onClickItem = new View.OnClickListener() {
         @Override
@@ -91,4 +130,6 @@ public class RecipeListFragment extends Fragment {
 
         }
     };
+
 }
+

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,15 +16,18 @@ import java.util.ArrayList;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.recipe.Recipe;
 
-public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAdapter.ViewHolder> {
+public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAdapter.ViewHolder>
+        implements Filterable {
 
-    private ArrayList<Recipe> itemList;
     private Context context;
     private View.OnClickListener onClickItem;
+    ArrayList<Recipe> unFilteredlist;
+    ArrayList<Recipe> filteredList;
 
     public MainRecipeListAdapter(Context context, ArrayList<Recipe> itemList, View.OnClickListener onClickItem) {
         this.context = context;
-        this.itemList = itemList;
+        this.unFilteredlist = itemList;
+        this.filteredList = itemList;
         this.onClickItem = onClickItem;
     }
 
@@ -37,7 +42,7 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
 
     @Override
     public void onBindViewHolder(MainRecipeListAdapter.ViewHolder holder, int position) {
-        Recipe item = itemList.get(position);
+        Recipe item = filteredList.get(position);
         holder.itemView.setTag(Integer.toString(position));
         holder.food_image.setImageResource(R.drawable.soup0 + position);
         holder.food_name.setText(item.name);
@@ -47,7 +52,37 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return filteredList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) { // 검색명이 없는 경우
+                    filteredList = unFilteredlist;
+                } else { // 검색명이 존재하는 경우 search 진행
+                    ArrayList<Recipe> filteringList = new ArrayList<>(); // 필터링중인 리스트
+                    for (Recipe recipe : unFilteredlist) { // 필터링안된 리스트를 순환하며
+                        if (recipe.name.toLowerCase().contains(charString.toLowerCase())) { // 검색어가 포함되면 필터링 리스트에 추가
+                            filteringList.add(recipe);
+                        }
+                    }
+                    filteredList = filteringList; // 완료되면 필터링된 리스트에 추가
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredList;
+                return filterResults; // 결과물을 세팅 후 리턴
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredList = (ArrayList<Recipe>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

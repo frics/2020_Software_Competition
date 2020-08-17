@@ -3,8 +3,7 @@
     android:id="@+id/fragment_home"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/testBackground">
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/recipe_view"
@@ -12,7 +11,7 @@
         android:layout_height="256dp"
         android:layout_margin="16dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
+        app:cardElevation="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,19 +35,6 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignBaseline="@+id/recommand_recipe"
-                android:layout_gravity="right"
-                android:text="설정"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                android:layout_marginRight="12dp"
-                android:layout_toLeftOf="@id/plus" />
-
-            <TextView
                 android:id="@+id/plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,7 +42,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@+id/recommand_recipe"
                 android:text="더보기"
-                android:textSize="12dp"
+                android:textSize="13.5dp"
                 android:textStyle="bold"
                 android:layout_marginRight="16dp"/>
 
@@ -65,8 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="196dp"
                 android:layout_below="@id/recommand_recipe"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:overScrollMode="never"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp" />

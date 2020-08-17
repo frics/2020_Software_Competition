@@ -99,6 +99,17 @@
         android:text="지방"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider3"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider4"
+        app:layout_constraintTop_toBottomOf="@id/ingre_nutrition_title" />
+
+    <TextView
+        android:id="@+id/title_sodium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="나트륨"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider4"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ingre_nutrition_title" />
 
@@ -181,8 +192,31 @@
         android:textSize="@dimen/introduction_content_size"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider3"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider4"
         app:layout_constraintTop_toBottomOf="@id/title_fat" />
+
+    <View
+        android:id="@+id/intro_content_divider4"
+        android:layout_width="1.5dp"
+        android:layout_height="45dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@id/content_protein"
+        app:layout_constraintLeft_toLeftOf="@id/content_fat"
+        app:layout_constraintRight_toRightOf="@id/content_sodium"
+        app:layout_constraintTop_toTopOf="@id/content_fat" />
+
+    <TextView
+        android:id="@+id/content_sodium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="500.8"
+        android:textColor="@color/black"
+        android:textSize="@dimen/introduction_content_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_sodium" />
 
     <TextView
         android:id="@+id/measure_kcal"
@@ -225,8 +259,19 @@
         android:text="Gram"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider3"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/intro_content_divider4"
         app:layout_constraintTop_toBottomOf="@id/content_fat" />
+
+    <TextView
+        android:id="@+id/measure_sodium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="mGram"
+        android:textSize="@dimen/introduction_title_size"
+        app:layout_constraintLeft_toRightOf="@id/intro_content_divider4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content_sodium" />
 
     <TextView
         android:id="@+id/warning_nutrition"
@@ -234,7 +279,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
-        android:text="주의해야 할 성분 (1회 제공량 당)"
+        android:text="성인 평균 권장 영양성분 (1일 기준)"
         android:textColor="@color/black"
         android:textSize="@dimen/introduction_information_title__size"
         android:textStyle="bold"
@@ -247,7 +292,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="20dp"
-        android:text="당류"
+        android:text="칼로리"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/warning_nutrition" />
@@ -267,7 +312,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
-        android:text="7g"
+        android:text="242kcal"
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/sugar_title"
@@ -280,7 +325,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
-        android:text="나트륨"
+        android:text="탄수화물"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sugar_title" />
@@ -300,7 +345,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
-        android:text="500.3mg"
+        android:text="36.6mg"
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/sodium_title"
@@ -313,7 +358,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
-        android:text="콜레스테롤"
+        android:text="단백질"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sodium_title" />
@@ -333,7 +378,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
-        android:text="4.5g"
+        android:text="6.5g"
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/cholesterol_title"
@@ -346,7 +391,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
-        android:text="포화지방산"
+        android:text="지방"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
@@ -366,7 +411,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
-        android:text="3.2g"
+        android:text="7.8g"
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/saturated_fatty_acid_title"
@@ -379,7 +424,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
-        android:text="트랜스지방"
+        android:text="나트륨"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
@@ -399,7 +444,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
-        android:text="2.7g"
+        android:text="500.8mg"
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/transfat_title"
@@ -423,7 +468,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="양호"
+        android:text="0%"
         android:textSize="7dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@id/sugar_bar"
@@ -434,7 +479,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="주의"
+        android:text="50%"
         android:textSize="7dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@id/good"
@@ -446,7 +491,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="경고"
+        android:text="100%"
         android:textSize="7dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@id/warning"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
-    android:background="@drawable/grey_edge">
+    android:background="@drawable/shadow">
 
     <ImageView
         android:id="@+id/main_food_image"

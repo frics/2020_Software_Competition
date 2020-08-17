@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<Recipe> itemList;
 
     private TextView listbutton;
+    private CardView recipeview;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment {
 */
         listbutton = (TextView) view.findViewById(R.id.plus);
         listbutton.setOnClickListener(onClickMenu);
+        recipeview = (CardView) view.findViewById(R.id.recipe_view);
 
         RecyclerView listview = view.findViewById(R.id.main_listview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
@@ -112,6 +115,7 @@ public class HomeFragment extends Fragment {
         @Override
         public void onClick(View v) {
             ((MainActivity) getActivity()).replaceFragment(RecipeListFragment.newInstance());
+            recipeview.setVisibility(View.INVISIBLE);
             // Intent intent = new Intent(getContext(), RecipeList.class);
             // intent.putExtra("itemlist", itemList);
             //  startActivity(intent);
