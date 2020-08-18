@@ -1,5 +1,6 @@
 package kr.ac.ssu.myrecipe.Camera;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -85,6 +86,8 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
             }
             case R.id.scanning_btn:{
                 Log.d(TAG, "스캔 시작");
+                Intent intent = new Intent(getContext(), UploadActivity.class);
+                startActivity(intent);
             }
 
 
