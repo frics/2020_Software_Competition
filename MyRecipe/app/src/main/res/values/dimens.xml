@@ -7,4 +7,5 @@
     <dimen name="introduction_title_size">12dp</dimen>
     <dimen name="introduction_content_size">15dp</dimen>
     <dimen name="introduction_information_title__size">13dp</dimen>
+
 </resources>

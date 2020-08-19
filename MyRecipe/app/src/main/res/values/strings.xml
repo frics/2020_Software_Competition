@@ -20,4 +20,6 @@
     <string name="title_preview">Preview</string>
     <string name="title_cpatured">Captured</string>
     <string name="title_captured">Captured</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="signin">로그인</string>
 </resources>
