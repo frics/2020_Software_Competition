@@ -41,7 +41,7 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_captured, container,
                 false);
 
-        Toolbar toolbar =  view.findViewById(R.id.capture_toolbar);
+        Toolbar toolbar =  view.findViewById(R.id.captured_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,11 +86,11 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
             }
             case R.id.scanning_btn:{
                 Log.d(TAG, "스캔 시작");
-                Intent intent = new Intent(getContext(), UploadActivity.class);
-                startActivity(intent);
+
+               Intent intent = new Intent(getContext(), UploadActivity.class);
+               startActivity(intent);
+               getActivity().finish();
             }
-
-
         }
     }
 }

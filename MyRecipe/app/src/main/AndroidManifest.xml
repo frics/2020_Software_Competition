@@ -19,14 +19,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Camera.UploadActivity"></activity>
-        <activity android:name=".ReceiptListActivity"></activity>
+
+
+        <activity android:name=".ReceiptListActivity">
+
+        </activity>
         <activity android:name=".AddActivity" />
         <activity
             android:name=".Camera.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_camera"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Camera.UploadActivity">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

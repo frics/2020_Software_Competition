@@ -1,14 +1,16 @@
 package kr.ac.ssu.myrecipe.Camera;
 
-import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -20,57 +22,62 @@ import java.net.URL;
 import kr.ac.ssu.myrecipe.R;
 
 public class UploadActivity extends AppCompatActivity {
-    TextView messageText;
-    Button uploadButton;
+
+    private static final String TAG = "UploadActivity" ;
+    ImageView imageView;
+    ImageView scanView;
+    File mFile = getExternalFilesDir(null);
+
     int serverResponseCode = 0;
-    ProgressDialog dialog = null;
-
-    String upLoadServerUri = null;
-
+    /************* Php script path ****************/
+    String upLoadServerUri = "http://13.209.6.94/upload_act.php";
     /**********  File Path *************/
-    final String uploadFilePath = "/storage/emulated/0/Android/data/kr.ac.ssu.myrecipe/files/";
-    final String uploadFileName = "pic.jpg";
+    String uploadFilePath=null;
+    String uploadFileName = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
-        uploadButton = (Button)findViewById(R.id.uploadButton);
-        messageText  = (TextView)findViewById(R.id.messageText);
+        //이미지 파일 경로 획득
+        uploadFilePath = mFile+"/";
+        uploadFileName = "pic.jpg";
 
-        messageText.setText("Uploading file path :"+uploadFilePath+uploadFileName+"'");
-
-        /************* Php script path ****************/
-        upLoadServerUri = "http://13.209.6.94/upload.php";
-
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog = ProgressDialog.show(UploadActivity.this, "", "Uploading file...", true);
-
-                new Thread(new Runnable() {
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                messageText.setText("uploading started.....");
-                            }
-                        });
-
-                        uploadFile(uploadFilePath + "" + uploadFileName);
-
-                    }
-                }).start();
+        new Thread(new Runnable() {
+            public void run() {
+                uploadFile(uploadFilePath + "" + uploadFileName);
             }
-        });
+        }).start();
+        scanView = findViewById(R.id.scan_view);
+        Glide.with(this).load(R.drawable.scan).into(scanView);
+        imageView=findViewById(R.id.upload_img);
+
+
+
+    }
+    //촬영한 사진으로 이미지뷰 생성
+    //디렉터리 접근 -> 사진 유무 확인
+    @Override
+    public void onResume() {
+        super.onResume();
+        String fullPath = uploadFilePath+uploadFileName;
+        Log.d(TAG, fullPath);
+        File imgFile = new File(fullPath);
+        //사진 유무 확인
+        if(imgFile.exists())
+        {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            int width = myBitmap.getWidth();
+            int height = myBitmap.getHeight();
+            Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+            imageView.setImageBitmap(rotatedBitmap);
+        }
     }
 
     public int uploadFile(String sourceFileUri) {
-
-
-        String fileName = sourceFileUri;
 
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
@@ -79,24 +86,13 @@ public class UploadActivity extends AppCompatActivity {
         String boundary = "*****";
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
+        int maxBufferSize = 1024 * 1024; //1 * 1024 * 1024
         File sourceFile = new File("/storage/emulated/0/Android/data/kr.ac.ssu.myrecipe/files/"+"pic.jpg");
 
         if (!sourceFile.isFile()) {
-
-            dialog.dismiss();
-
             Log.e("uploadFile", "Source File not exist :"
                     +uploadFilePath + "" + uploadFileName);
-
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    messageText.setText("Source File not exist :" +uploadFilePath + "/" + uploadFileName);
-                }
-            });
-
             return 0;
-
         }
         else
         {
@@ -111,16 +107,19 @@ public class UploadActivity extends AppCompatActivity {
                 conn.setDoInput(true); // Allow Inputs
                 conn.setDoOutput(true); // Allow Outputs
                 conn.setUseCaches(false); // Don't use a Cached Copy
+                //request 전송 방식 : POST
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Connection", "Keep-Alive");
                 conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                //이미지 파일 데이터 타입 php code와 동일하게
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                conn.setRequestProperty("uploaded_file", fileName);
+                //이미지 파일 변수 명 : uploaded_file(php 코드와 동일하게 맞춰야함)
+                conn.setRequestProperty("uploaded_file", sourceFileUri);
 
                 dos = new DataOutputStream(conn.getOutputStream());
 
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + fileName + "" + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + sourceFileUri + "" + lineEnd);
 
                 dos.writeBytes(lineEnd);
 
@@ -154,15 +153,12 @@ public class UploadActivity extends AppCompatActivity {
                         + serverResponseMessage + ": " + serverResponseCode);
 
                 if(serverResponseCode == 200){
-
+                    //파일 전송 성공시 메인 스레드(UI Thread)에 토스트 메시지 생성
                     runOnUiThread(new Runnable() {
                         public void run() {
-
                             String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
-                                    +" http://13.209.6.94/uplaod.php"
+                                    +" http://13.209.6.94:8888/OCR/resource/OriImgPath/"
                                     +uploadFileName;
-
-                            messageText.setText(msg);
                             Toast.makeText(UploadActivity.this, "File Upload Complete.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -173,38 +169,30 @@ public class UploadActivity extends AppCompatActivity {
                 fileInputStream.close();
                 dos.flush();
                 dos.close();
-
+                //해당 서버 url에 접근할 수 없는 exception
             } catch (MalformedURLException ex) {
-
-                dialog.dismiss();
                 ex.printStackTrace();
-
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        messageText.setText("MalformedURLException Exception : check script url.");
                         Toast.makeText(UploadActivity.this, "MalformedURLException",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
+                //기타 다른 Exception 예외 처리
             } catch (Exception e) {
-
-                dialog.dismiss();
                 e.printStackTrace();
-
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        messageText.setText("Got Exception : see logcat ");
-                        Toast.makeText(UploadActivity.this, "Got Exception : see logcat ",
+
+                        Toast.makeText(UploadActivity.this, "Got Exception : check the logcat ",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
                 Log.d("Error", "Exception : " + e.getMessage(), e);
             }
-            dialog.dismiss();
             return serverResponseCode;
-
         } // End else block
     }
 }
