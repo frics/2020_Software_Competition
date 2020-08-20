@@ -21,15 +21,16 @@
         <TextView
             android:id="@+id/signin_txt"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/signup"
+            android:text="@string/signin"
             android:textSize="25dp"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/user_input"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/user_input"
@@ -103,9 +104,10 @@
             android:layout_gravity="center"
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="25dp"
-            android:text="@string/signup"
+            android:text="@string/signin"
             android:textSize="15dp"
             android:textColor="@color/colorWhite"
+            android:textStyle="bold"
             android:background="@drawable/rounded_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +120,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00ff0000"
-        android:text="@string/signin"
+        android:text="@string/signup"
         android:textSize="15dp"
         android:textColor="#A6BCD0"
         app:layout_constraintTop_toBottomOf="@id/signin_card"
