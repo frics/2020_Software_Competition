@@ -4,7 +4,7 @@
     android:id="@+id/titles"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/round_edge"
+    android:background="@drawable/round_edge_up"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent">
