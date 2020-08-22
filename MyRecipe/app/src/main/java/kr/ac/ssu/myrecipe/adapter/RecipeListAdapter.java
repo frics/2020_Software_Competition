@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.R;
@@ -28,7 +30,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // context 와 parent.getContext() 는 같다.
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_tv, parent, false);
 
@@ -38,9 +39,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Recipe item = itemList.get(position);
-        holder.textview.setText(item.name);
+        holder.nameText.setText(item.name);
+        holder.styleText.setText(item.style);
         holder.itemView.setTag(Integer.toString(position));
-        holder.imageview.setImageResource(R.drawable.soup0+position);
+        Glide.with(context)
+                .load(item.image_url)
+                .error(R.drawable.basic)
+                .into(holder.imageview);
     }
 
     @Override
@@ -49,12 +54,14 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textview;
+        public TextView nameText, styleText;
         public ImageView imageview;
+
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(onClickItem);
-            textview = itemView.findViewById(R.id.recipe_name);
+            nameText = itemView.findViewById(R.id.recipe_name);
+            styleText = itemView.findViewById(R.id.recipe_style);
             imageview = itemView.findViewById(R.id.img_viewpager_childimage);
         }
     }

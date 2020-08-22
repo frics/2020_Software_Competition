@@ -1,14 +1,11 @@
 package kr.ac.ssu.myrecipe.MajorFragment;
 
-import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -19,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
@@ -27,13 +25,12 @@ import kr.ac.ssu.myrecipe.adapter.MyListDecoration;
 import kr.ac.ssu.myrecipe.recipe.Recipe;
 import kr.ac.ssu.myrecipe.recipe.RecipeIntroduction;
 import kr.ac.ssu.myrecipe.recipe.RecipeListFragment;
-import kr.ac.ssu.myrecipe.recipe.test;
 
 public class HomeFragment extends Fragment {
     private ArrayList<Recipe> itemList;
-
-    private TextView listbutton;
-    private CardView recipeview;
+    private TextView listButton;
+    private CardView recipeView;
+    private RecyclerView listView;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -43,83 +40,48 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        /* URL 로딩 관련 코드 였던것..
-        ImageView imageview = (ImageView)view.findViewById(R.id.test);
-        String url = "https://www.foodsafetykorea.go.kr/uploadimg/cook/10_00017_1.png";
-        Glide.with(this)
-                .load(url)
-                .placeholder(R.drawable.basic)
-                .error(R.drawable.basic)
-                .into(imageview);
-*/
-        listbutton = (TextView) view.findViewById(R.id.plus);
-        listbutton.setOnClickListener(onClickMenu);
-        recipeview = (CardView) view.findViewById(R.id.recipe_view);
+        itemList = new ArrayList<>(Arrays.asList(Recipe.recipeList));
 
-        RecyclerView listview = view.findViewById(R.id.main_listview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false);
-        listview.setLayoutManager(layoutManager);
-
-        itemList = new ArrayList<>();
-        ArrayList<Recipe.Ingredient> tmp = new ArrayList<>();
-        Recipe.Ingredient ingredient = new Recipe.Ingredient("고구마", "100g(2/3개)");
-        tmp.add(ingredient);
-        ingredient = new Recipe.Ingredient("설탕", "2g(1/3 작은술)");
-        tmp.add(ingredient);
-        ingredient = new Recipe.Ingredient("찹쌀가루", "3g(2/3 작은술)");
-        tmp.add(ingredient);
-        ingredient = new Recipe.Ingredient("물", "200ml(1컵)");
-        tmp.add(ingredient);
-        ingredient = new Recipe.Ingredient("잣", "8g(8알)");
-        tmp.add(ingredient);
-
-        ArrayList<String> tmp1 = new ArrayList<>();
-        tmp1.add("고구마는 깨끗이 씻어서 껍질을 벗기고 4cm 정도로 잘라준다.");
-        tmp1.add("찜기에 고구마를 넣고 20~30분 정도 삶아 주고, 블렌더나 체를 이용하여 잘 으깨어 곱게 만든다.");
-        tmp1.add("고구마와 물을 섞어 끓이면서 찹쌀가루로 농도를 맞추고 설탕을 넣어 맛을 낸다.");
-        tmp1.add("잣을 팬에 노릇하게 볶아 다져서 고구마 죽에 섞는다. 기호에 따라 고구마를 튀겨 얹어 먹어도 좋다");
-
-        Recipe recipe = new Recipe(0, "육개장", null, tmp, tmp1);
-        itemList.add(recipe);
-        recipe = new Recipe(1, "어묵탕", null, tmp, tmp1);
-        itemList.add(recipe);
-        recipe = new Recipe(2, "떡국", null, tmp, tmp1);
-        itemList.add(recipe);
-        recipe = new Recipe(3, "쇠고기가지볶음", null, tmp, tmp1);
-        itemList.add(recipe);
-
-        RecipeListAdapter m_adapter = new RecipeListAdapter(getContext(), itemList, onClickItem);
-        listview.setAdapter(m_adapter);
-
-        MyListDecoration decoration = new MyListDecoration();
-        listview.addItemDecoration(decoration);
+        setViewById(view);
+        setAdapter();
 
         return view;
     }
 
+    private void setViewById(View view) { // View에 id 세팅
+        listButton = view.findViewById(R.id.plus);
+        listButton.setOnClickListener(onClickMenu);
+        recipeView = view.findViewById(R.id.recipe_view);
+        listView = view.findViewById(R.id.main_listview);
+    }
+
+    private void setAdapter() { // RecyclerView 어댑터 세팅
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
+        listView.setLayoutManager(layoutManager);
+        RecipeListAdapter m_adapter = new RecipeListAdapter(getContext(), itemList, onClickItem);
+        listView.setAdapter(m_adapter);
+        MyListDecoration decoration = new MyListDecoration();
+        listView.addItemDecoration(decoration);
+    }
+
     private View.OnClickListener onClickItem = new View.OnClickListener() {
+        // 레시피 소개 액티비티 전환
         @Override
         public void onClick(View v) {
             String str = (String) v.getTag();
-            Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(getContext(), RecipeIntroduction.class);
-            intent.putExtra("itemlist", itemList.get(Integer.parseInt(str)));
+            intent.putExtra("recipe", itemList.get(Integer.parseInt(str)));
             startActivity(intent);
-
         }
     };
 
     private View.OnClickListener onClickMenu = new View.OnClickListener() {
+        // 전체 레시피 메뉴 프레그먼트 전환
         @Override
         public void onClick(View v) {
             ((MainActivity) getActivity()).replaceFragment(RecipeListFragment.newInstance());
-            recipeview.setVisibility(View.INVISIBLE);
-            // Intent intent = new Intent(getContext(), RecipeList.class);
-            // intent.putExtra("itemlist", itemList);
-            //  startActivity(intent);
-
+            recipeView.setVisibility(View.INVISIBLE);
         }
     };
 }

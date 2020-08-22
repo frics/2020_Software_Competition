@@ -11,29 +11,29 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.recipe.Recipe;
 
-public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAdapter.ViewHolder>
-        implements Filterable {
+public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAdapter.ViewHolder> implements Filterable {
 
     private Context context;
     private View.OnClickListener onClickItem;
-    ArrayList<Recipe> unFilteredlist;
-    ArrayList<Recipe> filteredList;
+    private ArrayList<Recipe> unFilteredList;
+    private ArrayList<Recipe> FilteredList;
 
     public MainRecipeListAdapter(Context context, ArrayList<Recipe> itemList, View.OnClickListener onClickItem) {
         this.context = context;
-        this.unFilteredlist = itemList;
-        this.filteredList = itemList;
+        this.unFilteredList = itemList;
+        this.FilteredList = itemList;
         this.onClickItem = onClickItem;
     }
 
     @Override
     public MainRecipeListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // context 와 parent.getContext() 는 같다.
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.main_recipe_list_item_tv, parent, false);
 
@@ -42,52 +42,71 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
 
     @Override
     public void onBindViewHolder(MainRecipeListAdapter.ViewHolder holder, int position) {
-        Recipe item = filteredList.get(position);
-        holder.itemView.setTag(Integer.toString(position));
-        holder.food_image.setImageResource(R.drawable.soup0 + position);
-        holder.food_name.setText(item.name);
-        holder.food_percent.setText("100%");
-        holder.ingredients.setText("고구마, 설탕, 찹쌀가루, 물, 잣");
+        Recipe item = FilteredList.get(position);
+
+        holder.itemView.setTag(item.num); // 태그설정
+        Glide.with(context) // 이미지 설정
+                .load(item.image_url)
+                .error(R.drawable.basic)
+                .into(holder.food_image);
+        holder.food_name.setText(item.name); // 음식명 설정
+        holder.food_percent.setText("100%"); // 퍼센트 설정(수정필요)
+
+        // 재료리스트 삽입
+        String lists = new String();
+        Recipe.Ingredient ingredient = new Recipe.Ingredient(null, null);
+
+        for (int i = 0; i < item.ingredient.size(); i++) {
+            lists = lists.concat(item.ingredient.get(i).name + ", ");
+        }
+
+        lists = lists.substring(0, lists.length() - 2);
+        holder.ingredients.setText(lists);
     }
 
     @Override
     public int getItemCount() {
-        return filteredList.size();
+        return FilteredList.size();
     }
 
     @Override
     public Filter getFilter() {
         return new Filter() {
+
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charString = constraint.toString();
+
                 if (charString.isEmpty()) { // 검색명이 없는 경우
-                    filteredList = unFilteredlist;
+                    FilteredList = unFilteredList;
                 } else { // 검색명이 존재하는 경우 search 진행
                     ArrayList<Recipe> filteringList = new ArrayList<>(); // 필터링중인 리스트
-                    for (Recipe recipe : unFilteredlist) { // 필터링안된 리스트를 순환하며
+
+                    for (Recipe recipe : unFilteredList) { // 필터링안된 리스트를 순환하며
                         if (recipe.name.toLowerCase().contains(charString.toLowerCase())) { // 검색어가 포함되면 필터링 리스트에 추가
                             filteringList.add(recipe);
                         }
                     }
-                    filteredList = filteringList; // 완료되면 필터링된 리스트에 추가
+
+                    FilteredList = filteringList; // 완료되면 필터링된 리스트에 추가
                 }
+
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = filteredList;
+                filterResults.values = FilteredList;
                 return filterResults; // 결과물을 세팅 후 리턴
             }
 
             @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredList = (ArrayList<Recipe>) results.values;
+            protected void publishResults(CharSequence constraint, FilterResults results) { // 검색 완료된 것 세팅
+                FilteredList = (ArrayList<Recipe>) results.values;
                 notifyDataSetChanged();
             }
         };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView food_image;
-        public TextView food_name, food_percent, ingredients;
+        private ImageView food_image;
+        private TextView food_name, food_percent, ingredients;
 
         public ViewHolder(View itemView) {
             super(itemView);

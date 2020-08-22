@@ -42,7 +42,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@+id/recommand_recipe"
                 android:text="더보기"
-                android:textSize="13.5dp"
+                android:textSize="14dp"
                 android:textStyle="bold"
                 android:layout_marginRight="16dp"/>
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +25,6 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // context 와 parent.getContext() 는 같다.
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.ingredient_item_tv, parent, false);
 
@@ -36,8 +34,8 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Recipe.Ingredient item = itemList.get(position);
-        holder.ingredient_name.setText(item.name);
-        holder.ingredient_quantity.setText(item.quantity);
+        holder.ingredient_name.setText(item.name); // 재료명 세팅
+        holder.ingredient_quantity.setText(item.quantity); // 재료양 세팅
     }
 
     @Override
@@ -47,6 +45,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView ingredient_name, ingredient_quantity;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ingredient_name = itemView.findViewById(R.id.ingredient_name);

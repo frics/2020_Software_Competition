@@ -1,16 +1,15 @@
 package kr.ac.ssu.myrecipe;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import kr.ac.ssu.myrecipe.database.OpenRecipeListCSV;
 
 public class LaunchActivity extends AppCompatActivity {
-
     private static final String TAG = LaunchActivity.class.getSimpleName();
 
     @Override
@@ -24,6 +23,13 @@ public class LaunchActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                // 레시피 리스트 내부 동기화
+                try {
+                    InputStreamReader inputStreamReader = new InputStreamReader(getResources().openRawResource(R.raw.recipelist));
+                    OpenRecipeListCSV.readDataFromCsv(inputStreamReader);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 Log.d(TAG, "메인으로");
                 startActivity(new Intent(getApplication(), MainActivity.class));

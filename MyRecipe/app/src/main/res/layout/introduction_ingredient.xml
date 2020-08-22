@@ -298,7 +298,7 @@
         app:layout_constraintTop_toBottomOf="@id/warning_nutrition" />
 
     <View
-        android:id="@+id/sugar_bar"
+        android:id="@+id/kcal_bar"
         android:layout_width="10dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
@@ -308,7 +308,7 @@
         app:layout_constraintTop_toBottomOf="@id/sugar_title" />
 
     <TextView
-        android:id="@+id/sugar_quantity"
+        android:id="@+id/kcal_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
@@ -316,7 +316,7 @@
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/sugar_title"
-        app:layout_constraintLeft_toRightOf="@id/sugar_bar"
+        app:layout_constraintLeft_toRightOf="@id/kcal_bar"
         app:layout_constraintTop_toBottomOf="@id/sugar_title" />
 
     <TextView
@@ -331,7 +331,7 @@
         app:layout_constraintTop_toBottomOf="@id/sugar_title" />
 
     <View
-        android:id="@+id/sodium_bar"
+        android:id="@+id/carbon_bar"
         android:layout_width="100dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
@@ -341,7 +341,7 @@
         app:layout_constraintTop_toBottomOf="@id/sodium_title" />
 
     <TextView
-        android:id="@+id/sodium_quantity"
+        android:id="@+id/carbon_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
@@ -349,7 +349,7 @@
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/sodium_title"
-        app:layout_constraintLeft_toRightOf="@id/sodium_bar"
+        app:layout_constraintLeft_toRightOf="@id/carbon_bar"
         app:layout_constraintTop_toBottomOf="@id/sodium_title" />
 
     <TextView
@@ -364,7 +364,7 @@
         app:layout_constraintTop_toBottomOf="@id/sodium_title" />
 
     <View
-        android:id="@+id/cholesterol_bar"
+        android:id="@+id/protein_bar"
         android:layout_width="42dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
@@ -374,7 +374,7 @@
         app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
 
     <TextView
-        android:id="@+id/cholesterol_quantity"
+        android:id="@+id/protein_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
@@ -382,7 +382,7 @@
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/cholesterol_title"
-        app:layout_constraintLeft_toRightOf="@id/cholesterol_bar"
+        app:layout_constraintLeft_toRightOf="@id/protein_bar"
         app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
 
     <TextView
@@ -397,7 +397,7 @@
         app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
 
     <View
-        android:id="@+id/saturated_fatty_acid_bar"
+        android:id="@+id/fat_bar"
         android:layout_width="33dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
@@ -407,7 +407,7 @@
         app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
 
     <TextView
-        android:id="@+id/saturated_fatty_acid_quantity"
+        android:id="@+id/fat_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
@@ -415,7 +415,7 @@
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/saturated_fatty_acid_title"
-        app:layout_constraintLeft_toRightOf="@id/saturated_fatty_acid_bar"
+        app:layout_constraintLeft_toRightOf="@id/fat_bar"
         app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
 
     <TextView
@@ -430,7 +430,7 @@
         app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
 
     <View
-        android:id="@+id/transfat_bar"
+        android:id="@+id/sodium_bar"
         android:layout_width="13dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
@@ -440,7 +440,7 @@
         app:layout_constraintTop_toBottomOf="@id/transfat_title" />
 
     <TextView
-        android:id="@+id/transfat_quantity"
+        android:id="@+id/sodium_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
@@ -448,7 +448,7 @@
         android:textSize="6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/transfat_title"
-        app:layout_constraintLeft_toRightOf="@id/transfat_bar"
+        app:layout_constraintLeft_toRightOf="@id/sodium_bar"
         app:layout_constraintTop_toBottomOf="@id/transfat_title" />
 
     <View
@@ -463,6 +463,14 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/transfat_title" />
 
+    <View
+        android:id="@+id/real_graph"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintLeft_toLeftOf="@id/good"
+        app:layout_constraintRight_toLeftOf="@id/error"
+        app:layout_constraintBottom_toTopOf="@id/graph_x"/>
+
     <TextView
         android:id="@+id/good"
         android:layout_width="wrap_content"
@@ -471,7 +479,7 @@
         android:text="0%"
         android:textSize="7dp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="@id/sugar_bar"
+        app:layout_constraintLeft_toLeftOf="@id/kcal_bar"
         app:layout_constraintTop_toBottomOf="@id/graph_x" />
 
     <TextView
