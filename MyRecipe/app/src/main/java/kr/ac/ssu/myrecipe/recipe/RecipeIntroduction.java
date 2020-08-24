@@ -54,6 +54,7 @@ public class RecipeIntroduction extends AppCompatActivity {
 
         setMainView();
         setPanelView();
+        makeResponsiveUI();
     }
 
     private void setMainView() { // 음식 사진 및 이름 세팅 (퍼센트 추가해야함)
@@ -64,8 +65,6 @@ public class RecipeIntroduction extends AppCompatActivity {
                 .error(R.drawable.basic)
                 .into(foodimage);
         textView.setText(recipe.name);
-
-        makeResponsiveUI();
     }
 
     private void makeResponsiveUI() { // 메인 레시피 반응형 UI 생성 함수

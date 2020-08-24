@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/food_image" />
 
-    <TextView
+    <kr.ac.ssu.myrecipe.design.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
         android:id="@+id/food_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,9 +46,12 @@
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        textoutline:textStroke="true"
+        textoutline:textStrokeColor="@color/grey"
+        textoutline:textStrokeWidth="3.0" />
 
-    <TextView
+    <kr.ac.ssu.myrecipe.design.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
         android:id="@+id/food_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +60,10 @@
         android:text="100%"
         android:textColor="@color/white"
         android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/food_name"
-        app:layout_constraintStart_toStartOf="parent" />
+        textoutline:textStroke="true"
+        textoutline:textStrokeColor="@color/grey"
+        textoutline:textStrokeWidth="3.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
