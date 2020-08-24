@@ -7,6 +7,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sothree.slidinguppanel.ScrollableViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -14,12 +15,14 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.IngredientListAdapter;
 import kr.ac.ssu.myrecipe.adapter.RecipeOrderListAdapter;
@@ -27,11 +30,16 @@ import kr.ac.ssu.myrecipe.adapter.RecipeOrderListAdapter;
 public class RecipeIntroduction extends AppCompatActivity {
 
     private boolean check = false;
+    private int maxWidth; // 영양성분 그래프 뷰 길이
+    private Recipe recipe;
 
-    private View recipeBar, ingredientBar;
-    private TextView textView, recipeTitle, ingredientTitle;
+    // 데이터 표시 뷰
+    private View recipeBar, ingredientBar, kcalBar, carbonBar, proteinBar, fatBar, sodiumBar, max_bar;
+    private TextView textView, recipeTitle, ingredientTitle, kcalText, carbonText, proteinText, fatText, sodiumText;
+    private TextView kcalTextBar, carbonTextBar, proteinTextBar, fatTextBar, sodiumTextBar;
     private ImageView backButton, scrapButton, foodimage;
 
+    // 데이터 표시 레이아웃
     private ConstraintLayout ingredientLayout, recipeLayout;
     private SlidingUpPanelLayout slidingPaneLayout;
     private NestedScrollView mScrollableView;
@@ -42,31 +50,24 @@ public class RecipeIntroduction extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_introduction);
 
         Intent intent = getIntent();
-        Recipe recipe = (Recipe) intent.getSerializableExtra("itemlist");
+        recipe = (Recipe) intent.getSerializableExtra("recipe");
 
-        // 음식 사진 및 이름 세팅 (퍼센트 추가해야함)
-        foodimage = (ImageView) this.findViewById(R.id.food_image);
-        textView = (TextView) this.findViewById(R.id.food_name);
-        foodimage.setImageResource(R.drawable.soup0 + recipe.num);
+        setMainView();
+        setPanelView();
+        makeResponsiveUI();
+    }
+
+    private void setMainView() { // 음식 사진 및 이름 세팅 (퍼센트 추가해야함)
+        foodimage = this.findViewById(R.id.food_image);
+        textView = this.findViewById(R.id.food_name);
+        Glide.with(this)
+                .load(recipe.image_url)
+                .error(R.drawable.basic)
+                .into(foodimage);
         textView.setText(recipe.name);
+    }
 
-        // 정보 뷰들 동기화
-        slidingPaneLayout = (SlidingUpPanelLayout) this.findViewById(R.id.sliding_layout);
-        backButton = (ImageView) this.findViewById(R.id.intro_arrow);
-        scrapButton = (ImageView) this.findViewById(R.id.intro_heart);
-        ingredientTitle = (TextView) this.findViewById(R.id.ingredients_title);
-        recipeTitle = (TextView) this.findViewById(R.id.recipe_title);
-        ingredientBar = this.findViewById(R.id.ingredients_bar);
-        recipeBar = this.findViewById(R.id.recipe_bar);
-        recipeLayout = (ConstraintLayout) findViewById(R.id.constraint_recipe);
-        ingredientLayout = (ConstraintLayout) findViewById(R.id.constraint_ingredients);
-
-        slidingPaneLayout.setTouchEnabled(true);
-        backButton.setOnClickListener(onClickIntro);
-        scrapButton.setOnClickListener(onClickIntro);
-        ingredientTitle.setOnClickListener(onClickIntro);
-        recipeTitle.setOnClickListener(onClickIntro);
-
+    private void makeResponsiveUI() { // 메인 레시피 반응형 UI 생성 함수
         // 반응형 UI 생성 코드
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -77,11 +78,51 @@ public class RecipeIntroduction extends AppCompatActivity {
         foodimage.getLayoutParams().height = (int) (size.y * 0.68);
         foodimage.getLayoutParams().width = (int) (size.y * 0.68);
         foodimage.requestLayout();
+    }
 
-        // listview들 세팅
+    private void setPanelView() {
+        // 정보 뷰들 동기화
+        slidingPaneLayout = this.findViewById(R.id.sliding_layout);
+        backButton = this.findViewById(R.id.intro_arrow);
+        scrapButton = this.findViewById(R.id.intro_heart);
+        ingredientTitle = this.findViewById(R.id.ingredients_title);
+        recipeTitle = this.findViewById(R.id.recipe_title);
+        ingredientBar = this.findViewById(R.id.ingredients_bar);
+        recipeBar = this.findViewById(R.id.recipe_bar);
+        recipeLayout = findViewById(R.id.constraint_recipe);
+        ingredientLayout = findViewById(R.id.constraint_ingredients);
+
+        kcalText = findViewById(R.id.content_kcal);
+        carbonText = findViewById(R.id.content_carbon);
+        proteinText = findViewById(R.id.content_protein);
+        fatText = findViewById(R.id.content_fat);
+        sodiumText = findViewById(R.id.content_sodium);
+
+        kcalTextBar = findViewById(R.id.kcal_quantity);
+        carbonTextBar = findViewById(R.id.carbon_quantity);
+        proteinTextBar = findViewById(R.id.protein_quantity);
+        fatTextBar = findViewById(R.id.fat_quantity);
+        sodiumTextBar = findViewById(R.id.sodium_quantity);
+
+        kcalBar = findViewById(R.id.kcal_bar);
+        carbonBar = findViewById(R.id.carbon_bar);
+        proteinBar = findViewById(R.id.protein_bar);
+        fatBar = findViewById(R.id.fat_bar);
+        sodiumBar = findViewById(R.id.sodium_bar);
+
+        slidingPaneLayout.setTouchEnabled(true);
+        backButton.setOnClickListener(onClickIntro);
+        scrapButton.setOnClickListener(onClickIntro);
+        ingredientTitle.setOnClickListener(onClickIntro);
+        recipeTitle.setOnClickListener(onClickIntro);
+
+        makePanelUI();
+    }
+
+    private void makePanelUI() {
         ArrayList<Recipe.Ingredient> datalist = recipe.ingredient;
-        RecyclerView ingredientRecyclerView = (RecyclerView) findViewById(R.id.ingredient_list);
-        RecyclerView recipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_list);
+        RecyclerView ingredientRecyclerView = findViewById(R.id.ingredient_list);
+        RecyclerView recipeRecyclerView = findViewById(R.id.recipe_list);
 
         LinearLayoutManager ingredientLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
@@ -97,11 +138,21 @@ public class RecipeIntroduction extends AppCompatActivity {
         ingredientRecyclerView.setAdapter(adapter);
         recipeRecyclerView.setAdapter(adapter1);
 
-        mScrollableView = (NestedScrollView) findViewById(R.id.scrollView);
+        mScrollableView = findViewById(R.id.scrollView);
         NestedScrollableViewHelper helper = new NestedScrollableViewHelper();
         slidingPaneLayout.setScrollableViewHelper(helper);
 
+        kcalText.setText(Integer.toString((int) recipe.nutrition[0]));
+        carbonText.setText(Double.toString(recipe.nutrition[1]));
+        proteinText.setText(Double.toString(recipe.nutrition[2]));
+        fatText.setText(Double.toString(recipe.nutrition[3]));
+        sodiumText.setText(Double.toString(recipe.nutrition[4]));
 
+        kcalTextBar.setText(Integer.toString((int) recipe.nutrition[0]) + "kcal");
+        carbonTextBar.setText(Double.toString(recipe.nutrition[1]) + "g");
+        proteinTextBar.setText(Double.toString(recipe.nutrition[2]) + "g");
+        fatTextBar.setText(Double.toString(recipe.nutrition[3]) + "g");
+        sodiumTextBar.setText(Double.toString(recipe.nutrition[4]) + "mg");
     }
 
     private View.OnClickListener onClickIntro = new View.OnClickListener() {
@@ -156,4 +207,25 @@ public class RecipeIntroduction extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) { // 영양성분 그래프 세팅 함수
+        max_bar = findViewById(R.id.real_graph);
+        maxWidth = max_bar.getWidth();
+
+        for (int i = 0; i < 5; i++) { // 영양성분 0 그램 시 바 길이 조정
+            if (recipe.nutrition[i] == 0)
+                recipe.nutrition[i] = 1;
+        }
+
+        kcalBar.getLayoutParams().width = (int) (maxWidth * (recipe.nutrition[0] / 2000)); // 남자 2500 여자 2000
+        kcalBar.requestLayout();
+        carbonBar.getLayoutParams().width = (int) (maxWidth * (recipe.nutrition[1] / 350)); // 남자 438 여자 350
+        carbonBar.requestLayout();
+        proteinBar.getLayoutParams().width = (int) (maxWidth * (recipe.nutrition[2] / 55)); // 남자 70 여자 55
+        proteinBar.requestLayout();
+        fatBar.getLayoutParams().width = (int) (maxWidth * (recipe.nutrition[3] / 42)); // 남자 60 여자 42
+        fatBar.requestLayout();
+        sodiumBar.getLayoutParams().width = (int) (maxWidth * (recipe.nutrition[4] / 2000)); // 공통 2000
+        sodiumBar.requestLayout();
+    }
 }

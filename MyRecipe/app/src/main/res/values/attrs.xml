@@ -9,4 +9,10 @@
         <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="CustomTextBorderEffect">
+        <attr name="textStroke" format="boolean"/>
+        <attr name="textStrokeWidth" format="float"/>
+        <attr name="textStrokeColor" format="color"/>
+    </declare-styleable>
+
 </resources>

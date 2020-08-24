@@ -25,7 +25,6 @@ public class RecipeOrderListAdapter extends RecyclerView.Adapter<RecipeOrderList
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // context 와 parent.getContext() 는 같다.
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.recipe_order_item_tv, parent, false);
 
@@ -35,8 +34,8 @@ public class RecipeOrderListAdapter extends RecyclerView.Adapter<RecipeOrderList
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String item = itemList.get(position);
-        holder.steps.setText("STEP " + (position + 1));
-        holder.content.setText(item);
+        holder.steps.setText("STEP " + (position + 1)); // "STEP"의 넘버값 세팅
+        holder.content.setText(item); // 조리방법 내용 세팅
     }
 
     @Override
@@ -45,7 +44,7 @@ public class RecipeOrderListAdapter extends RecyclerView.Adapter<RecipeOrderList
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView steps, content;
+        private TextView steps, content;
 
         public ViewHolder(View itemView) {
             super(itemView);

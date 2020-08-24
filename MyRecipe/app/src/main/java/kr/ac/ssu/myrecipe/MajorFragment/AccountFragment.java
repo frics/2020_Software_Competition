@@ -21,9 +21,6 @@ public class AccountFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_account, container, false);
 
-        FrameLayout test = (FrameLayout)view.findViewById(R.id.testpal);
-  //      test.setVisibility(View.GONE);
-
         return view;
     }
 }
