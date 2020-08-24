@@ -76,26 +76,30 @@
                 android:importantForAutofill="no"
                 android:textColorHint="#A6BCD0"
                 android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/find_passwd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/user_id" />
+
+            <Button
+                android:id="@+id/find_passwd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:text="비밀번호 찾기"
+                android:textColor="#A6BCD0"
+                android:textSize="15dp"
+                android:background="#00ff0000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/user_password"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-        <Button
-            android:id="@+id/find_passwd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00ff0000"
-            android:text="비밀번호 찾기"
-            android:textSize="15dp"
-            android:textColor="#A6BCD0"
-            app:layout_constraintTop_toBottomOf="@id/user_input"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+
 
         <Button
             android:id="@+id/signin_submit"

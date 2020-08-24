@@ -20,32 +20,43 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SignUpActivity"></activity>
+
         <activity
-            android:name=".SignInActivity"
-            android:label="@string/title_activity_sign_in">
+            android:name=".User.SignUpActivity">
+        </activity>
+        <activity
+            android:name=".User.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReceiptListActivity"></activity>
+        <activity
+            android:name=".ReceiptListActivity">
+        </activity>
         <activity android:name=".AddActivity" />
         <activity
             android:name=".Camera.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_camera"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".Camera.UploadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".LaunchActivity"></activity>
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".LaunchActivity">
+        </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"></activity>
-        <activity android:name=".recipe.RecipeIntroduction"></activity>
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".recipe.RecipeIntroduction">
+        </activity>
     </application>
 
 </manifest>

@@ -43,12 +43,13 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
-                android:id="@+id/user_id"
+                android:id="@+id/regi_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:paddingVertical="20dp"
                 android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:background="@drawable/rounded_background"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="20dp"
@@ -59,10 +60,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/user_password"/>
+                app:layout_constraintBottom_toTopOf="@id/regi_password"/>
 
             <EditText
-                android:id="@+id/user_password"
+                android:id="@+id/regi_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
@@ -76,13 +77,13 @@
                 android:importantForAutofill="no"
                 android:textColorHint="#A6BCD0"
                 android:textSize="15dp"
-                app:layout_constraintBottom_toTopOf="@id/user_nickname"
+                app:layout_constraintBottom_toTopOf="@id/regi_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/user_id" />
+                app:layout_constraintTop_toBottomOf="@id/regi_id" />
 
             <EditText
-                android:id="@+id/user_nickname"
+                android:id="@+id/regi_nickname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
@@ -91,7 +92,7 @@
                 android:background="@drawable/rounded_background"
                 android:drawableStart="@drawable/ic_account"
                 android:drawablePadding="20dp"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:hint="@string/nickname"
                 android:importantForAutofill="no"
                 android:textColorHint="#A6BCD0"
@@ -99,7 +100,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/user_password"/>
+                app:layout_constraintTop_toBottomOf="@id/regi_password"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
