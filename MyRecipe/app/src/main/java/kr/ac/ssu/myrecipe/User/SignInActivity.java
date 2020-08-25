@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener{
@@ -103,26 +104,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                         //getting the user from the response
                         JSONObject userJson = obj.getJSONObject("user");
+                        String nickname = userJson.getString("nickname");
 
-                        /*creating a new user object
-                        User user = new User(
-                                userJson.getInt("id"),
-                                userJson.getString("username"),
-                                userJson.getString("email"),
-                                userJson.getString("gender")
-                        );
+                        Log.d(TAG, id+", "+nickname);
 
-                        //storing the user in shared preferences
-                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                        //Preference에 정보 삽입
+                        SharedPrefManager.userSignin(SignInActivity.this, id, nickname);
 
-                        //starting the profile activity
                         finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                         */
                     } else {
-                        Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
