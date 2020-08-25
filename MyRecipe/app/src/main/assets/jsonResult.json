@@ -1,0 +1,22 @@
+{
+   "refrigerator1": {
+      "ingredient": "마박수에이드",
+      "price": "7000",
+      "amount": "1"
+   },
+   "refrigerator2": {
+      "ingredient": "상추",
+      "price": "2000",
+      "amount": "2"
+   },
+   "refrigerator3": {
+      "ingredient": "바나나",
+      "price": "3000",
+      "amount": "1"
+   },
+   "refrigerator4": {
+      "ingredient": "돼지고기",
+      "price": "10000",
+      "amount": "2"
+   }
+}
