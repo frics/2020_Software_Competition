@@ -1,21 +1,19 @@
 package kr.ac.ssu.myrecipe;
 
-<<<<<<< HEAD
-import androidx.appcompat.app.AppCompatActivity;
-=======
->>>>>>> login
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import kr.ac.ssu.myrecipe.database.OpenRecipeListCSV;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import kr.ac.ssu.myrecipe.User.SharedPrefManager;
 import kr.ac.ssu.myrecipe.User.SignInActivity;
+import kr.ac.ssu.myrecipe.database.OpenRecipeListCSV;
 
 public class LaunchActivity extends AppCompatActivity {
     private static final String TAG = LaunchActivity.class.getSimpleName();
