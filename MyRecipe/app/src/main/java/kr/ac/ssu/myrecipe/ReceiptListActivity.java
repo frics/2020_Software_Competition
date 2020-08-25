@@ -9,6 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.adapter.ReceiptListAdapter;
@@ -16,22 +21,6 @@ import kr.ac.ssu.myrecipe.adapter.ReceiptListAdapter;
 public class ReceiptListActivity extends AppCompatActivity {
     private ReceiptListAdapter FoodAdapter;
     private ArrayList<ReceiptListAdapter.Data> foodList;
-    private Integer[] iconList = {
-            R.drawable.category_1, R.drawable.category_2,
-            R.drawable.category_3, R.drawable.category_4,
-            R.drawable.category_5, R.drawable.category_6,
-            R.drawable.category_7, R.drawable.category_8,
-            R.drawable.category_9, R.drawable.category_10,
-            R.drawable.category_11, R.drawable.category_12,
-            R.drawable.category_13, R.drawable.category_14,
-            R.drawable.category_15, R.drawable.ic_question_24dp
-    };
-    private String[] textList = {
-            "과일", "채소","쌀/잡곡","견과/건과",
-            "축산/계란", "수산물/건어물","생수/음료","커피/차",
-            "초콜릿/시리얼", "면/통조림","반찬/샐러드","냉동/간편요리",
-            "유제품", "가루/오일","소스", "카테고리 없음"
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +29,7 @@ public class ReceiptListActivity extends AppCompatActivity {
         Context context = this;
 
         //데이터 생성
-        MakeData();
+        jsonParsing(getJsonString());
         //음식리스트 초기화
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
         food.setLayoutManager(layoutManager1);
@@ -55,27 +44,62 @@ public class ReceiptListActivity extends AppCompatActivity {
             }
         });
     }
-    public void MakeData()
+    private String getJsonString()
     {
-        foodList = new ArrayList<>();
-        for(int i = 0; i < 3; i++) {
-            ReceiptListAdapter.Data data = new ReceiptListAdapter.Data();
-            data.setCategory(iconList[i]);
-            data.setName(textList[i]);
-            data.setCount(i);
-            data.setPrice((i + 1) * 1000);
-            foodList.add(data);
+        String json = "";
+        try {
+            InputStream is = getAssets().open("jsonResult.json");
+            int fileSize = is.available();
+
+            byte[] buffer = new byte[fileSize];
+            is.read(buffer);
+            is.close();
+
+            json = new String(buffer, "UTF-8");
         }
-        ReceiptListAdapter.Data line = new ReceiptListAdapter.Data();
-        line.setName("-----");
-        foodList.add(line);
-        for(int i = 0; i < 5; i++){
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return json;
+    }
+    private void jsonParsing(String json)
+    {
+        int sum = 0;
+        foodList = new ArrayList<>();
+        try{
+            JSONObject jsonObject = new JSONObject(json);
+            for(int i = 1; i <= jsonObject.length();i++){
+                JSONObject object = jsonObject.getJSONObject("refrigerator"+i);
+                ReceiptListAdapter.Data data = new ReceiptListAdapter.Data();
+                if(i == 1){
+                    //라인 구분선
+                    ReceiptListAdapter.Data line = new ReceiptListAdapter.Data();
+                    line.setName("-----");
+                    //라인 구분선 부분의 카테고리도 카테고리없음으로 설정(db저장시 거르기위함)
+                    line.setCategory(R.drawable.ic_question_24dp);
+                    line.setPrice(sum);
+                    foodList.add(line);
+                }
+                //임시
+                data.setCategory(R.drawable.ic_question_24dp);
+                data.setName(object.getString("ingredient"));
+                data.setTag("태그없음");
+                //data.setCount(Integer.parseInt(object.getString("amount")));
+                data.setPrice(Integer.parseInt(object.getString("price")));
+                sum += Integer.parseInt(object.getString("price"));
+                foodList.add(data);
+            }
             ReceiptListAdapter.Data data = new ReceiptListAdapter.Data();
-            data.setCategory(iconList[15]);
-            data.setName(textList[15]);
-            data.setCount(i);
-            data.setPrice((i + 1) * 1000);
+            data.setName("last");
+            //마지막 확인버튼 라인역시 카테고리 없음으로 설정(db저장시 거르기위함)
+            data.setCategory(R.drawable.ic_question_24dp);
+            data.setPrice(sum);
             foodList.add(data);
+
+        }catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }
