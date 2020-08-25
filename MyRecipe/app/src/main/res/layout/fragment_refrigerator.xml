@@ -5,70 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/refri_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
-        <LinearLayout
-            android:id="@+id/refri_nested_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:visibility="invisible">
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_sharp_search_24"
-                android:background="@android:color/transparent" />
-            <EditText
-                android:id="@+id/refri_search_table"
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="wrap_content"
-                android:hint="재료명을 입력해주세요."
-                android:singleLine="true"
-                android:ellipsize="end"/>
-            <ImageButton
-                android:id="@+id/refri_nested_close"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_baseline_clear_24"
-                android:background="@android:color/transparent"/>
-        </LinearLayout>
-        <ImageButton
-            android:id="@+id/refri_search"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="50dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_sharp_search_24"/>
+    <ImageButton
+        android:id="@+id/refri_search"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_sharp_search_24"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/refri_add"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/refri_add"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="50dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_sharp_add_24" />
-        <ImageButton
-            android:id="@+id/refri_temp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="50dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_question_24dp"
-            android:visibility="visible"/>
-    </LinearLayout>
-
+    <ImageButton
+        android:id="@+id/refri_add"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_sharp_add_24"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@+id/refri_search"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/refri_temp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_question_24dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@+id/refri_add"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/refri_recycler"
         android:layout_width="match_parent"
-        android:layout_height="510dp"
+        android:layout_height="520dp"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/refri_layout"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/refri_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>
