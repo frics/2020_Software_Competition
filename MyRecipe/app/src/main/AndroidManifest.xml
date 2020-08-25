@@ -19,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ReceiptListActivity"></activity>
-        <activity android:name=".AddActivity" />
         <activity
             android:name=".Camera.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
