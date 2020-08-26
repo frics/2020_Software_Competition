@@ -74,8 +74,6 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
             Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
             imageView.setImageBitmap(rotatedBitmap);
         }
-
-
     }
     @Override
     public void onClick(View view) {

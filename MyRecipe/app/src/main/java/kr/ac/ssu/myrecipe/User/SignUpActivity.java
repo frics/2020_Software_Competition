@@ -21,7 +21,7 @@ import kr.ac.ssu.myrecipe.R;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG =  SignUpActivity.class.getSimpleName();;
+    private static final String TAG =  SignUpActivity.class.getSimpleName();
     private EditText editTextId;
     private EditText editTextPassword;
     private EditText editTextNickName;
@@ -120,9 +120,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     //if no error in response
                     if (!obj.getBoolean("error")) {
                         Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        String ref = obj.getString("refrigerator");
+                        Log.e(TAG, ref);
 
                         //getting the user from the response
-                        JSONObject userJson = obj.getJSONObject("user");
+                        //JSONObject userJson = obj.getJSONObject("user");
 
                         //creating a new user object
 

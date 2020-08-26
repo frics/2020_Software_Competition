@@ -105,11 +105,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         //getting the user from the response
                         JSONObject userJson = obj.getJSONObject("user");
                         String nickname = userJson.getString("nickname");
+                        String dbname = userJson.getString("mem_idx")+nickname;
 
-                        Log.d(TAG, id+", "+nickname);
+                        Log.d(TAG, id+", "+nickname +", "+dbname);
 
                         //Preference에 정보 삽입
-                        SharedPrefManager.userSignin(SignInActivity.this, id, nickname);
+                        SharedPrefManager.userSignin(SignInActivity.this, id, nickname, dbname);
 
                         finish();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
