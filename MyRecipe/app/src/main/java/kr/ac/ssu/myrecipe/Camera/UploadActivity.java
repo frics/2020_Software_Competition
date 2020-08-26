@@ -26,12 +26,14 @@ public class UploadActivity extends AppCompatActivity {
     private static final String TAG = "UploadActivity" ;
     ImageView imageView;
     ImageView scanView;
-    File mFile = getExternalFilesDir(null);
+
+
 
     int serverResponseCode = 0;
     /************* Php script path ****************/
     String upLoadServerUri = "http://13.209.6.94/upload_act.php";
     /**********  File Path *************/
+    File mFile = null;
     String uploadFilePath=null;
     String uploadFileName = null;
 
@@ -41,6 +43,7 @@ public class UploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload);
 
         //이미지 파일 경로 획득
+        mFile = this.getExternalFilesDir(null);
         uploadFilePath = mFile+"/";
         uploadFileName = "pic.jpg";
 

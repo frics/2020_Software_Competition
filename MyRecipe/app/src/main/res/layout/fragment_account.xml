@@ -77,13 +77,14 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/backup_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp">
+
         <Button
+            android:id="@+id/backup_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_backup"
@@ -96,13 +97,14 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/reset_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp">
+
         <Button
+            android:id="@+id/reset_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_warning"

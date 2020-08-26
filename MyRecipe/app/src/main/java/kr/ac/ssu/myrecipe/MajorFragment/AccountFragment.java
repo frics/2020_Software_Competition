@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ public class AccountFragment extends Fragment {
 
     private TextView TvNickname;
     private TextView TvId;
+    private Button backUpBtn;
     private static final String KEY_ID="userId";
     private static final String KEY_NICKNAME = "userNickname";
     private String id;
@@ -36,6 +38,9 @@ public class AccountFragment extends Fragment {
         TvId = view.findViewById(R.id.info_id);
         TvNickname.setText(nickname);
         TvId.setText(id);
+
+        backUpBtn = view.findViewById(R.id.backup_btn);
+        backUpBtn.setOnClickListener(new );
 
 
 
