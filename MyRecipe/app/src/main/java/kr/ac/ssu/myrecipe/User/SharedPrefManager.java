@@ -8,9 +8,11 @@ import android.util.Log;
 public class SharedPrefManager {
     private static final String TAG = SharedPreferences.class.getSimpleName();
     private static final String SHARED_PREF_NAME = "userPreference";
-    private static final String KEY_ID="userId";
-    private static final String KEY_NICKNAME = "userNickname";
+    public static final String KEY_ID="userId";
+    public static final String KEY_NICKNAME = "userNickname";
 
+    //서버 Mysql REF_DB에 저장되어 있는 user의 냉장고 DB table 이름
+    public static final String KEY_REF_DB = "userRefDB";
 
 
     private static SharedPreferences getPreferences(Context context){
@@ -29,13 +31,14 @@ public class SharedPrefManager {
         return value;
     }
 
-    public static void userSignin(Context context, String id, String nickname){
+    public static void userSignin(Context context, String id, String nickname, String dbname){
         SharedPreferences sharedPreferences = getPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         Log.d("프리 메니저", id+", "+nickname);
         editor.putString(KEY_ID, id);
         editor.putString(KEY_NICKNAME, nickname);
+        editor.putString(KEY_REF_DB, dbname);
         editor.apply();
     }
 
@@ -46,14 +49,12 @@ public class SharedPrefManager {
         return id != null;
     }
 
-    public void logout(Context context) {
+    public static void logout(Context context) {
         SharedPreferences sharedPreferences =  getPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
         context.startActivity(new Intent(context, SignInActivity.class));
     }
-
-
 }
 
