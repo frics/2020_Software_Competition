@@ -32,7 +32,7 @@
             android:label="@string/title_activity_camera"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Camera.UploadActivity">
+        <activity android:name=".Camera.UploadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>

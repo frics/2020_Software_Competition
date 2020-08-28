@@ -12,6 +12,7 @@ import com.sothree.slidinguppanel.ScrollableViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import kr.ac.ssu.myrecipe.MajorFragment.HomeFragment;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.IngredientListAdapter;
 import kr.ac.ssu.myrecipe.adapter.RecipeOrderListAdapter;
@@ -55,6 +57,7 @@ public class RecipeIntroduction extends AppCompatActivity {
         setMainView();
         setPanelView();
         makeResponsiveUI();
+        pushRecentRecipeList();
     }
 
     private void setMainView() { // 음식 사진 및 이름 세팅 (퍼센트 추가해야함)
@@ -153,6 +156,48 @@ public class RecipeIntroduction extends AppCompatActivity {
         proteinTextBar.setText(Double.toString(recipe.nutrition[2]) + "g");
         fatTextBar.setText(Double.toString(recipe.nutrition[3]) + "g");
         sodiumTextBar.setText(Double.toString(recipe.nutrition[4]) + "mg");
+    }
+
+    private void pushRecentRecipeList() {
+        int i;
+        boolean isExist = false;
+        SharedPreferences pref = getSharedPreferences("recentList", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        String recentlist = pref.getString("recentlist", "");
+        String string[] = recentlist.split(",");
+        if (string[0].compareTo("") != 0) {
+            if (string.length > 9) { // 최대 리스트 개수를 초과한 경우
+                for (i = 0; i < string.length; i++) { // 중복 여부 검사
+                    if (Integer.parseInt(string[i]) == recipe.num) {
+                        isExist = true;
+                        break;
+                    }
+                }
+
+                if (isExist)  // 중복된 경우
+                    recentlist = recentlist.substring(0, recentlist.indexOf(string[i])) + recentlist.substring(recentlist.lastIndexOf(string[i]) + 2);
+                else { // 중복되지 않은 경우
+                    recentlist = recentlist.substring(0, recentlist.length() - 1);
+                    while (!recentlist.endsWith(","))
+                        recentlist = recentlist.substring(0, recentlist.length() - 1);
+                }
+            } else { // 최대 리스트 개수 미만인 경우
+                for (i = 0; i < string.length; i++) { // 중복 여부 검사
+                    if (Integer.parseInt(string[i]) == recipe.num) {
+                        isExist = true;
+                        break;
+                    }
+                }
+
+                if (isExist)  // 중복된 경우
+                    recentlist = recentlist.substring(0, recentlist.indexOf(string[i])) + recentlist.substring(recentlist.lastIndexOf(string[i]) + 2);
+            }
+        }
+
+        recentlist = recipe.num + "," + recentlist;
+        HomeFragment.recent_recipes = recentlist;
+        editor.putString("recentlist", recentlist);
+        editor.commit();
     }
 
     private View.OnClickListener onClickIntro = new View.OnClickListener() {
