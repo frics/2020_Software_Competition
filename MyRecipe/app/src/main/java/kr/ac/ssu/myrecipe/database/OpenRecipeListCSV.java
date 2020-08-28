@@ -1,5 +1,7 @@
 package kr.ac.ssu.myrecipe.database;
 
+import android.util.Log;
+
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
@@ -76,6 +78,10 @@ public class OpenRecipeListCSV {
                             // 공백 제거 및 DB에 삽입
                             ingredient.name = ingredient.name.trim();
                             ingredient.quantity = ingredient.quantity.trim();
+
+                            if(ingredient.quantity.charAt(0) == '(' && ingredient.quantity.charAt(ingredient.quantity.length()-1) == ')')
+                                ingredient.quantity = ingredient.quantity.substring(1,ingredient.quantity.length()-1);
+
                             Recipe.recipeList[i].ingredient.add(ingredient);
                         }
                         break;

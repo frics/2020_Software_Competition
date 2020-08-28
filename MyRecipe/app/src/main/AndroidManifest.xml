@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 카메라 및 저장소 접근 권한 -->
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" /> <!-- 카메라 기능 권한 -->
@@ -47,10 +48,7 @@
         </activity>
 
         <activity
-            android:name=".AddActivity" />
-        <activity
             android:name=".Camera.CameraActivity"
-
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>

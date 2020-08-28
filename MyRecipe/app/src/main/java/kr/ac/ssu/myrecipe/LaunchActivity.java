@@ -2,6 +2,7 @@ package kr.ac.ssu.myrecipe;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,9 +15,12 @@ import java.io.InputStreamReader;
 import kr.ac.ssu.myrecipe.User.SharedPrefManager;
 import kr.ac.ssu.myrecipe.User.SignInActivity;
 import kr.ac.ssu.myrecipe.database.OpenRecipeListCSV;
+import kr.ac.ssu.myrecipe.MajorFragment.HomeFragment;
 
 public class LaunchActivity extends AppCompatActivity {
     private static final String TAG = LaunchActivity.class.getSimpleName();
+
+    public final String PREFERENCE = "recentList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,12 @@ public class LaunchActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                // 최근 찾아본 레시피 목록 동기화
+                SharedPreferences pref = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
+               // SharedPreferences.Editor editor = pref.edit();
+                HomeFragment.recent_recipes = pref.getString("recentlist", "");
+                Log.d(TAG, "run: " + HomeFragment.recent_recipes);
 
                 if(isSignin) {
                     Log.d(TAG, "메인 엑티비티로 이동");
