@@ -25,6 +25,7 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "CapturedFragment";
 
     ImageView imageView;
+
     //Fragment에서 Fragment로 instance 넘길때 반환 메소드
     public static CapturedFragment newInstance() {
         return new CapturedFragment();
@@ -70,11 +71,9 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             int width = myBitmap.getWidth();
             int height = myBitmap.getHeight();
-            Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, width, height, matrix, true);
             imageView.setImageBitmap(rotatedBitmap);
         }
-
-
     }
     @Override
     public void onClick(View view) {

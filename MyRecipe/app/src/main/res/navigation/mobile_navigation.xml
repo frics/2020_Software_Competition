@@ -19,10 +19,10 @@
         tools:layout="@layout/fragment_refrigerator" />
 
     <fragment
-        android:id="@+id/navigation_undefined"
-        android:name="kr.ac.ssu.myrecipe.MajorFragment.UndefinedFragment"
-        android:label="미정"
-        tools:layout="@layout/fragment_undefined" />
+        android:id="@+id/navigation_market"
+        android:name="kr.ac.ssu.myrecipe.MajorFragment.MarketFragment"
+        android:label="마트"
+        tools:layout="@layout/fragment_market" />
 
     <fragment
         android:id="@+id/navigation_account"
