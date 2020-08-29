@@ -42,8 +42,6 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 
-
-
     <string name="result_image_desc">crop result</string>
 
     <string name="main_drawer_load">Load Image for cropping</string>
