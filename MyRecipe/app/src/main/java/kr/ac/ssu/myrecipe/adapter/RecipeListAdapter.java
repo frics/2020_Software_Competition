@@ -41,7 +41,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
         Recipe item = itemList.get(position);
         holder.nameText.setText(item.name);
         holder.styleText.setText(item.style);
-        holder.itemView.setTag(Integer.toString(position));
+        holder.itemView.setTag(item.num);
         Glide.with(context)
                 .load(item.image_url)
                 .error(R.drawable.basic)
