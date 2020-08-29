@@ -149,7 +149,6 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
         }
     }
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -261,6 +260,4 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
         }
 
     }
-
-
 }

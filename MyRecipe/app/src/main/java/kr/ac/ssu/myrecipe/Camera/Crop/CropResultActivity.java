@@ -16,8 +16,6 @@ import kr.ac.ssu.myrecipe.R;
 
 public class CropResultActivity extends AppCompatActivity {
 
-
-    /** The image to show in the activity. */
     static Bitmap mImage;
 
     private ImageView imageView;
