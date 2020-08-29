@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -94,32 +95,55 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 super.onPostExecute(s);
 
                 try {
-                    //converting response to json object
-                    Log.d(TAG, "json object"+s);
-                    JSONObject obj = new JSONObject(s);
 
-                    //if no error in response
-                    if (!obj.getBoolean("error")) {
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                    JSONObject object = new JSONObject(s);
+                    //Log.e(TAG, jsonArray+"");
+                    JSONObject response = object.getJSONObject("response");
+                    Log.d(TAG+"response", "response : "+response+"");
+                    JSONObject refResponse = object.getJSONObject("ref");
+                    Log.e(TAG+"refResponse", "ref : "+refResponse+"");
 
-                        //getting the user from the response
-                        JSONObject userJson = obj.getJSONObject("user");
-                        String nickname = userJson.getString("nickname");
-                        String dbname = userJson.getString("mem_idx")+nickname;
+                    if(!response.getBoolean("error")){
 
-                        Log.d(TAG, id+", "+nickname +", "+dbname);
+                        if(!refResponse.getBoolean("error")) {
+                            Log.e(TAG, response.getString("message")+"\n"+ refResponse.getString("message"));
+                            Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                            JSONObject userJson = object.getJSONObject("user");
+                            Log.d(TAG+"user", "user : "+userJson+"");
+                            String nickname = userJson.getString("nickname");
+                            String dbname = userJson.getString("mem_idx")+nickname;
 
-                        //Preference에 정보 삽입
-                        SharedPrefManager.userSignin(SignInActivity.this, id, nickname, dbname);
+                            Log.d(TAG, id+", "+nickname +", "+dbname);
 
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            //Preference에 정보 삽입
+                            SharedPrefManager.userSignin(SignInActivity.this, id, nickname, dbname);
 
-                    } else {
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                            ////냉장고 디비 받아오기
+                            JSONArray refrigerator = object.getJSONArray("refrigerator");
+                            Log.e(TAG + "refrigerator", "refrigerator : " + refrigerator);
+                            for (int i = 0; i < refrigerator.length(); i++) {
+                                /***************************************************************
+                                 * 여기 받아온 JSON 포멧 냉장고 데이터를 삽입하면 된다.
+                                 *
+                                 *
+                                 *************************************************************/
+                                Log.e(TAG + "refrigerator 1", i + " : " + refrigerator.getJSONObject(i));
+                            }
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+                        else{ //냉장고 디비 복원 실패 시
+                            Toast.makeText(getApplicationContext(), refResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
                     }
+                    else { //비밀번호 || 아이디 오류 시
+                        Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
             }
         }
