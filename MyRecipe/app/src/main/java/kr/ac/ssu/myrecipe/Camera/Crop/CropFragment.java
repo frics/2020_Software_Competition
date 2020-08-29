@@ -23,6 +23,8 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import kr.ac.ssu.myrecipe.R;
 
@@ -96,7 +98,7 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
         mCropImageView.setOnSetImageUriCompleteListener(this);
         mCropImageView.setOnCropImageCompleteListener(this);
 
-        mFile = getContext().getExternalFilesDir(null);
+        mFile = new File(getActivity().getExternalFilesDir(null), "pic_crop.jpg");
         uploadFilePath = mFile+"/";
         uploadFileName = "pic.jpg";
         Button btn = view.findViewById(R.id.crop_btn);
@@ -126,6 +128,7 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
         {
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
+
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             int width = myBitmap.getWidth();
             int height = myBitmap.getHeight();
@@ -180,6 +183,12 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -195,11 +204,11 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
             if (result.getUri() != null) {
                 intent.putExtra("URI", result.getUri());
             } else {
-                CropResultActivity.mImage =
-                        mCropImageView.getCropShape() == CropImageView.CropShape.OVAL
-                                ? CropImage.toOvalBitmap(result.getBitmap())
-                                : result.getBitmap();
+                CropResultActivity.mImage = result.getBitmap();
             }
+           //SaveBitmapToFileCache(result.getBitmap(), uploadFilePath);
+            ImageSaver imageSaver = new ImageSaver(result.getBitmap(), mFile);
+            imageSaver.run();
             startActivity(intent);
         } else {
             Log.e("AIC", "Failed to crop image", result.getError());
@@ -210,4 +219,48 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
                     .show();
         }
     }
+
+    private static class ImageSaver implements Runnable {
+        /**
+         * The JPEG image
+         */
+        private final Bitmap mImage;
+        /**
+         * The file we save the image into.
+         */
+        private final File mFile;
+
+        ImageSaver(Bitmap image, File file) {
+            mImage = image;
+            mFile = file;
+        }
+
+        @Override
+        public void run() {
+
+            //File fileCacheItem = mFile;
+            FileOutputStream output = null;
+            try {
+              //  fileCacheItem.createNewFile();
+                output = new FileOutputStream(mFile);
+                //bitmap  이미지를 JPG 형식으로 압축해서 저장
+                mImage.compress(Bitmap.CompressFormat.JPEG, 100, output);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if(null != output) {
+                    try {
+                        Log.e("test", "성공성공성공성공");
+                        output.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+    }
+
+
 }
