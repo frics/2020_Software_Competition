@@ -112,6 +112,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         //Preference에 정보 삽입
                         SharedPrefManager.userSignin(SignInActivity.this, id, nickname, dbname);
 
+
+                        ////냉장고 디비 받아오기
                         finish();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
