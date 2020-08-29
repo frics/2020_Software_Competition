@@ -111,29 +111,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 //hiding the progressbar after completion
 
                 try {
-
+                    //converting response to json object
+                    //converting response to json object
                     Log.d(TAG, "json object"+s);
-                    JSONObject object = new JSONObject(s);
-                    //Log.e(TAG, jsonArray+"");
-                    JSONObject response = object.getJSONObject("response");
-                    Log.d(TAG+"response", "response : "+response+"");
-                    JSONObject refResponse = object.getJSONObject("ref");
-                    Log.e(TAG+"refResponse", "ref : "+refResponse+"");
+                    JSONObject obj = new JSONObject(s);
+
 
                     //if no error in response
-                    if (!response.getBoolean("error")) {
-                        if(!refResponse.getBoolean("error")) {
-                            Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-                        }
+                    if (!obj.getBoolean("error")) {
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        String ref = obj.getString("refrigerator");
+                        Log.e(TAG, ref);
+
+                        //getting the user from the response
+                        //JSONObject userJson = obj.getJSONObject("user");
+
+                        //creating a new user object
 
                     } else {
-                        if(response.getString("message").equals("이미 등록된 이메일입니다")) {
-                            editTextId.setError(response.getString("message"));
+                        if(obj.getString("message").equals("이미 등록된 이메일입니다")) {
+                            editTextId.setError(obj.getString("message"));
                             editTextId.requestFocus();
                         }else
-                            Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     //Toast.makeText(getApplicationContext(), "NULL RETURN", Toast.LENGTH_SHORT).show();
@@ -154,8 +154,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.signin_btn:{
                 Log.d(TAG, "계정생성 액티비티로 넘어감");
-                finish();
-                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                startActivity(intent);
               //  overridePendingTransition(R.anim.slide_down, R.anim.stay);
                 break;
             }

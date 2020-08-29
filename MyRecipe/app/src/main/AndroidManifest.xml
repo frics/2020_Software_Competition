@@ -20,36 +20,50 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name=".Camera.Crop.CropResultActivity">
-        </activity>
-        <activity
-            android:name=".Camera.Crop.CropActivity" >
-        </activity>
-        
-        <activity android:name=".LaunchActivity">
+            android:name=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".User.SignInActivity" />
-        <activity android:name=".User.SignUpActivity" />
+
+        <activity
+            android:name=".User.SignInActivity">
+        </activity>
+        <activity
+            android:name=".User.SignUpActivity">
+        </activity>
+
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" />
-        <activity android:name=".ReceiptListActivity" />
-        <activity android:name=".AddActivity" />
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".ReceiptListActivity">
+        </activity>
+
+        <activity
+            android:name=".AddActivity" />
         <activity
             android:name=".Camera.CameraActivity"
+
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+        </activity>
+        
         <activity
             android:name=".Camera.UploadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity android:name=".recipe.RecipeIntroduction" />
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".recipe.RecipeIntroduction">
+        </activity>
     </application>
 
 </manifest>

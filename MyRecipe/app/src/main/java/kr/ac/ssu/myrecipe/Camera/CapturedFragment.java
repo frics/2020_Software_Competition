@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 
 import java.io.File;
 
-import kr.ac.ssu.myrecipe.Camera.Crop.CropActivity;
 import kr.ac.ssu.myrecipe.R;
 
 
@@ -86,8 +85,8 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
             }
             case R.id.scanning_btn:{
                 Log.d(TAG, "스캔 시작");
-                Intent intent = new Intent(getContext(), CropActivity.class);
-               //Intent intent = new Intent(getContext(), UploadActivity.class);
+
+               Intent intent = new Intent(getContext(), UploadActivity.class);
                startActivity(intent);
                getActivity().finish();
             }
