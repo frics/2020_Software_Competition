@@ -79,21 +79,30 @@ public class OpenRecipeListCSV {
                             ingredient.name = ingredient.name.trim();
                             ingredient.quantity = ingredient.quantity.trim();
 
-                            if(ingredient.quantity.charAt(0) == '(' && ingredient.quantity.charAt(ingredient.quantity.length()-1) == ')')
-                                ingredient.quantity = ingredient.quantity.substring(1,ingredient.quantity.length()-1);
+                            if (ingredient.quantity.charAt(0) == '(' && ingredient.quantity.charAt(ingredient.quantity.length() - 1) == ')')
+                                ingredient.quantity = ingredient.quantity.substring(1, ingredient.quantity.length() - 1);
 
                             Recipe.recipeList[i].ingredient.add(ingredient);
                         }
                         break;
+                    case 11: // 재료 태그 리스트
+                        String tag = nextLine[i];
+
+                        tag = tag.trim();
+                        String[] tags = tag.split(","); // ','를 기준으로 split
+
+                        for (int j = 0; j < tags.length; j++)
+                            Recipe.recipeList[i].tag_list.add(tags[j]);
+                            break;
                 }
 
                 // 레시피 순서 입력
-                if (count > 10 && nextLine[i].compareTo("") != 0) {
+                if (count > 11 && nextLine[i].compareTo("") != 0) {
                     Recipe.recipeList[i].recipe_order.add(nextLine[i]);
                 }
             }
 
-            if (count++ > 26)
+            if (count++ > 28)
                 break;
         }
     }
