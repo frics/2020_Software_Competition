@@ -142,7 +142,7 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
             mCropImageView.setMultiTouchEnabled(true);
             mCropImageView.setShowCropOverlay(true);
             mCropImageView.setShowProgressBar(false);
-            mCropImageView.setAutoZoomEnabled(false);
+            mCropImageView.setAutoZoomEnabled(true);
             mCropImageView.setFlippedHorizontally(false);
             mCropImageView.setFlippedVertically(false);
 
@@ -184,7 +184,6 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
     }
 
     @Override
@@ -207,6 +206,7 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
             }
            //SaveBitmapToFileCache(result.getBitmap(), uploadFilePath);
             ImageSaver imageSaver = new ImageSaver(result.getBitmap(), mFile);
+            Log.e(TAG, mFile+"");
             imageSaver.run();
             startActivity(intent);
         } else {

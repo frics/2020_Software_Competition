@@ -53,6 +53,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".Camera.Crop.CropResultActivity">
+        </activity>
+        <activity
+            android:name=".Camera.Crop.CropActivity" >
+        </activity>
+        <activity
             android:name=".recipe.RecipeIntroduction" />
     </application>
 
