@@ -1,5 +1,6 @@
 package kr.ac.ssu.myrecipe.MajorFragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,17 +16,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.myrecipe.User.PushData;
 import kr.ac.ssu.myrecipe.User.SharedPrefManager;
 
 public class AccountFragment extends Fragment {
 
     private static final String TAG =  AccountFragment.class.getSimpleName();
+
     private TextView TvNickname;
+    private Context mContext;
     private TextView TvId;
     private Button backUpBtn;
     private Button signoutBtn;
     private String id;
     private String nickname;
+    private String DBName;
 
     public static  AccountFragment newInstance() {
         return new  AccountFragment();
@@ -33,10 +38,17 @@ public class AccountFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_account, container, false);
+        mContext = getContext();
+        nickname = SharedPrefManager.getString( mContext, SharedPrefManager.KEY_NICKNAME);
+        id = SharedPrefManager.getString( mContext,SharedPrefManager.KEY_ID);
+        DBName = SharedPrefManager.getString( mContext, SharedPrefManager.KEY_REF_DB);
 
-        nickname = SharedPrefManager.getString(getContext(), SharedPrefManager.KEY_NICKNAME);
 
-        id = SharedPrefManager.getString(getContext(),SharedPrefManager.KEY_ID);
+
+        Log.e(TAG, nickname);
+        Log.e(TAG, id);
+        Log.e(TAG, DBName);
+
 
         TvNickname =view.findViewById(R.id.info_nickname);
         TvId = view.findViewById(R.id.info_id);
@@ -53,6 +65,13 @@ public class AccountFragment extends Fragment {
                 signOutProcess();
             }
         });
+        backUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PushData pushData = new PushData(getContext(),PushData.BACKUP, DBName);
+                pushData.execute();
+            }
+        });
 
         return view;
     }
@@ -65,10 +84,9 @@ public class AccountFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         //사용자 Preference 삭제
                         SharedPrefManager.logout(getContext());
+                        PushData pushData = new PushData(getContext(),PushData.LOGOUT, DBName);
+                        pushData.execute();
 
-                        /*여기부터 내부 DB 삭제 코드 삽입
-                        삭제할 내부 DB는 사용자의 냉장고 DB와 장보기 리스트 DB
-                        사용자 냉장고 디비는 서버의 Mysql로 백업 해야한다.*/
                     }
                 })
                 .setNegativeButton("아니요", new DialogInterface.OnClickListener() {

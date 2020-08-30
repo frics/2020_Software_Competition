@@ -43,7 +43,9 @@ public class RequestHandler {
 
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, StandardCharsets.UTF_8));
-            writer.write(getPostDataString(postDataParams));
+            //추가코드(param null pointer exception발생
+            if(postDataParams != null)
+                writer.write(getPostDataString(postDataParams));
 
             writer.flush();
             writer.close();

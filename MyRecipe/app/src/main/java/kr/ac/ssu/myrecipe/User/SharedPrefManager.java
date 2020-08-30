@@ -35,7 +35,7 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = getPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        Log.d("프리 메니저", id+", "+nickname);
+        Log.d("프리 메니저", id+", "+nickname+", "+ dbname);
         editor.putString(KEY_ID, id);
         editor.putString(KEY_NICKNAME, nickname);
         editor.putString(KEY_REF_DB, dbname);

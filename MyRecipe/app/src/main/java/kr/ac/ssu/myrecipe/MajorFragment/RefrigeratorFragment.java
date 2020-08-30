@@ -36,7 +36,7 @@ import kr.ac.ssu.myrecipe.ReceiptListActivity;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDelete;
-import kr.ac.ssu.myrecipe.TagDB.GetTag;
+import kr.ac.ssu.myrecipe.GetTag;
 import kr.ac.ssu.myrecipe.adapter.CategoryAdapter;
 import kr.ac.ssu.myrecipe.adapter.RefrigeratorAdapter;
 import kr.ac.ssu.myrecipe.adapter.TagListAdapter;
