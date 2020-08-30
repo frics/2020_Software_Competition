@@ -1,6 +1,7 @@
 package kr.ac.ssu.myrecipe.TagDB;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +58,8 @@ public class GetTag extends AsyncTask<Void, Void, String>{
                         data.setCategory("가루/오일");
                     tagList.add(data);
                 }
+            }else{
+                Log.e(TAG, response.getString("message"));
             }
             TagListAdapter.Item data = new TagListAdapter.Item();
             data.setCategory("카테고리 없음");

@@ -1,30 +1,26 @@
 package kr.ac.ssu.myrecipe.RefrigerRatorDB;
 
-import android.app.Activity;
-import android.content.Context;
-
-import androidx.appcompat.app.AppCompatDialog;
-
 import java.util.ArrayList;
 
 public class ThreadTask implements Runnable{
     private ArrayList<RefrigeratorData> mArgument;
-    private AppCompatDialog dialog;
-    private Context context;
     private RefrigeratorDao dao;
+    private OnTaskCompleted listener;
     private int flag;
     public final static int RECIEPT = 0;
     public final static int INITIALIZE = 1;
 
-    public ThreadTask(Context context, RefrigeratorDao dao, AppCompatDialog dialog, int flag) {
-        this.context = context;
-        this.dialog = dialog;
+    public ThreadTask(RefrigeratorDao dao, OnTaskCompleted listener, int flag) {
+        this.listener = listener;
         this.dao = dao;
         this.flag = flag;
     }
+    public interface OnTaskCompleted {
+        void onTaskCompleted(String str);
+        void onTaskFailure(String str);
+    }
 
     final public void execute(final ArrayList<RefrigeratorData> arg) {
-        // Store the argument
         mArgument = arg;
         // Call onPreExecute
         //onPreExecute();
@@ -55,7 +51,6 @@ public class ThreadTask implements Runnable{
     // onPreExecute
     protected void onPreExecute()
     {
-
     }
 
     // doInBackground
@@ -63,7 +58,6 @@ public class ThreadTask implements Runnable{
     {
         if(flag == INITIALIZE)
             dao.deleteAll();
-
         for(int i = 0; i < arg.size(); i++) {
             if(dao.findData(arg.get(i).getName()) == null) {
                 dao.insert(arg.get(i));
@@ -74,7 +68,7 @@ public class ThreadTask implements Runnable{
     // onPostExecute
     protected void onPostExecute()
     {
-        dialog.dismiss();
-        ((Activity)context).finish();
+        if (listener != null)
+            listener.onTaskCompleted("Success");
     }
 }
