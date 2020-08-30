@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import kr.ac.ssu.myrecipe.adapter.TagListAdapter;
 
 public class GetTag extends AsyncTask<Void, Void, String>{
+    private static final String TAG = GetTag.class.getSimpleName();
     private ArrayList<TagListAdapter.Item> tagList;
     private OnTaskCompleted listener;
+
 
     public interface OnTaskCompleted {
         void onTaskCompleted(String str);
@@ -39,18 +41,22 @@ public class GetTag extends AsyncTask<Void, Void, String>{
         super.onPostExecute(s);
 
         try {
-
-            JSONArray jsonArray = new JSONArray(s);
-            for(int i = 0; i < jsonArray.length(); i++){
-                TagListAdapter.Item data = new TagListAdapter.Item();
-                JSONObject arrayIndex = jsonArray.getJSONObject(i);
-                data.setCategory(arrayIndex.getString("cate"));
-                data.setTag(arrayIndex.getString("tag"));
-                data.setTagNumber(arrayIndex.getInt("tagNumber"));
-                //생성자에서 넘겨받은 arrayList에 저장
-                if(i == 0)
-                    data.setCategory("가루/오일");
-                tagList.add(data);
+            JSONObject object = new JSONObject(s);
+            JSONObject response = object.getJSONObject("response");
+           // Log.e(TAG, object.getJSONObject("response")+"");
+            if(!response.getBoolean("error")) {
+                JSONArray tag = object.getJSONArray("tag");
+                for(int i = 0; i < tag.length(); i++){
+                    TagListAdapter.Item data = new TagListAdapter.Item();
+                    JSONObject arrayIndex = tag.getJSONObject(i);
+                    data.setCategory(arrayIndex.getString("category"));
+                    data.setTag(arrayIndex.getString("tag"));
+                    data.setTagNumber(arrayIndex.getInt("tagNumber"));
+                    //생성자에서 넘겨받은 arrayList에 저장
+                    if(i == 0)
+                        data.setCategory("가루/오일");
+                    tagList.add(data);
+                }
             }
             TagListAdapter.Item data = new TagListAdapter.Item();
             data.setCategory("카테고리 없음");
