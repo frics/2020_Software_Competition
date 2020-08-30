@@ -40,6 +40,7 @@ import kr.ac.ssu.myrecipe.GetTag;
 import kr.ac.ssu.myrecipe.adapter.CategoryAdapter;
 import kr.ac.ssu.myrecipe.adapter.RefrigeratorAdapter;
 import kr.ac.ssu.myrecipe.adapter.TagListAdapter;
+import kr.ac.ssu.myrecipe.recipe.RecipeOrderList;
 
 public class RefrigeratorFragment extends Fragment{
     private ArrayList<ArrayList<RefrigeratorAdapter.Data>> dataList;
@@ -195,6 +196,8 @@ public class RefrigeratorFragment extends Fragment{
             recyclerview.setVisibility(View.VISIBLE);
             text.setVisibility(View.GONE);
         }
+
+        RecipeOrderList.RenewOrder(getContext()); // 레시피 갱신
     }
 
     void showAddDialog(final Context context)
