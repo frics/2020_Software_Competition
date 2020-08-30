@@ -33,7 +33,7 @@ import kr.ac.ssu.myrecipe.ReceiptListActivity;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
-import kr.ac.ssu.myrecipe.TagDB.GetTag;
+import kr.ac.ssu.myrecipe.GetTag;
 
 public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.ViewHolder> {
     private ArrayList<Data> mData = null;
