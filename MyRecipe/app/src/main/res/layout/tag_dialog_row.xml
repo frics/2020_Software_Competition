@@ -10,7 +10,7 @@
         android:layout_marginLeft="20dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/category_1"/>
+        android:src="@drawable/category_14"/>
     <TextView
         android:id="@+id/tag_row_text"
         android:layout_marginTop="12dp"

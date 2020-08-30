@@ -8,33 +8,30 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
+
+import kr.ac.ssu.myrecipe.IconData;
 import kr.ac.ssu.myrecipe.R;
 
 
 public class TagListAdapter extends RecyclerView.Adapter<TagListAdapter.ViewHolder> implements Filterable {
+    public static final int ADD = 1;
+    public static final int RECEIPT = 0;
     public ArrayList<TagListAdapter.Item> filteredList;
     private ArrayList<TagListAdapter.Item> unFilteredlist;
     private OnItemClickListener mListener = null ;
-    private AlertDialog dialog;
     private Context context;
-    //ReceiptList
+    private int flag;
 
-    public TagListAdapter(Context context, AlertDialog dialog) {
+    public TagListAdapter(Context context, ArrayList<TagListAdapter.Item> items, int flag){
         this.context = context;
-        this.dialog = dialog;
-
-        filteredList = new ArrayList<Item>();
-        filteredList.add(new Item("과일", "자두"));
-        filteredList.add(new Item("과일", "사과"));
-        filteredList.add(new Item("과일", "자몽"));
-        filteredList.add(new Item("채소", "두부"));
-        filteredList.add(new Item("채소", "콩나물"));
-        unFilteredlist = filteredList;
-        //list초기화
+        this.filteredList = items;
+        this.unFilteredlist = items;
+        this.flag = flag;
     }
 
     @Override
@@ -78,9 +75,16 @@ public class TagListAdapter extends RecyclerView.Adapter<TagListAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull TagListAdapter.ViewHolder holder, int position) {
         holder.textView.setText(filteredList.get(position).tag);
-        if(filteredList.get(position).category.equals("채소"))
-            holder.imageView.setImageResource(R.drawable.category_2);
-        //카테고리 연동 코드
+        if(flag == RECEIPT)
+            holder.imageView.setImageResource(IconData.textToicon.get(filteredList.get(position).category));
+        else if(flag == ADD){
+            //전체 xml파일이 없으므로 100단위로 끊음
+            String resName = "@drawable/ic_tag";
+            String packName = context.getPackageName();
+            int num = filteredList.get(position).getTagNumber() / 100;
+            int id = context.getResources().getIdentifier(resName+(426+num), "drawable", packName);
+            holder.imageView.setImageResource(id);
+        }
     }
 
     @Override
@@ -116,12 +120,40 @@ public class TagListAdapter extends RecyclerView.Adapter<TagListAdapter.ViewHold
     }
 
     public static class Item{
-        public String category;
-        public String tag;
+        private String category;
+        private String tag;
+        private int tagNumber;
 
-        public Item(String category, String tag) {
+        public Item(String category, String tag, int tagNumber) {
             this.category = category;
             this.tag = tag;
+            this.tagNumber = tagNumber;
+        }
+
+        public Item(){}
+
+        public String getCategory() {
+            return category;
+        }
+
+        public String getTag() {
+            return tag;
+        }
+
+        public int getTagNumber() {
+            return tagNumber;
+        }
+
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public void setTag(String tag) {
+            this.tag = tag;
+        }
+
+        public void setTagNumber(int tagNumber) {
+            this.tagNumber = tagNumber;
         }
     }
 }
