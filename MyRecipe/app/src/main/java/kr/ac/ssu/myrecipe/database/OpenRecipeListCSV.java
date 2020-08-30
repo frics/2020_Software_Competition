@@ -91,9 +91,11 @@ public class OpenRecipeListCSV {
                         tag = tag.trim();
                         String[] tags = tag.split(","); // ','를 기준으로 split
 
-                        for (int j = 0; j < tags.length; j++)
+                        for (int j = 0; j < tags.length; j++) {
+                            tags[j] = tags[j].trim();
                             Recipe.recipeList[i].tag_list.add(tags[j]);
-                            break;
+                        }
+                        break;
                 }
 
                 // 레시피 순서 입력

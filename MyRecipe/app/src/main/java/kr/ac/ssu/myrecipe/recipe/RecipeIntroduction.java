@@ -37,7 +37,7 @@ public class RecipeIntroduction extends AppCompatActivity {
 
     // 데이터 표시 뷰
     private View recipeBar, ingredientBar, kcalBar, carbonBar, proteinBar, fatBar, sodiumBar, max_bar;
-    private TextView textView, recipeTitle, ingredientTitle, kcalText, carbonText, proteinText, fatText, sodiumText;
+    private TextView percentText, textView, recipeTitle, ingredientTitle, kcalText, carbonText, proteinText, fatText, sodiumText;
     private TextView kcalTextBar, carbonTextBar, proteinTextBar, fatTextBar, sodiumTextBar;
     private ImageView backButton, scrapButton, foodimage;
 
@@ -60,14 +60,16 @@ public class RecipeIntroduction extends AppCompatActivity {
         pushRecentRecipeList();
     }
 
-    private void setMainView() { // 음식 사진 및 이름 세팅 (퍼센트 추가해야함)
+    private void setMainView() { // 음식 사진 및 이름 세팅
         foodimage = this.findViewById(R.id.food_image);
         textView = this.findViewById(R.id.food_name);
+        percentText = this.findViewById(R.id.food_percentage);
         Glide.with(this)
                 .load(recipe.image_url)
                 .error(R.drawable.basic)
                 .into(foodimage);
         textView.setText(recipe.name);
+        percentText.setText(recipe.percent+"%");
     }
 
     private void makeResponsiveUI() { // 메인 레시피 반응형 UI 생성 함수

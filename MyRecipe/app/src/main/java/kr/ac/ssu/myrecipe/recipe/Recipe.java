@@ -3,8 +3,8 @@ package kr.ac.ssu.myrecipe.recipe;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// 레시피 클래스
-public class Recipe implements Serializable {
+public class Recipe implements Serializable { // 레시피 클래스
+
     // 내부 레시피리스트
     public static final int TOTAL_RECIPE_NUM = 1200;
     public static Recipe[] recipeList;
@@ -17,6 +17,7 @@ public class Recipe implements Serializable {
     public ArrayList<Ingredient> ingredient; // 재료리스트
     public ArrayList<String> tag_list; // 재료 태그리스트
     public ArrayList<String> recipe_order; // 조리 순서
+    public int percent; // 완성도
 
     // 디폴트 생성자
     public Recipe() {

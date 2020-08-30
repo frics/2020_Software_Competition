@@ -50,7 +50,7 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
                 .error(R.drawable.basic)
                 .into(holder.food_image);
         holder.food_name.setText(item.name); // 음식명 설정
-        holder.food_percent.setText("100%"); // 퍼센트 설정(수정필요)
+        holder.food_percent.setText(item.percent+"%"); // 퍼센트 설정
 
         // 재료리스트 삽입
         String lists = new String();
