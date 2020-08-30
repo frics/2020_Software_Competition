@@ -31,12 +31,11 @@ import androidx.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
+import kr.ac.ssu.myrecipe.GetTag;
+import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDelete;
-import kr.ac.ssu.myrecipe.GetTag;
 import kr.ac.ssu.myrecipe.adapter.CategoryAdapter;
 import kr.ac.ssu.myrecipe.adapter.RefrigeratorAdapter;
 import kr.ac.ssu.myrecipe.adapter.TagListAdapter;
@@ -313,16 +312,15 @@ public class RefrigeratorFragment extends Fragment{
     public void showDeleteDialog(final int position)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        final RefrigeratorDataBase db = Room.databaseBuilder(getContext(),RefrigeratorDataBase.class,"refrigerator.db").build();
         builder.setMessage("음식을 삭제하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         String name = refrigeratorAdapter.filteredList.get(position).name;
-                        RefrigeratorData data = new RefrigeratorData();
-                        data.setName(name);
                         //백그라운드 삭제
-                        new RefrigeratorDelete(db.Dao()).execute(data);
+                        //new RefrigeratorDelete(db.Dao()).execute(data);
+                        RefrigeratorData result = db.Dao().findData(name);
+                        db.Dao().delete(result);
                         refrigeratorAdapter.filteredList.remove(position);
                         //필터된 리스트와 원본 리스트가 다르면
                         if(refrigeratorAdapter.unFilteredlist != refrigeratorAdapter.filteredList) {
@@ -389,6 +387,7 @@ public class RefrigeratorFragment extends Fragment{
                             text.setVisibility(View.VISIBLE);
                         }
                         refrigeratorAdapter.notifyDataSetChanged();
+                        RecipeOrderList.RenewOrder(getContext()); // 레시피 갱신
                     }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
