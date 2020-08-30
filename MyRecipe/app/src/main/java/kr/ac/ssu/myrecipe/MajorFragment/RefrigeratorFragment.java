@@ -24,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -37,42 +36,46 @@ import kr.ac.ssu.myrecipe.ReceiptListActivity;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDelete;
-import kr.ac.ssu.myrecipe.adapter.RefrigeratorListAdapter;
+import kr.ac.ssu.myrecipe.TagDB.GetTag;
+import kr.ac.ssu.myrecipe.adapter.CategoryAdapter;
+import kr.ac.ssu.myrecipe.adapter.RefrigeratorAdapter;
 import kr.ac.ssu.myrecipe.adapter.TagListAdapter;
 
-public class RefrigeratorFragment extends Fragment {
-    private RefrigeratorListAdapter adapter;
+public class RefrigeratorFragment extends Fragment{
+    private ArrayList<ArrayList<RefrigeratorAdapter.Data>> dataList;
+    private RecyclerView categoryRecycler;
     private RecyclerView recyclerview;
     private EditText searching_table;
-    private List<RefrigeratorListAdapter.Item> data;
     private ImageButton search_button;
-    private ImageButton nested_close;
     private LinearLayout nested_layout;
     private EditText tag;
     private TextView category;
+    private TextView tagNumber;
+    private RefrigeratorAdapter refrigeratorAdapter;
+    private CategoryAdapter categoryAdapter;
     private RefrigeratorDataBase db;
-    private ItemTouchHelper.SimpleCallback simpleCallback;
     private InputMethodManager imm;
+    private TextView text;
+    private ArrayList<TagListAdapter.Item> taglist;
+    private ArrayList<String> categoryList;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_refrigerator, container, false);
         final Context context = getContext();
         imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         recyclerview = (RecyclerView)v.findViewById(R.id.refri_recycler);
+        categoryRecycler = (RecyclerView)v.findViewById(R.id.refri_recycler_horizon);
         search_button = (ImageButton)v.findViewById(R.id.refri_search);
         nested_layout = (LinearLayout)v.findViewById(R.id.refri_nested_layout);
         searching_table = (EditText)v.findViewById(R.id.refri_search_table);
-        nested_close = (ImageButton)v.findViewById(R.id.refri_nested_close);
+        text = (TextView)v.findViewById(R.id.refri_text);
         recyclerview.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        categoryRecycler.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,false));
         db = Room.databaseBuilder(getContext(),RefrigeratorDataBase.class, "refrigerator.db").allowMainThreadQueries().build();
+        ImageButton nested_close = (ImageButton) v.findViewById(R.id.refri_nested_close);
         ImageButton add_button = (ImageButton)v.findViewById(R.id.refri_add);
         ImageButton temp = (ImageButton)v.findViewById(R.id.refri_temp);
 
-        //swipe동작 리스너 초기화
-        setSimpleCallback();
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        //리사이클러뷰에 swipehelper장착
-        itemTouchHelper.attachToRecyclerView(recyclerview);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +119,7 @@ public class RefrigeratorFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                adapter.getFilter().filter(charSequence);
+                refrigeratorAdapter.getFilter().filter(charSequence);
             }
 
             @Override
@@ -130,26 +133,68 @@ public class RefrigeratorFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setRecyclerviewData();
+        setData();
     }
 
-    public void setRecyclerviewData(){
-        data = new ArrayList<>();
+    public void setData(){
+        ArrayList<RefrigeratorAdapter.Data> items = new ArrayList<>();
         List<RefrigeratorData> dbData = db.Dao().sortData();
-        String category = "null";
+        categoryList = new ArrayList<>();
+
         for(int i = 0; i < dbData.size(); i++){
-            //Log.e("RefrigeratorFragment",dbData.get(i).getName() + " " + dbData.get(i).getTag());
-            if(!category.equals(dbData.get(i).getCategory())){
-                category = dbData.get(i).getCategory();
-                data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.HEADER, category));
-                data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, dbData.get(i).getName()));
-            }
-            else
-                data.add(new RefrigeratorListAdapter.Item(RefrigeratorListAdapter.CHILD, dbData.get(i).getName()));
+            RefrigeratorAdapter.Data data = new RefrigeratorAdapter.Data();
+            data.category = dbData.get(i).getCategory();
+            data.tag = dbData.get(i).getTag();
+            data.name = dbData.get(i).getName();
+            data.tagNumber = dbData.get(i).getTagNumber();
+            items.add(data);
         }
-        //Log.e("RefrigeratorFragment","=========================");
-        adapter = new RefrigeratorListAdapter(data);
-        recyclerview.setAdapter(adapter);
+        int position = 0;
+        String category = "null";
+        //전체카테고리 생성
+        dataList = new ArrayList<ArrayList<RefrigeratorAdapter.Data>>();
+        dataList.add(new ArrayList<RefrigeratorAdapter.Data>());
+        categoryList.add("전체");
+        for(int i = 0; i < items.size(); i++){
+            if(!category.equals(items.get(i).category)){
+                category = items.get(i).category;
+                dataList.add(new ArrayList<RefrigeratorAdapter.Data>());
+                categoryList.add(items.get(i).category);
+                position++;
+            }
+            dataList.get(0).add(items.get(i));
+            dataList.get(position).add(items.get(i));
+        }
+        refrigeratorAdapter = new RefrigeratorAdapter(getContext(), dataList.get(0),dataList);
+        recyclerview.setAdapter(refrigeratorAdapter);
+        categoryAdapter = new CategoryAdapter(categoryList,getContext());
+        categoryRecycler.setAdapter(categoryAdapter);
+        categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                int prePositon = categoryAdapter.getClick_position();
+                categoryAdapter.setClick_position(position);
+                categoryAdapter.notifyItemChanged(prePositon);
+                categoryAdapter.notifyItemChanged(position);
+                refrigeratorAdapter.changeData(dataList.get(position));
+                refrigeratorAdapter.getFilter().filter(searching_table.getText().toString());
+            }
+        });
+        refrigeratorAdapter.setOnItemClickListener(new RefrigeratorAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                showDeleteDialog(position);
+            }
+        });
+        if(dbData.size() == 0){
+            recyclerview.setVisibility(View.GONE);
+            text.setVisibility(View.VISIBLE);
+            return;
+        }
+        else{
+            recyclerview.setVisibility(View.VISIBLE);
+            text.setVisibility(View.GONE);
+        }
     }
 
     void showAddDialog(final Context context)
@@ -158,6 +203,7 @@ public class RefrigeratorFragment extends Fragment {
         View view = inflater.inflate(R.layout.add_dialog, null);
         tag = (EditText)view.findViewById(R.id.add_dialog_tag);
         category = (TextView)view.findViewById(R.id.add_dialog_category);
+        tagNumber = (TextView)view.findViewById(R.id.add_dialog_tagNumber);
         final EditText material = (EditText)view.findViewById(R.id.add_dialog_material);
         final Button okay = (Button)view.findViewById(R.id.add_dialog_okay);
         final ImageButton close = (ImageButton)view.findViewById(R.id.add_dialog_close);
@@ -165,7 +211,6 @@ public class RefrigeratorFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);
         final AlertDialog dialog = builder.create();
-        //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,11 +229,13 @@ public class RefrigeratorFragment extends Fragment {
                     RefrigeratorData dbdata = new RefrigeratorData();
                     dbdata.setTag(tag.getText().toString());
                     dbdata.setName(material.getText().toString());
-                    //카테고리 미설정
+                    dbdata.setTagNumber(Integer.parseInt(tagNumber.getText().toString()));
                     dbdata.setCategory(category.getText().toString());
                     if(db.Dao().findData(dbdata.getName()) == null)
                         db.Dao().insert(dbdata);
-                    setRecyclerviewData();
+                    else
+                        Toast.makeText(context,"이미 같은이름의 재료가 등록되어 있습니다.",Toast.LENGTH_SHORT).show();
+                    setData();
                     dialog.dismiss();
                 }
             }
@@ -196,7 +243,21 @@ public class RefrigeratorFragment extends Fragment {
         tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showTagDialog(context);
+                //tag담을 리스트 초기화
+                taglist = new ArrayList<>();
+                GetTag.OnTaskCompleted listener = new GetTag.OnTaskCompleted() {
+                    @Override
+                    public void onTaskCompleted(String str) {
+                        showTagDialog(getContext());
+                    }
+                    @Override
+                    public void onTaskFailure(String str) {
+                        Log.e("RefrigeratorFragment","Task Failure!");
+                    }
+                };
+                //백그라운드 수행(완료시 progressDialog 종료)
+                new GetTag(taglist,listener).execute();
+
             }
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -212,7 +273,7 @@ public class RefrigeratorFragment extends Fragment {
         final AlertDialog dialog = builder.create();
         final EditText editText = (EditText)view.findViewById(R.id.tag_edittext);
         final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.tag_recylcerview);
-        final TagListAdapter adapter = new TagListAdapter(context, dialog);
+        final TagListAdapter adapter = new TagListAdapter(context, taglist, TagListAdapter.ADD);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setAdapter(adapter);
@@ -238,102 +299,101 @@ public class RefrigeratorFragment extends Fragment {
         adapter.setOnItemClickListener(new TagListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                tag.setText(adapter.filteredList.get(pos).tag);
-                category.setText(adapter.filteredList.get(pos).category);
+                tag.setText(adapter.filteredList.get(pos).getTag());
+                category.setText(adapter.filteredList.get(pos).getCategory());
+                tagNumber.setText("" + adapter.filteredList.get(pos).getTagNumber());
                 dialog.dismiss();
             }
         });
     }
 
-    private void setSimpleCallback()
+    public void showDeleteDialog(final int position)
     {
-        simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
-                if(adapter.getItemViewType(viewHolder.getLayoutPosition()) == 0) {
-                    adapter.notifyItemChanged(viewHolder.getLayoutPosition());
-                    return;
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("음식을 삭제하시겠습니까?")
-                        .setCancelable(false)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //db에서 delete
-                                RefrigeratorData findData = new RefrigeratorData();
-                                findData.setName(adapter.filteredList.get(viewHolder.getLayoutPosition()).text);
-                                new RefrigeratorDelete(db.Dao()).execute(findData);
-                                int pos = adapter.filteredList.get(viewHolder.getLayoutPosition()).position;
-                                Log.e("TEST",pos + " " +viewHolder.getLayoutPosition());
-                                //바로위가 HEADER이면
-                                if(adapter.getItemViewType(viewHolder.getLayoutPosition()-1) == 0){
-                                    //맨마지막이면
-                                    if(viewHolder.getLayoutPosition() == adapter.filteredList.size()-1){
-                                        adapter.filteredList.remove(viewHolder.getLayoutPosition());
-                                        adapter.notifyItemRemoved(viewHolder.getLayoutPosition());
-                                        adapter.filteredList.remove(viewHolder.getLayoutPosition()-1);
-                                        adapter.notifyItemRemoved(viewHolder.getLayoutPosition()-1);
-                                    }
-                                    //중간에 끼어있으면
-                                    else if(adapter.getItemViewType(viewHolder.getLayoutPosition()+1) == 0){
-                                        adapter.filteredList.remove(viewHolder.getLayoutPosition());
-                                        adapter.notifyItemRemoved(viewHolder.getLayoutPosition());
-                                        adapter.filteredList.remove(viewHolder.getLayoutPosition()-1);
-                                        adapter.notifyItemRemoved(viewHolder.getLayoutPosition()-1);
-                                    }
-                                    //그외
-                                    else
-                                    {
-                                        adapter.filteredList.remove(viewHolder.getLayoutPosition());
-                                        adapter.notifyItemRemoved(viewHolder.getLayoutPosition());
-                                    }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final RefrigeratorDataBase db = Room.databaseBuilder(getContext(),RefrigeratorDataBase.class,"refrigerator.db").build();
+        builder.setMessage("음식을 삭제하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        String name = refrigeratorAdapter.filteredList.get(position).name;
+                        RefrigeratorData data = new RefrigeratorData();
+                        data.setName(name);
+                        //백그라운드 삭제
+                        new RefrigeratorDelete(db.Dao()).execute(data);
+                        refrigeratorAdapter.filteredList.remove(position);
+                        //필터된 리스트와 원본 리스트가 다르면
+                        if(refrigeratorAdapter.unFilteredlist != refrigeratorAdapter.filteredList) {
+                            //원본리스트에서도 삭제
+                            for (int i = 0; i < refrigeratorAdapter.unFilteredlist.size(); i++) {
+                                if (name.equals(refrigeratorAdapter.unFilteredlist.get(i).name)) {
+                                    refrigeratorAdapter.unFilteredlist.remove(i);
+                                    break;
                                 }
-                                //중간에 끼어있으면
-                                else
-                                {
-                                    adapter.filteredList.remove(viewHolder.getLayoutPosition());
-                                    adapter.notifyItemRemoved(viewHolder.getLayoutPosition());
-                                }
-                                Log.e("TEST","table : " + searching_table.getText().toString());
-                                if(searching_table.getText().toString().equals(""))
-                                    return;
-                                //unfiltered삭제
-                                if(adapter.getUnfilterViewType(pos-1) == 0){
-                                    //맨마지막이면
-                                    if(pos == adapter.unFilteredlist.size()-1){
-                                        adapter.unFilteredlist.remove(pos);
-                                        adapter.unFilteredlist.remove(pos-1);
-                                    }
-                                    //중간에 끼어있으면
-                                    else if(adapter.getUnfilterViewType(pos+1) == 0){
-                                        adapter.unFilteredlist.remove(pos);
-                                        adapter.unFilteredlist.remove(pos-1);
-                                    }
-                                    //그외
-                                    else
-                                        adapter.unFilteredlist.remove(pos);
-                                }
-                                //중간에 끼어있으면
-                                else
-                                    adapter.unFilteredlist.remove(pos);
-                                CharSequence text = searching_table.getText().toString();
-                                adapter.getFilter().filter(text);
                             }
-                        })
-                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                adapter.notifyItemChanged(viewHolder.getLayoutPosition());
+                        }
+                        //전체 카테고리가 아닐경우
+                        if(refrigeratorAdapter.unFilteredlist != refrigeratorAdapter.allItems.get(0)){
+                            //전체 카테고리 아이템도 삭제
+                            for(int i = 0; i < refrigeratorAdapter.allItems.size(); i++){
+                                if(name.equals(refrigeratorAdapter.allItems.get(0).get(i).name)){
+                                    refrigeratorAdapter.allItems.get(0).remove(i);
+                                    break;
+                                }
                             }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        };
+                            //선택된 카테고리가 0이되었으면
+                            if(refrigeratorAdapter.allItems.get(categoryAdapter.getClick_position()).size() == 0){
+                                //allitem에 dataset에서 삭제
+                                refrigeratorAdapter.allItems.remove(categoryAdapter.getClick_position());
+                                //0인 카테고리를 리스트에서 삭제
+                                categoryList.remove(categoryAdapter.getClick_position());
+                                int prePositon = categoryAdapter.getClick_position();
+                                //데이터변경
+                                categoryAdapter.setClick_position(0);
+                                categoryAdapter.notifyDataSetChanged();
+                                //전체카테고리로 이동
+                                refrigeratorAdapter.changeData(dataList.get(0));
+                                refrigeratorAdapter.getFilter().filter(searching_table.getText().toString());
+                            }
+                        }
+                        //전체 카테고리 일경우
+                        else{
+                            boolean exit = false;
+                            for(int i = 1; i < refrigeratorAdapter.allItems.size(); i++){
+                                for(int j = 0; j < refrigeratorAdapter.allItems.get(i).size(); j++){
+                                    if(name.equals(refrigeratorAdapter.allItems.get(i).get(j).name)){
+                                        //해당하는 아이템 삭제
+                                        refrigeratorAdapter.allItems.get(i).remove(j);
+                                        //i번째 카테고리가 비었으면
+                                        if(refrigeratorAdapter.allItems.get(i).size() == 0){
+                                            //데이터셋 삭제
+                                            refrigeratorAdapter.allItems.remove(i);
+                                            //0인 카테고리를 리스트에서 삭제
+                                            categoryList.remove(i);
+                                            //데이터변경
+                                            categoryAdapter.notifyDataSetChanged();
+                                        }
+                                        exit = true;
+                                        break;
+                                    }
+                                    if(exit)
+                                        break;
+                                }
+                            }
+                        }
+                        //전체 카테고리가 0이면
+                        if(refrigeratorAdapter.allItems.get(0).size() == 0){
+                            recyclerview.setVisibility(View.GONE);
+                            text.setVisibility(View.VISIBLE);
+                        }
+                        refrigeratorAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

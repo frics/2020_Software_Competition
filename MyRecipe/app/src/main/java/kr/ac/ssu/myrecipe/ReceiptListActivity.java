@@ -70,32 +70,41 @@ public class ReceiptListActivity extends AppCompatActivity {
         foodList = new ArrayList<>();
         try{
             JSONObject jsonObject = new JSONObject(json);
-            for(int i = 1; i <= jsonObject.length();i++){
-                JSONObject object = jsonObject.getJSONObject("refrigerator"+i);
+            ArrayList<ReceiptListAdapter.Data> noCategoryList = new ArrayList<>();
+            for(int i = 0; i < jsonObject.length();i++){
+                JSONObject object = jsonObject.getJSONObject("classification"+i);
                 ReceiptListAdapter.Data data = new ReceiptListAdapter.Data();
-                if(i == 1){
-                    //라인 구분선
-                    ReceiptListAdapter.Data line = new ReceiptListAdapter.Data();
-                    line.setName("-----");
-                    //라인 구분선 부분의 카테고리도 카테고리없음으로 설정(db저장시 거르기위함)
-                    line.setCategory(R.drawable.ic_question_24dp);
-                    line.setPrice(sum);
-                    foodList.add(line);
+                data.setName(object.getString("name"));
+                data.setTag(object.getString("tag"));
+                if(data.getTag().equals("태그없음")){
+                    //임시로 이 아이콘 사용
+                    data.setCategory("카테고리 없음");
+                    //임시로 TagNumber 0사용
+                    data.setTagNumber(0);
+                    //태그없음에 해당하는 tagNumber
+                    noCategoryList.add(data);
                 }
-                //임시
-                data.setCategory(R.drawable.ic_question_24dp);
-                data.setName(object.getString("ingredient"));
-                data.setTag("태그없음");
-                //data.setCount(Integer.parseInt(object.getString("amount")));
-                data.setPrice(Integer.parseInt(object.getString("price")));
-                sum += Integer.parseInt(object.getString("price"));
-                foodList.add(data);
+                else {
+                    data.setCategory(object.getString("cate"));
+                    //임시로 TagNumber 0사용
+                    data.setTagNumber(object.getInt("tagNumber"));
+                    foodList.add(data);
+                }
             }
+            //구분선 추가
+            ReceiptListAdapter.Data line = new ReceiptListAdapter.Data();
+            line.setName("-----");
+            //라인 구분선 부분의 카테고리도 카테고리없음으로 설정(db저장시 거르기위함)
+            line.setCategory("카테고리 없음");
+            foodList.add(line);
+            //카테고리없음 아이템 추가
+            for(int i = 0 ; i < noCategoryList.size(); i++)
+                foodList.add(noCategoryList.get(i));
+            //마지막 화인버튼 라인 추가
             ReceiptListAdapter.Data data = new ReceiptListAdapter.Data();
             data.setName("last");
             //마지막 확인버튼 라인역시 카테고리 없음으로 설정(db저장시 거르기위함)
-            data.setCategory(R.drawable.ic_question_24dp);
-            data.setPrice(sum);
+            data.setCategory("카테고리 없음");
             foodList.add(data);
 
         }catch (JSONException e) {

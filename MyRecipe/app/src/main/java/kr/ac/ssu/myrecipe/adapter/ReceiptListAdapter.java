@@ -34,12 +34,14 @@ import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
+import kr.ac.ssu.myrecipe.TagDB.GetTag;
 
 public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.ViewHolder> {
     private ArrayList<Data> mData = null;
     private Context context;
     private int LinePos;
     private IconData iconData;
+    private ArrayList<TagListAdapter.Item> taglist;
 
     public ReceiptListAdapter(ArrayList<Data> list, Context context) {
         mData = list;
@@ -83,20 +85,20 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                         for(int i = 0; i < mData.size(); i++){
                             JSONObject jsonObject = new JSONObject();
                             //카테고리가 설정되었으면 서버로 보내거나 db에 저장
-                            if(mData.get(i).getCategory() != R.drawable.ic_question_24dp) {
+                            if(!mData.get(i).getCategory().equals("카테고리 없음")) {
                                 //냉장고 내부 db
                                 RefrigeratorData data = new RefrigeratorData();
                                 //icon int값에서 text로 변환
-                                data.setCategory(iconData.iconTotext.get(mData.get(i).getCategory()));
+                                data.setCategory(mData.get(i).getCategory());
                                 data.setTag(mData.get(i).getTag());
                                 data.setName(mData.get(i).getName());
+                                data.setTagNumber(mData.get(i).getTagNumber());
                                 list.add(data);
                                 //new RefrigeratorInsert(db.Dao()).execute();
                                 //서버 전송 json
-                                jsonObject.put("category", iconData.iconTotext.get(mData.get(i).category));
+                                jsonObject.put("category", mData.get(i).category);
                                 jsonObject.put("name", mData.get(i).getName());
                                 jsonObject.put("tag", mData.get(i).getTag());
-                                jsonObject.put("price", mData.get(i).getPrice());
                                 wrapObject.put("refrigerator" + (i + 1), jsonObject);
                             }
                         }
@@ -135,16 +137,29 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
             holder.layout.setVisibility(View.VISIBLE);
             holder.view.setVisibility(View.GONE);
             holder.constrain.setVisibility(View.GONE);
-            holder.category.setImageResource(item.getCategory());
+            holder.category.setImageResource(IconData.textToicon.get(item.getCategory()));
             holder.category.setBackgroundResource(R.drawable.circle);
             holder.name.setText(item.getName());
             holder.tag.setText(item.getTag());
-            holder.price.setText(Integer.toString(item.getPrice()));
             //카테고리 다이얼로그
             holder.category.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showTagDialog(context, position, holder);
+                    //tag담을 리스트 초기화
+                    taglist = new ArrayList<>();
+                    GetTag.OnTaskCompleted listener = new GetTag.OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(String str) {
+                            showTagDialog(context,position,holder);
+                        }
+                        @Override
+                        public void onTaskFailure(String str) {
+                            Log.e("RefrigeratorFragment","Task Failure!");
+                        }
+                    };
+                    //백그라운드 수행(완료시 progressDialog 종료)
+                    new GetTag(taglist,listener).execute();
+                    //showTagDialog(context, position, holder);
                 }
             });
             holder.name.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +194,7 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
         final AlertDialog dialog = builder.create();
         final EditText editText = (EditText)view.findViewById(R.id.tag_edittext);
         final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.tag_recylcerview);
-        final TagListAdapter adapter = new TagListAdapter(context, dialog);
+        final TagListAdapter adapter = new TagListAdapter(context,taglist,TagListAdapter.RECEIPT);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setAdapter(adapter);
@@ -203,18 +218,17 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
         adapter.setOnItemClickListener(new TagListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                holder.tag.setText(adapter.filteredList.get(pos).tag);
-                holder.categoryString.setText(adapter.filteredList.get(pos).category);
+                IconData iconData = new IconData();
+                holder.tag.setText(adapter.filteredList.get(pos).getTag());
+                holder.categoryString.setText(adapter.filteredList.get(pos).getCategory());
                 String pre = item.getTag();
                 String post = holder.tag.getText().toString();
 
                 if(pre.equals("태그없음") && !post.equals("태그없음")){
                     Data newdata = new Data();
-                    Integer category = IconData.textToicon.get(holder.categoryString.getText().toString());
-                    newdata.setCategory(category);
+                    newdata.setCategory(holder.categoryString.getText().toString());
                     newdata.setTag(holder.tag.getText().toString());
                     newdata.setName(item.getName());
-                    newdata.setPrice(item.getPrice());
                     //먼저 추가하고
                     mData.add(LinePos,newdata);
                     //한칸 밀렸으니 positon+1삭제
@@ -224,10 +238,9 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                 else if(!pre.equals("태그없음") && post.equals("태그없음"))
                 {
                     Data newdata = new Data();
-                    newdata.setCategory(R.drawable.ic_question_24dp);
+                    newdata.setCategory("카테고리 없음");
                     newdata.setName(item.getName());
                     newdata.setTag(holder.tag.getText().toString());
-                    newdata.setPrice(item.getPrice());
                     //먼저 삭제하고
                     mData.remove(position);
                     //한칸 당겨졌으니 그 자리에 그대로 삽입
@@ -235,9 +248,9 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                     notifyDataSetChanged();
                 }
                 else{
-                    Integer category = IconData.textToicon.get(holder.categoryString.getText().toString());
+                    Integer category = iconData.textToicon.get(holder.categoryString.getText().toString());
                     holder.category.setImageResource(category);
-                    mData.get(position).setCategory(category);
+                    mData.get(position).setCategory(holder.categoryString.getText().toString());
                 }
                 dialog.dismiss();
             }
@@ -250,10 +263,7 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
     public int getItemCount() {
         return mData.size() ;
     }
-    void addItem(Data data) {
-        // 외부에서 item을 추가시킬 함수입니다.
-        mData.add(data);
-    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView category;
         TextView name;
@@ -274,7 +284,6 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
             categoryString = itemView.findViewById(R.id.receipt_item_categoryString);
             name = itemView.findViewById(R.id.receipt_item_name);
             tag = itemView.findViewById(R.id.receipt_item_tag);
-            price = itemView.findViewById(R.id.receipt_item_price);
             //구분자 or 데이터
             layout = itemView.findViewById(R.id.receipt_item_layout);
             view = itemView.findViewById(R.id.receipt_item_view);
@@ -283,26 +292,33 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
         }
     }
     public static class Data{
-        int category;
+        String category;
         String name;
         String tag;
-        int price;
+        int tagNumber;
 
-        public int getCategory() {
+        public String getCategory() {
             return category;
         }
+
+        public int getTagNumber() {
+            return tagNumber;
+        }
+
         public String getName() {
             return name;
         }
         public String getTag() {
             return tag;
         }
-        public int getPrice() {
-            return price;
+
+
+        public void setCategory(String category) {
+            this.category = category;
         }
 
-        public void setCategory(int category) {
-            this.category = category;
+        public void setTagNumber(int tagNumber) {
+            this.tagNumber = tagNumber;
         }
 
         public void setName(String name) {
@@ -313,8 +329,5 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
             this.tag = tag;
         }
 
-        public void setPrice(int price) {
-            this.price = price;
-        }
     }
 }
