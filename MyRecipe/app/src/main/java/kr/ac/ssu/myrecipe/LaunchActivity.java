@@ -16,10 +16,10 @@ import kr.ac.ssu.myrecipe.User.SharedPrefManager;
 import kr.ac.ssu.myrecipe.User.SignInActivity;
 import kr.ac.ssu.myrecipe.database.OpenRecipeListCSV;
 import kr.ac.ssu.myrecipe.MajorFragment.HomeFragment;
+import kr.ac.ssu.myrecipe.recipe.RecipeOrderList;
 
 public class LaunchActivity extends AppCompatActivity {
     private static final String TAG = LaunchActivity.class.getSimpleName();
-
     public final String PREFERENCE = "recentList";
 
     @Override
@@ -27,10 +27,10 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
+        int SPLASH_DISPLAY_TIME = 3000; // 스플래시 액티비티가 화면에 표시되는 시간 설정
         Handler handler = new Handler();
         final boolean isSignin = SharedPrefManager.isLoggedIn(this);
-        /* 스플래시 화면이 표시되는 시간을 설정(ms) */
-        int SPLASH_DISPLAY_TIME = 3000;
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -44,26 +44,22 @@ public class LaunchActivity extends AppCompatActivity {
 
                 // 최근 찾아본 레시피 목록 동기화
                 SharedPreferences pref = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
-               // SharedPreferences.Editor editor = pref.edit();
                 HomeFragment.recent_recipes = pref.getString("recentlist", "");
-                Log.d(TAG, "run: " + HomeFragment.recent_recipes);
 
-                if(isSignin) {
+                // 완성도 순 레시피리스트 세팅
+                RecipeOrderList.RenewOrder(getApplicationContext());
+
+                if (isSignin) {
                     Log.d(TAG, "메인 엑티비티로 이동");
                     startActivity(new Intent(getApplication(), MainActivity.class));
-                }else{
+                } else {
                     Log.d(TAG, "로그인 엑티비티로 이동");
                     startActivity(new Intent(getApplication(), SignInActivity.class));
                 }
-                /* 런 액티비티를 스택에서 제거. */
+
+                // 런 액티비티를 스택에서 제거.
                 LaunchActivity.this.finish();
             }
         }, SPLASH_DISPLAY_TIME);
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        /* 스플래시 화면에서 뒤로가기 기능 제거. */
     }
 }
