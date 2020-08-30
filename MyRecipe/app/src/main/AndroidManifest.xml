@@ -41,7 +41,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".ReceiptListActivity" />
+            android:name=".Camera.ReceiptListActivity" />
         <activity
             android:name=".Camera.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

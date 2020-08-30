@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.ReceiptListActivity;
+import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDelete;

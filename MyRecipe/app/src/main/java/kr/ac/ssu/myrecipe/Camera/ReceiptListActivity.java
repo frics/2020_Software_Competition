@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe;
+package kr.ac.ssu.myrecipe.Camera;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.ReceiptListAdapter;
 
 public class ReceiptListActivity extends AppCompatActivity {

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.IconData;
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.ReceiptListActivity;
+import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
