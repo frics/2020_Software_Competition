@@ -1,5 +1,6 @@
 package kr.ac.ssu.myrecipe.Camera;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -24,6 +25,7 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "CapturedFragment";
 
     ImageView imageView;
+
     //Fragment에서 Fragment로 instance 넘길때 반환 메소드
     public static CapturedFragment newInstance() {
         return new CapturedFragment();
@@ -40,7 +42,7 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_captured, container,
                 false);
 
-        Toolbar toolbar =  view.findViewById(R.id.capture_toolbar);
+        Toolbar toolbar =  view.findViewById(R.id.captured_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,11 +71,9 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             int width = myBitmap.getWidth();
             int height = myBitmap.getHeight();
-            Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, width, height, matrix, true);
             imageView.setImageBitmap(rotatedBitmap);
         }
-
-
     }
     @Override
     public void onClick(View view) {
@@ -85,9 +85,11 @@ public class CapturedFragment extends Fragment implements View.OnClickListener {
             }
             case R.id.scanning_btn:{
                 Log.d(TAG, "스캔 시작");
+
+               Intent intent = new Intent(getContext(), UploadActivity.class);
+               startActivity(intent);
+               getActivity().finish();
             }
-
-
         }
     }
 }

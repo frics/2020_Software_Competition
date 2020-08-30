@@ -9,18 +9,20 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.Recipe;
+import kr.ac.ssu.myrecipe.recipe.Recipe;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolder> {
 
     private ArrayList<Recipe> itemList;
     private Context context;
     private View.OnClickListener onClickItem;
 
-    public MyAdapter(Context context, ArrayList<Recipe> itemList, View.OnClickListener onClickItem) {
+    public RecipeListAdapter(Context context, ArrayList<Recipe> itemList, View.OnClickListener onClickItem) {
         this.context = context;
         this.itemList = itemList;
         this.onClickItem = onClickItem;
@@ -28,7 +30,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // context 와 parent.getContext() 는 같다.
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_tv, parent, false);
 
@@ -38,10 +39,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Recipe item = itemList.get(position);
-        holder.textview.setText(item.name);
-        holder.textview.setTag(item);
-        holder.textview.setOnClickListener(onClickItem);
-        holder.imageview.setImageResource(R.drawable.soup0+position);
+        holder.nameText.setText(item.name);
+        holder.styleText.setText(item.style);
+        holder.itemView.setTag(item.num);
+        Glide.with(context)
+                .load(item.image_url)
+                .error(R.drawable.basic)
+                .into(holder.imageview);
     }
 
     @Override
@@ -50,11 +54,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textview;
+        public TextView nameText, styleText;
         public ImageView imageview;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            textview = itemView.findViewById(R.id.recipe_name);
+            itemView.setOnClickListener(onClickItem);
+            nameText = itemView.findViewById(R.id.recipe_name);
+            styleText = itemView.findViewById(R.id.recipe_style);
             imageview = itemView.findViewById(R.id.img_viewpager_childimage);
         }
     }

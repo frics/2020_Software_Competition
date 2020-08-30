@@ -987,31 +987,4 @@ public class CameraFragment extends Fragment
                     .create();
         }
     }
-
-
-    /*
-    public void picCapture(){   // 버튼 onClick 리스너
-        // WRITE_EXTERNAL_STORAGE 외부 공간 사용 권한 허용
-        mTextureView.buildDrawingCache();   // 캡처할 뷰를 지정하여 buildDrawingCache() 한다
-        Bitmap captureView = mTextureView.getDrawingCache();   // 캡쳐할 뷰를 지정하여 getDrawingCache() 한다
-
-        FileOutputStream fos;   // FileOutputStream 이용 파일 쓰기 한다
-        File strFolderPath = getActivity().getExternalFilesDir(null);
-
-
-        String strFilePath = strFolderPath + "/pic2.jpg";
-        File fileCacheItem = new File(strFilePath);
-
-        try {
-            fos = new FileOutputStream(fileCacheItem);
-            captureView.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            Log.d(TAG, "crop suc");
-        }
-    }
-
-     */
-
 }
