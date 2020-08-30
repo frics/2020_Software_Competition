@@ -16,6 +16,7 @@ import kr.ac.ssu.myrecipe.User.SharedPrefManager;
 import kr.ac.ssu.myrecipe.User.SignInActivity;
 import kr.ac.ssu.myrecipe.database.OpenRecipeListCSV;
 import kr.ac.ssu.myrecipe.MajorFragment.HomeFragment;
+import kr.ac.ssu.myrecipe.recipe.RecipeOrder;
 
 public class LaunchActivity extends AppCompatActivity {
     private static final String TAG = LaunchActivity.class.getSimpleName();
@@ -47,6 +48,10 @@ public class LaunchActivity extends AppCompatActivity {
                // SharedPreferences.Editor editor = pref.edit();
                 HomeFragment.recent_recipes = pref.getString("recentlist", "");
                 Log.d(TAG, "run: " + HomeFragment.recent_recipes);
+
+                RecipeOrder.InitList();
+                RecipeOrder.RenewOrder(getApplicationContext());
+
 
                 if(isSignin) {
                     Log.d(TAG, "메인 엑티비티로 이동");

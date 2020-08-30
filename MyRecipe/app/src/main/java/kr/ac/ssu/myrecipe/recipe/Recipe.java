@@ -6,7 +6,7 @@ import java.util.ArrayList;
 // 레시피 클래스
 public class Recipe implements Serializable {
     // 내부 레시피리스트
-    private static final int TOTAL_RECIPE_NUM = 1200;
+    public static final int TOTAL_RECIPE_NUM = 1200;
     public static Recipe[] recipeList;
 
     public int num; // 번호
