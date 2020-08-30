@@ -3,10 +3,10 @@ package kr.ac.ssu.myrecipe.recipe;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// 레시피 클래스
-public class Recipe implements Serializable {
+public class Recipe implements Serializable { // 레시피 클래스
+
     // 내부 레시피리스트
-    private static final int TOTAL_RECIPE_NUM = 1200;
+    public static final int TOTAL_RECIPE_NUM = 1200;
     public static Recipe[] recipeList;
 
     public int num; // 번호
@@ -15,12 +15,15 @@ public class Recipe implements Serializable {
     public double[] nutrition; // 영양분 리스트 (0번 인덱스부터, 칼로리, 탄수화물, 단백질, 지방, 나트륨)
     public String image_url; // 음식사진 url
     public ArrayList<Ingredient> ingredient; // 재료리스트
+    public ArrayList<String> tag_list; // 재료 태그리스트
     public ArrayList<String> recipe_order; // 조리 순서
+    public int percent; // 완성도
 
     // 디폴트 생성자
     public Recipe() {
         this.nutrition = new double[5];
         this.ingredient = new ArrayList<>();
+        this.tag_list = new ArrayList<>();
         this.recipe_order = new ArrayList<>();
     }
 
