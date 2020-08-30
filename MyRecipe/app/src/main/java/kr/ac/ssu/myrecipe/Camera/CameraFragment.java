@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -57,6 +58,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+import kr.ac.ssu.myrecipe.Camera.Crop.CropActivity;
 import kr.ac.ssu.myrecipe.R;
 
 
@@ -818,7 +820,6 @@ public class CameraFragment extends Fragment
             mCaptureSession.stopRepeating();
             mCaptureSession.abortCaptures();
             mCaptureSession.capture(captureBuilder.build(), CaptureCallback, null);
-            ((CameraActivity)getActivity()).replaceFragment(CapturedFragment.newInstance());
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -842,6 +843,11 @@ public class CameraFragment extends Fragment
                     mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        }
+        finally {
+            getActivity().finish();
+            Intent intent = new Intent(getContext(), CropActivity.class);
+            startActivity(intent);
         }
     }
 
