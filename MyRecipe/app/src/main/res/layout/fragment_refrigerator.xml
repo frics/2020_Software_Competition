@@ -64,11 +64,43 @@
             android:visibility="visible"/>
     </LinearLayout>
 
+    <View
+        android:id="@+id/refri_view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#5A5A5A"
+        app:layout_constraintTop_toBottomOf="@+id/refri_layout"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/refri_recycler_horizon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/refri_view1"/>
+    <View
+        android:id="@+id/refri_view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#5A5A5A"
+        app:layout_constraintTop_toBottomOf="@+id/refri_recycler_horizon"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <TextView
+        android:id="@+id/refri_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:gravity="center"
+        android:text="재료가 없어요"
+        android:textSize="30dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/refri_view2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/refri_recycler"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/refri_recycler"
         android:layout_width="match_parent"
         android:layout_height="510dp"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/refri_layout"
+        app:layout_constraintTop_toBottomOf="@id/refri_view2"
         app:layout_constraintLeft_toLeftOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,7 +48,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.15"
+                    android:layout_weight="0.1"
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="30dp"
                     android:text="분류"
@@ -56,7 +56,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.15"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="30dp"
                     android:text="태그"
@@ -64,20 +64,12 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.2"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="30dp"
                     android:text="제품명"
                     android:textSize="15dp"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="30dp"
-                    android:text="금액"
-                    android:textSize="15dp"/>
+
             </LinearLayout>
             <View
                 android:layout_width="wrap_content"
@@ -88,20 +80,6 @@
                 android:id="@+id/receipt_foodlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <!--
-            <View
-                android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center"
-                android:background="@drawable/dotted_line"
-                android:layerType="software" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/receipt_notlist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-                -->
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -10,6 +10,7 @@ public class RefrigeratorData {
     private String category;
     private String tag;
     private String name;
+    private int tagNumber;
 
     public void setId(int id) {
         this.id = id;
@@ -31,6 +32,9 @@ public class RefrigeratorData {
         return name;
     }
 
+    public int getTagNumber() {
+        return tagNumber;
+    }
 
     public void setCategory(String category) {
         this.category = category;
@@ -44,6 +48,9 @@ public class RefrigeratorData {
         this.name = name;
     }
 
+    public void setTagNumber(int tagNumber) {
+        this.tagNumber = tagNumber;
+    }
 
     @Override
     public String toString() {
