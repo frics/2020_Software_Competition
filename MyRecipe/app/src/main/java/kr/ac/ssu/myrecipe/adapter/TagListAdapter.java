@@ -79,10 +79,15 @@ public class TagListAdapter extends RecyclerView.Adapter<TagListAdapter.ViewHold
             holder.imageView.setImageResource(IconData.textToicon.get(filteredList.get(position).category));
         else if(flag == ADD){
             //전체 xml파일이 없으므로 100단위로 끊음
-            String resName = "@drawable/ic_tag";
+            String res = "@drawable/ic_tag";
             String packName = context.getPackageName();
-            int num = filteredList.get(position).getTagNumber() / 100;
-            int id = context.getResources().getIdentifier(resName+(426+num), "drawable", packName);
+            String resName = "@drawable/ic_tag";
+            if(filteredList.get(position).tagNumber  < 10)
+                resName = res + "00";
+            else if(filteredList.get(position).tagNumber  < 100)
+                resName = res + "0";
+            int num = filteredList.get(position).tagNumber;
+            int id = context.getResources().getIdentifier(resName+num, "drawable", packName);
             holder.imageView.setImageResource(id);
         }
     }

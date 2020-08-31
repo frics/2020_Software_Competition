@@ -1,5 +1,6 @@
 package kr.ac.ssu.myrecipe.User;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,15 +12,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
+import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
+import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -28,6 +34,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private EditText editTextPw;
     private Button signInBtn;
     private Button signUpBtn;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         editTextPw = findViewById(R.id.user_password);
         signInBtn = findViewById(R.id.signin_submit);
         signUpBtn = findViewById(R.id.signup_btn);
+        context = this;
         signInBtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -69,7 +77,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         //if everything is fine
 
         class UserLogin extends AsyncTask<Void, Void, String> {
-
+            private Context context;
+            public UserLogin(Context context){
+                this.context = context;
+            }
             @Override
             protected String doInBackground(Void... voids) {
                 //creating request handler object
@@ -120,16 +131,35 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             ////냉장고 디비 받아오기
                             JSONArray refrigerator = object.getJSONArray("refrigerator");
                             Log.e(TAG + "refrigerator", "refrigerator : " + refrigerator);
+                            RefrigeratorDataBase db = Room.databaseBuilder(context,RefrigeratorDataBase.class, "refrigerator.db").build();
+                            ArrayList<RefrigeratorData> list = new ArrayList<>();
                             for (int i = 0; i < refrigerator.length(); i++) {
-                                /***************************************************************
-                                 * 여기 받아온 JSON 포멧 냉장고 데이터를 삽입하면 된다.
+                                RefrigeratorData data = new RefrigeratorData();
+                                data.setCategory(refrigerator.getJSONObject(i).getString("category"));
+                                data.setTag(refrigerator.getJSONObject(i).getString("tag"));
+                                data.setName(refrigerator.getJSONObject(i).getString("name"));
+                                data.setTagNumber(refrigerator.getJSONObject(i).getInt("tagNumber"));
+                                list.add(data);
+
+                                /***********refrigerator.getJSONObject(i) JSON 포멧 냉장고 데이터를 삽입하면 된다.
                                  *
                                  *
                                  *************************************************************/
-                                Log.e(TAG + "refrigerator 1", i + " : " + refrigerator.getJSONObject(i));
+                                //Log.e(TAG + "refrigerator 1", i + " : " + refrigerator.getJSONObject(i));
                             }
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            ThreadTask.OnTaskCompleted listener = new ThreadTask.OnTaskCompleted() {
+                                @Override
+                                public void onTaskCompleted(String str) {
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                }
+                                @Override
+                                public void onTaskFailure(String str) {
+                                    Log.e("RefrigeratorFragment","Task Failure!");
+                                }
+                            };
+                            new ThreadTask(db.Dao(), listener, ThreadTask.INITIALIZE).execute(list);
+
                         }
                         else{ //냉장고 디비 복원 실패 시
                             Toast.makeText(getApplicationContext(), refResponse.getString("message"), Toast.LENGTH_SHORT).show();
@@ -145,7 +175,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        UserLogin ul = new UserLogin();
+        UserLogin ul = new UserLogin(context);
         ul.execute();
     }
 

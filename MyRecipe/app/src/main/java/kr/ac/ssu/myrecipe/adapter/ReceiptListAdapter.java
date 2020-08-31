@@ -3,7 +3,6 @@ package kr.ac.ssu.myrecipe.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,10 +29,11 @@ import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.IconData;
 import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
-import kr.ac.ssu.myrecipe.TagDB.GetTag;
+import kr.ac.ssu.myrecipe.GetTag;
 
 public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.ViewHolder> {
     private ArrayList<Data> mData = null;
@@ -102,29 +101,18 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                                 wrapObject.put("refrigerator" + (i + 1), jsonObject);
                             }
                         }
-                        // 로딩 다이얼로그 설정
-                        final AppCompatDialog progressDialog = new AppCompatDialog(context);
-                        progressDialog.setCancelable(false);
-                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                        progressDialog.setContentView(R.layout.loading_dialog);
-                        progressDialog.show();
-                        final ImageView img_loading_frame = (ImageView) progressDialog.findViewById(R.id.iv_frame_loading);
-                        final AnimationDrawable frameAnimation = (AnimationDrawable) img_loading_frame.getBackground();
-                        img_loading_frame.post(new Runnable() {
+                        ThreadTask.OnTaskCompleted listener = new ThreadTask.OnTaskCompleted() {
                             @Override
-                            public void run() {
-                                frameAnimation.start();
+                            public void onTaskCompleted(String str) {
+                                ((ReceiptListActivity)context).finish();
                             }
-                        });
-                        final ImageView text_loading_frame = (ImageView) progressDialog.findViewById(R.id.tv_progress_message);
-                        final AnimationDrawable textAnimation = (AnimationDrawable) text_loading_frame.getBackground();
-                        img_loading_frame.post(new Runnable() {
                             @Override
-                            public void run() {
-                                textAnimation.start();
+                            public void onTaskFailure(String str) {
+                                Log.e("RefrigeratorFragment","Task Failure!");
                             }
-                        });
-                        new ThreadTask(context, db.Dao(), progressDialog, 0).execute(list);
+                        };
+                        new ThreadTask(db.Dao(), listener, ThreadTask.RECIEPT).execute(list);
+                        //new ThreadTask(context, db.Dao(), progressDialog, 0).execute(list);
                         Log.e("test",wrapObject.toString());
                         //실제 데이터 전송 메소드;
                     }catch (JSONException e){

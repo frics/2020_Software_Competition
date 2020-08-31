@@ -46,11 +46,9 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("TEST", "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        itemList = new ArrayList<>(Arrays.asList(Recipe.recipeList));
-
+        makeItemList();
         setViewById(view);
         setAdapter();
 
@@ -68,7 +66,11 @@ public class HomeFragment extends Fragment {
         recentAdapter = new RecipeListAdapter(getContext(), recent_list, onClickItem);
         recentListView.setAdapter(recentAdapter);
         recentListView.addItemDecoration(decoration);
-        Log.d("TAG", "onResume: ");
+    }
+
+    private void makeItemList(){
+        itemList = new ArrayList<>(Arrays.asList(Recipe.recipeList));
+
     }
 
     private void setViewById(View view) { // View에 id 세팅
@@ -108,7 +110,6 @@ public class HomeFragment extends Fragment {
             return list;
 
         for (int i = 0; i < string_list.length; i++) {
-            Log.d("TAG", "getRecentRecipeList: " + string_list[i]);
             list.add(itemList.get(Integer.parseInt(string_list[i])));
         }
 
