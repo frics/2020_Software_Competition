@@ -8,12 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-
 import com.theartofdev.edmodo.cropper.CropImage;
-
 import kr.ac.ssu.myrecipe.R;
 
 public class CropActivity extends AppCompatActivity {
@@ -37,7 +34,7 @@ public class CropActivity extends AppCompatActivity {
         Log.e("순서", "3");
 
         if (savedInstanceState == null) {
-            setMainFragmentByPreset(CropDemoPreset.RECT);
+            setMainFragmentByPreset();
         }
     }
 
@@ -102,11 +99,11 @@ public class CropActivity extends AppCompatActivity {
     }
 
 
-    private void setMainFragmentByPreset(CropDemoPreset demoPreset) {
+    private void setMainFragmentByPreset() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.container, CropFragment.newInstance(demoPreset))
+                .replace(R.id.container, CropFragment.newInstance())
                 .commit();
     }
 }
