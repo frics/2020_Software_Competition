@@ -16,7 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.User.PushData;
+import kr.ac.ssu.myrecipe.ServerConnect.PushData;
 import kr.ac.ssu.myrecipe.User.SharedPrefManager;
 
 public class AccountFragment extends Fragment {

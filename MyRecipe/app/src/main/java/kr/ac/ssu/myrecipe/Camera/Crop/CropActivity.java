@@ -15,8 +15,6 @@ import kr.ac.ssu.myrecipe.R;
 
 public class CropActivity extends AppCompatActivity {
 
-
-
     private CropFragment mCurrentFragment;
 
     private Uri mCropImageUri;
