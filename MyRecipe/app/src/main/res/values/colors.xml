@@ -8,6 +8,9 @@
     <color name="colorTint">#68000000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="scrap_grey">#a49f9e</color>
+    <color name="textColor">#eeeeee</color>
+
 
     <color name="testBackground">#45EDEDED</color>
     <color name="grey">#e7e7e7</color>
