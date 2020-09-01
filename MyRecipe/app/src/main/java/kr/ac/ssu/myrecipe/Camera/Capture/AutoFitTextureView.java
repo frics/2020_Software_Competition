@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.Camera;
+package kr.ac.ssu.myrecipe.Camera.Capture;
 
 import android.content.Context;
 import android.util.AttributeSet;

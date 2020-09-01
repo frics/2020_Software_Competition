@@ -1,7 +1,9 @@
-package kr.ac.ssu.myrecipe;
+package kr.ac.ssu.myrecipe.UI;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import kr.ac.ssu.myrecipe.R;
 
 public class IconData {
     public static Map<String, Integer> textToicon = new HashMap<String, Integer>(){

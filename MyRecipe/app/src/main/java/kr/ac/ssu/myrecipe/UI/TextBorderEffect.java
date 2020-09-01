@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.design;
+package kr.ac.ssu.myrecipe.UI;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,8 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.widget.TextView;
-
-import java.util.jar.Attributes;
 
 import kr.ac.ssu.myrecipe.R;
 

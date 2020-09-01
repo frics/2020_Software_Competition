@@ -43,7 +43,7 @@
         <activity
             android:name=".Camera.ReceiptListActivity" />
         <activity
-            android:name=".Camera.CameraActivity"
+            android:name=".Camera.Capture.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>
