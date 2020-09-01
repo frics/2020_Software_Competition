@@ -3,11 +3,11 @@ package kr.ac.ssu.myrecipe.recipe;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Recipe implements Serializable { // 레시피 클래스
+public class Recipe implements Serializable, Cloneable { // 레시피 클래스
 
-    // 내부 레시피리스트
-    public static final int TOTAL_RECIPE_NUM = 1200;
-    public static Recipe[] recipeList;
+    // 레시피리스트 및 랭킹리스트
+    public static final int TOTAL_RECIPE_NUM = 1200, RANK_RECIPE_NUM = 30;
+    public static Recipe[] recipeList, myRecipeList, RankingList;
 
     public int num; // 번호
     public String name; // 음식명
@@ -40,9 +40,17 @@ public class Recipe implements Serializable { // 레시피 클래스
 
     public static void InitList() { // 레시피리스트 초기화 함수
         recipeList = new Recipe[TOTAL_RECIPE_NUM];
+        myRecipeList = new Recipe[TOTAL_RECIPE_NUM];
+        RankingList = new Recipe[RANK_RECIPE_NUM];
 
         for (int i = 0; i < TOTAL_RECIPE_NUM; i++) {
             recipeList[i] = new Recipe();
+            myRecipeList[i] = new Recipe();
         }
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
     }
 }

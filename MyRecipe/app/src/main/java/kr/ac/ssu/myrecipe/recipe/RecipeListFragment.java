@@ -46,7 +46,7 @@ public class RecipeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
-        itemList = new ArrayList<>(Arrays.asList(Recipe.recipeList));
+        itemList = new ArrayList<>(Arrays.asList(Recipe.myRecipeList));
 
         setSearchBar(view);
         setRecyclerView(view);

@@ -12,7 +12,7 @@ import kr.ac.ssu.myrecipe.recipe.Recipe;
 
 public class OpenRecipeListCSV {
 
-    public static void readDataFromCsv(InputStreamReader inputStreamReader) throws IOException {
+    public static void readDataFromCsv(InputStreamReader inputStreamReader) throws IOException, CloneNotSupportedException {
         // csv 파일을 읽기 위한 Reader 객체 세팅
         BufferedReader reader = new BufferedReader(inputStreamReader);
         CSVReader csvReader = new CSVReader(reader);
@@ -60,11 +60,6 @@ public class OpenRecipeListCSV {
                         tmp = tmp.substring(0, length); // 큰따옴표 제거
                         String[] ingredients = tmp.split(","); // ','를 기준으로 split
 
-                        /*Log.d("holo", "count" + count + " " + i + " " + nextLine[i]); 디버그용 로그문
-                        for (int a = 0; a < ingredients.length; a++)
-                            Log.d("hoo", ingredients[a]);
-                         */
-
                         for (int j = 0; j < ingredients.length; j++) { // 재료명과 재료양을 split
                             int pos = ingredients[j].length();
 
@@ -72,8 +67,6 @@ public class OpenRecipeListCSV {
 
                             Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredients[j].substring(0, pos),
                                     ingredients[j].substring(pos + 1, ingredients[j].length())); // ' '를 기준으로 Ingredient 객체에 삽입
-
-                            //Log.d("hook", ingredient.name + "//" + ingredient.quantity);
 
                             // 공백 제거 및 DB에 삽입
                             ingredient.name = ingredient.name.trim();
@@ -107,5 +100,9 @@ public class OpenRecipeListCSV {
             if (count++ > 28)
                 break;
         }
+
+        // 나의 레시피 레시피와 동기화
+        for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++)
+            Recipe.myRecipeList[i] = (Recipe)Recipe.recipeList[i].clone();
     }
 }
