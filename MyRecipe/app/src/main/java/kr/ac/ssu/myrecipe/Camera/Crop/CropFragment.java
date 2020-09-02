@@ -29,8 +29,7 @@ import java.io.IOException;
 import kr.ac.ssu.myrecipe.R;
 
 
-public class CropFragment extends Fragment implements CropImageView.OnSetImageUriCompleteListener,
-        CropImageView.OnCropImageCompleteListener {
+public class CropFragment extends Fragment implements CropImageView.OnCropImageCompleteListener {
 
     private static final String TAG = CropFragment.class.getSimpleName();
     File mFile = null;
@@ -39,16 +38,14 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
 
     // region: Fields and Consts
 
-    private CropDemoPreset mDemoPreset;
-
     public CropImageView mCropImageView;
     // endregion
 
     /** Returns a new instance of this fragment for the given section number. */
-    public static CropFragment newInstance(CropDemoPreset demoPreset) {
+    public static CropFragment newInstance() {
         CropFragment fragment = new CropFragment();
         Bundle args = new Bundle();
-        args.putString("DEMO_PRESET", demoPreset.name());
+        //args.putString("DEMO_PRESET", demoPreset.name());
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,13 +70,8 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView;
-        switch (mDemoPreset) {
-            case RECT:
-                rootView = inflater.inflate(R.layout.fragment_crop, container, false);
-                break;
-            default:
-                throw new IllegalStateException("Unknown preset: " + mDemoPreset);
-        }
+        rootView = inflater.inflate(R.layout.fragment_crop, container, false);
+
         Toolbar toolbar =  rootView.findViewById(R.id.crop_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -95,7 +87,7 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
         super.onViewCreated(view, savedInstanceState);
 
         mCropImageView = view.findViewById(R.id.cropImageView);
-        mCropImageView.setOnSetImageUriCompleteListener(this);
+
         mCropImageView.setOnCropImageCompleteListener(this);
 
         mFile = new File(getActivity().getExternalFilesDir(null), "pic_crop.jpg");
@@ -132,7 +124,8 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             int width = myBitmap.getWidth();
             int height = myBitmap.getHeight();
-            Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0,myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+
+            Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, width, height, matrix, true);
             //CROP OPTION 설정
             mCropImageView.setImageBitmap(rotatedBitmap);
             mCropImageView.setScaleType(CropImageView.ScaleType.FIT_CENTER);
@@ -152,7 +145,7 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mDemoPreset = CropDemoPreset.valueOf(getArguments().getString("DEMO_PRESET"));
+        //mDemoPreset = CropDemoPreset.valueOf(getArguments().getString("DEMO_PRESET"));
         ((CropActivity) activity).setCurrentFragment(this);
     }
 
@@ -165,16 +158,6 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
         }
     }
 
-    @Override
-    public void onSetImageUriComplete(CropImageView view, Uri uri, Exception error) {
-        if (error == null) {
-            Toast.makeText(getActivity(), "Image load successful", Toast.LENGTH_SHORT).show();
-        } else {
-            Log.e("AIC", "Failed to load image by URI", error);
-            Toast.makeText(getActivity(), "Image load failed: " + error.getMessage(), Toast.LENGTH_LONG)
-                    .show();
-        }
-    }
 
     @Override
     public void onCropImageComplete(CropImageView view, CropImageView.CropResult result) {
@@ -197,12 +180,12 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
 
     private void handleCropResult(CropImageView.CropResult result) {
         if (result.getError() == null) {
-            android.content.Intent intent = new Intent(getActivity(), CropResultActivity.class);
+            android.content.Intent intent = new Intent(getActivity(), UploadActivity.class);
             intent.putExtra("SAMPLE_SIZE", result.getSampleSize());
             if (result.getUri() != null) {
                 intent.putExtra("URI", result.getUri());
             } else {
-                CropResultActivity.mImage = result.getBitmap();
+                UploadActivity.mImage = result.getBitmap();
             }
            //SaveBitmapToFileCache(result.getBitmap(), uploadFilePath);
             ImageSaver imageSaver = new ImageSaver(result.getBitmap(), mFile);

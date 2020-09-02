@@ -10,6 +10,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,12 +35,11 @@ import androidx.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
+import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDelete;
-import kr.ac.ssu.myrecipe.GetTag;
+import kr.ac.ssu.myrecipe.ServerConnect.GetTag;
 import kr.ac.ssu.myrecipe.adapter.CategoryAdapter;
 import kr.ac.ssu.myrecipe.adapter.RefrigeratorAdapter;
 import kr.ac.ssu.myrecipe.adapter.TagListAdapter;
@@ -59,10 +62,11 @@ public class RefrigeratorFragment extends Fragment{
     private TextView text;
     private ArrayList<TagListAdapter.Item> taglist;
     private ArrayList<String> categoryList;
+    private Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_refrigerator, container, false);
-        final Context context = getContext();
+        context = getContext();
         imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         recyclerview = (RecyclerView)v.findViewById(R.id.refri_recycler);
         categoryRecycler = (RecyclerView)v.findViewById(R.id.refri_recycler_horizon);
@@ -76,6 +80,8 @@ public class RefrigeratorFragment extends Fragment{
         ImageButton nested_close = (ImageButton) v.findViewById(R.id.refri_nested_close);
         ImageButton add_button = (ImageButton)v.findViewById(R.id.refri_add);
         ImageButton temp = (ImageButton)v.findViewById(R.id.refri_temp);
+
+        setHasOptionsMenu(true);
 
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,13 +103,7 @@ public class RefrigeratorFragment extends Fragment{
                 }
             }
         });
-        //add버튼 리스너 장착
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddDialog(context);
-            }
-        });
+
         //영수증 임시버튼
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +130,31 @@ public class RefrigeratorFragment extends Fragment{
         });
         return v;
     }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu,inflater); inflater.inflate(R.menu.refrigerator_menu,menu);
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId){
+            case R.id.action_ref_search:
+                Toast.makeText(getActivity(), "검색", Toast.LENGTH_SHORT).show();//검색 메뉴 아이콘 선택시 이벤트 설정
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+                break;
+            case R.id.ref_add:
+                showAddDialog(context);
+                Toast.makeText(getActivity(), "검색", Toast.LENGTH_SHORT).show();//추가 메뉴 아이콘 선택시 이벤트 설정
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     @Override
     public void onResume() {
@@ -313,16 +338,15 @@ public class RefrigeratorFragment extends Fragment{
     public void showDeleteDialog(final int position)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        final RefrigeratorDataBase db = Room.databaseBuilder(getContext(),RefrigeratorDataBase.class,"refrigerator.db").build();
         builder.setMessage("음식을 삭제하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         String name = refrigeratorAdapter.filteredList.get(position).name;
-                        RefrigeratorData data = new RefrigeratorData();
-                        data.setName(name);
                         //백그라운드 삭제
-                        new RefrigeratorDelete(db.Dao()).execute(data);
+                        //new RefrigeratorDelete(db.Dao()).execute(data);
+                        RefrigeratorData result = db.Dao().findData(name);
+                        db.Dao().delete(result);
                         refrigeratorAdapter.filteredList.remove(position);
                         //필터된 리스트와 원본 리스트가 다르면
                         if(refrigeratorAdapter.unFilteredlist != refrigeratorAdapter.filteredList) {
@@ -389,6 +413,7 @@ public class RefrigeratorFragment extends Fragment{
                             text.setVisibility(View.VISIBLE);
                         }
                         refrigeratorAdapter.notifyDataSetChanged();
+                        RecipeOrderList.RenewOrder(getContext()); // 레시피 갱신
                     }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {

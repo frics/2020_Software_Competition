@@ -27,13 +27,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.IconData;
+import kr.ac.ssu.myrecipe.UI.IconData;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
-import kr.ac.ssu.myrecipe.GetTag;
+import kr.ac.ssu.myrecipe.ServerConnect.GetTag;
 
 public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.ViewHolder> {
     private ArrayList<Data> mData = null;
@@ -239,6 +239,7 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                     Integer category = iconData.textToicon.get(holder.categoryString.getText().toString());
                     holder.category.setImageResource(category);
                     mData.get(position).setCategory(holder.categoryString.getText().toString());
+                    mData.get(position).setTagNumber(adapter.filteredList.get(pos).getTagNumber());
                 }
                 dialog.dismiss();
             }

@@ -1,7 +1,6 @@
 package kr.ac.ssu.myrecipe.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +52,6 @@ public class RefrigeratorAdapter extends RecyclerView.Adapter<RefrigeratorAdapte
     public void onBindViewHolder(@NonNull RefrigeratorAdapter.ViewHolder holder, final int position) {
         int index = position * 4;
         int id;
-        String res = "@drawable/ic_tag";
         String packName = context.getPackageName();
 
         if(filteredList.size() > index){
@@ -61,9 +59,9 @@ public class RefrigeratorAdapter extends RecyclerView.Adapter<RefrigeratorAdapte
             String resName = "@drawable/ic_tag";
             int num = filteredList.get(index).tagNumber;
             if(filteredList.get(index).tagNumber  < 10)
-                resName = res + "00";
+                resName = resName + "00";
             else if(filteredList.get(index).tagNumber  < 100)
-                resName = res + "0";
+                resName = resName + "0";
             id = context.getResources().getIdentifier(resName+(num), "drawable", packName);
             holder.image1.setImageResource(id);
             holder.text1.setText(filteredList.get(index).name);
@@ -74,11 +72,10 @@ public class RefrigeratorAdapter extends RecyclerView.Adapter<RefrigeratorAdapte
         if(filteredList.size() > index + 1){
             String resName = "@drawable/ic_tag";
             if(filteredList.get(index + 1).tagNumber  < 10)
-                resName = res + "00";
+                resName = resName + "00";
             else if(filteredList.get(index + 1).tagNumber  < 100)
-                resName = res + "0";
+                resName = resName + "0";
             int num = filteredList.get(index + 1).tagNumber;
-            Log.e("test",resName + num);
             id = context.getResources().getIdentifier(resName+(num), "drawable", packName);
             holder.image2.setImageResource(id);
             holder.text2.setText(filteredList.get(index+1).name);
@@ -89,11 +86,10 @@ public class RefrigeratorAdapter extends RecyclerView.Adapter<RefrigeratorAdapte
         if(filteredList.size() > index + 2) {
             String resName = "@drawable/ic_tag";
             if(filteredList.get(index + 2).tagNumber  < 10)
-                resName = res + "00";
+                resName = resName + "00";
             else if(filteredList.get(index + 2).tagNumber  < 100)
-                resName = res + "0";
+                resName = resName + "0";
             int num = filteredList.get(index + 2).tagNumber;
-            Log.e("test",resName + num);
             id = context.getResources().getIdentifier(resName+(num), "drawable", packName);
             holder.image3.setImageResource(id);
             holder.text3.setText(filteredList.get(index + 2).name);
@@ -104,11 +100,10 @@ public class RefrigeratorAdapter extends RecyclerView.Adapter<RefrigeratorAdapte
         if(filteredList.size() > index + 3) {
             String resName = "@drawable/ic_tag";
             if(filteredList.get(index + 3).tagNumber  < 10)
-                resName = res + "00";
+                resName = resName + "00";
             else if(filteredList.get(index + 3).tagNumber  < 100)
-                resName = res + "0";
+                resName = resName + "0";
             int num = filteredList.get(index + 3).tagNumber;
-            Log.e("test",resName + num);
             id = context.getResources().getIdentifier(resName+(num), "drawable", packName);
             holder.image4.setImageResource(id);
             holder.text4.setText(filteredList.get(index + 3).name);

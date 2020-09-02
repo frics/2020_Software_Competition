@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.User;
+package kr.ac.ssu.myrecipe.ServerConnect;
 
 import android.util.Log;
 

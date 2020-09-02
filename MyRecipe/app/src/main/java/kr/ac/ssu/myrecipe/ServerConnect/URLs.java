@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.User;
+package kr.ac.ssu.myrecipe.ServerConnect;
 
 public class URLs {
     private static final String ROOT_URL = "http://13.209.6.94/UserApi.php?apicall=";

@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.Camera;
+package kr.ac.ssu.myrecipe.Camera.Capture;
 
 import android.Manifest;
 import android.app.Activity;
@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -57,6 +58,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+import kr.ac.ssu.myrecipe.Camera.Crop.CropActivity;
 import kr.ac.ssu.myrecipe.R;
 
 
@@ -513,21 +515,7 @@ public class CameraFragment extends Fragment
                 int maxPreviewWidth = displaySize.x;
                 int maxPreviewHeight = displaySize.y;
 
-/*
-                rotatedPreviewWidth = height;
-                rotatedPreviewHeight = width;
-                maxPreviewWidth = displaySize.y;
-                maxPreviewHeight = displaySize.x;
 
-
-                if (maxPreviewWidth > MAX_PREVIEW_WIDTH) {
-                    maxPreviewWidth = MAX_PREVIEW_WIDTH;
-                }
-
-                if (maxPreviewHeight > MAX_PREVIEW_HEIGHT) {
-                    maxPreviewHeight = MAX_PREVIEW_HEIGHT;
-                }
-*/
                 // Danger, W.R.! Attempting to use too large a preview size could  exceed the camera
                 // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                 // garbage capture data.
@@ -708,25 +696,8 @@ public class CameraFragment extends Fragment
         if (null == mTextureView || null == mPreviewSize || null == activity) {
             return;
         }
-       // int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         Matrix matrix = new Matrix();
-        /*
-        RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
-        RectF bufferRect = new RectF(0, 0, mPreviewSize.getHeight(), mPreviewSize.getWidth());
 
-        float centerX = viewRect.centerX();
-        float centerY = viewRect.centerY();
-        if (Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation) {
-            bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
-            matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
-            float scale = Math.max(
-                    (float) viewHeight / mPreviewSize.getHeight(),
-                    (float) viewWidth / mPreviewSize.getWidth());
-            matrix.postScale(scale, scale, centerX, centerY);
-            matrix.postRotate(90 * (rotation - 2), centerX, centerY);
-        } else if (Surface.ROTATION_180 == rotation) {
-            matrix.postRotate(180, centerX, centerY);
-        }*/
         mTextureView.setTransform(matrix);
     }
 
@@ -818,7 +789,6 @@ public class CameraFragment extends Fragment
             mCaptureSession.stopRepeating();
             mCaptureSession.abortCaptures();
             mCaptureSession.capture(captureBuilder.build(), CaptureCallback, null);
-            ((CameraActivity)getActivity()).replaceFragment(CapturedFragment.newInstance());
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -842,6 +812,11 @@ public class CameraFragment extends Fragment
                     mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        }
+        finally {
+            getActivity().finish();
+            Intent intent = new Intent(getContext(), CropActivity.class);
+            startActivity(intent);
         }
     }
 

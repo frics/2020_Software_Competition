@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe;
+package kr.ac.ssu.myrecipe.ServerConnect;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -9,8 +9,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.User.RequestHandler;
-import kr.ac.ssu.myrecipe.User.URLs;
 import kr.ac.ssu.myrecipe.adapter.TagListAdapter;
 
 public class GetTag extends AsyncTask<Void, Void, String>{
