@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.myrecipe.ServerConnect.RequestHandler;
+import kr.ac.ssu.myrecipe.ServerConnect.URLs;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 

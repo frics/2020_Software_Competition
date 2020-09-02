@@ -15,7 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import kr.ac.ssu.myrecipe.Camera.CameraActivity;
+import kr.ac.ssu.myrecipe.Camera.Capture.CameraActivity;
 
 
 public class MainActivity extends AppCompatActivity {

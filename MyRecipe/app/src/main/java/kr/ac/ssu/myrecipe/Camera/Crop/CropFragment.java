@@ -39,16 +39,14 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
 
     // region: Fields and Consts
 
-    private CropDemoPreset mDemoPreset;
-
     public CropImageView mCropImageView;
     // endregion
 
     /** Returns a new instance of this fragment for the given section number. */
-    public static CropFragment newInstance(CropDemoPreset demoPreset) {
+    public static CropFragment newInstance() {
         CropFragment fragment = new CropFragment();
         Bundle args = new Bundle();
-        args.putString("DEMO_PRESET", demoPreset.name());
+        //args.putString("DEMO_PRESET", demoPreset.name());
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,13 +71,8 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView;
-        switch (mDemoPreset) {
-            case RECT:
-                rootView = inflater.inflate(R.layout.fragment_crop, container, false);
-                break;
-            default:
-                throw new IllegalStateException("Unknown preset: " + mDemoPreset);
-        }
+        rootView = inflater.inflate(R.layout.fragment_crop, container, false);
+
         Toolbar toolbar =  rootView.findViewById(R.id.crop_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -152,7 +145,7 @@ public class CropFragment extends Fragment implements CropImageView.OnSetImageUr
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mDemoPreset = CropDemoPreset.valueOf(getArguments().getString("DEMO_PRESET"));
+        //mDemoPreset = CropDemoPreset.valueOf(getArguments().getString("DEMO_PRESET"));
         ((CropActivity) activity).setCurrentFragment(this);
     }
 

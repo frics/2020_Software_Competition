@@ -43,6 +43,7 @@ public class RecipePagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         inflater = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
+
         View v = inflater.inflate(R.layout.viewpager_recipe, container, false);
 
         v.setTag(itemList.get(position).num);

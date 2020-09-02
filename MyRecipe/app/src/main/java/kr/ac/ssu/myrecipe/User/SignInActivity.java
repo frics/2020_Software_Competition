@@ -26,6 +26,8 @@ import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
+import kr.ac.ssu.myrecipe.ServerConnect.RequestHandler;
+import kr.ac.ssu.myrecipe.ServerConnect.URLs;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener{
 

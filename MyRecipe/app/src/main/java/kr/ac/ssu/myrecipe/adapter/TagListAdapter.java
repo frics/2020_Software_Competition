@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.IconData;
+import kr.ac.ssu.myrecipe.UI.IconData;
 import kr.ac.ssu.myrecipe.R;
 
 
