@@ -1,18 +1,22 @@
 package kr.ac.ssu.myrecipe.Camera.Crop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import java.io.DataOutputStream;
@@ -22,15 +26,20 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import kr.ac.ssu.myrecipe.Camera.Capture.CameraActivity;
 import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
 
-public class UploadActivity extends AppCompatActivity {
+public class UploadActivity extends AppCompatActivity  {
 
     private static final String TAG = UploadActivity.class.getSimpleName();
     static Bitmap mImage;
 
+    private Context mContext;
+
     private ImageView imageView;
+    private Button recapture;
+    private Button getReceipt;
 
 
 
@@ -49,26 +58,58 @@ public class UploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload);
         hideNavigationBar();
 
+        mContext = this;
         imageView = ((ImageView) findViewById(R.id.resultImageView));
+        recapture = findViewById(R.id.recapture_btn);
+        getReceipt = findViewById(R.id.get_receipt_btn);
 
+        recapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(mContext, CameraActivity.class);
+                startActivity(intent);
+            }
+        });
+        getReceipt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "tlqkf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                final AppCompatDialog progressDialog = new AppCompatDialog(mContext);
+                progressDialog.setCancelable(false);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                progressDialog.setContentView(R.layout.loading_dialog);
+                progressDialog.show();
+                final ImageView img_loading_frame = (ImageView) progressDialog.findViewById(R.id.iv_frame_loading);
+                final AnimationDrawable frameAnimation = (AnimationDrawable) img_loading_frame.getBackground();
+                img_loading_frame.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        frameAnimation.start();
+                    }
+                });
+                final ImageView text_loading_frame = (ImageView) progressDialog.findViewById(R.id.tv_progress_message);
+                final AnimationDrawable textAnimation = (AnimationDrawable) text_loading_frame.getBackground();
+                img_loading_frame.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textAnimation.start();
+                    }
+                });
+            }
+        });
+
+        //툴바 설정
         Toolbar toolbar =  findViewById(R.id.upload_toolbar);
         setSupportActionBar(toolbar);
-        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         toolbar.bringToFront();
 
-        Intent intent = getIntent();
+
         if (mImage != null) {
             imageView.setImageBitmap(mImage);
-        } else {
-            Uri imageUri = intent.getParcelableExtra("URI");
-            if (imageUri != null) {
-                imageView.setImageURI(imageUri);
-            } else {
-                Toast.makeText(this, "No image is set to show", Toast.LENGTH_LONG).show();
-            }
         }
 
         //이미지 파일 경로 획득
@@ -96,13 +137,10 @@ public class UploadActivity extends AppCompatActivity {
         switch (curId) {
             case android.R.id.home:
                 Log.e(TAG, "크롭으로 간다");
-                Toast.makeText( this,"go to crop", Toast.LENGTH_SHORT).show();
                 releaseBitmap();
                 finish();
                 onBackPressed();
-                //startActivity(new Intent(this, CropActivity.class));
                 break;
-
             case R.id.go_to_main:
                 Log.e(TAG, "메인으로 간다!!!!");
                 releaseBitmap();
@@ -110,7 +148,6 @@ public class UploadActivity extends AppCompatActivity {
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -129,6 +166,8 @@ public class UploadActivity extends AppCompatActivity {
         newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
+
+
 
 
 

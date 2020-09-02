@@ -85,7 +85,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <Button
-            android:id="@+id/crop_btn"
+            android:id="@+id/get_receipt_btn"
             android:text="사진 사용"
             android:textColor="@color/grey"
             android:textStyle="bold"
