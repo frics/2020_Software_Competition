@@ -29,23 +29,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <kr.ac.ssu.myrecipe.UI.TextBorderEffect
-        xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
-        android:id="@+id/viewpager_food_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"
-        android:maxLines="1"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/viewpager_food_image"
-        app:layout_constraintLeft_toLeftOf="parent"
-        textoutline:textStroke="true"
-        textoutline:textStrokeColor="@color/grey"
-        textoutline:textStrokeWidth="3.0" />
-
-        <kr.ac.ssu.myrecipe.design.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
+        <kr.ac.ssu.myrecipe.UI.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
             android:id="@+id/viewpager_food_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

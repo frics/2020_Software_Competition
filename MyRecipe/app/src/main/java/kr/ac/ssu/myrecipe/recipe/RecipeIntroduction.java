@@ -215,7 +215,7 @@ public class RecipeIntroduction extends AppCompatActivity {
 
         recentlist = num + "," + recentlist;
         HomeFragment.recent_recipes = recentlist;
-        HomeFragment.recent_recipes.replaceAll(",,",",");
+        HomeFragment.recent_recipes = HomeFragment.recent_recipes.replaceAll(",,",",");
 
         editor.putString("recentlist", recentlist);
         editor.commit();
