@@ -302,7 +302,7 @@
         android:layout_width="10dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
-        android:background="@color/colorPrimaryLight"
+        android:background="@color/kcal_color"
         app:layout_constraintBottom_toTopOf="@id/sugar_title"
         app:layout_constraintLeft_toRightOf="@id/transfat_title"
         app:layout_constraintTop_toBottomOf="@id/sugar_title" />
@@ -335,7 +335,7 @@
         android:layout_width="100dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
-        android:background="#29d2a2"
+        android:background="@color/carbon_color"
         app:layout_constraintBottom_toTopOf="@id/sodium_title"
         app:layout_constraintLeft_toRightOf="@id/transfat_title"
         app:layout_constraintTop_toBottomOf="@id/sodium_title" />
@@ -368,7 +368,7 @@
         android:layout_width="42dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
-        android:background="#e15229"
+        android:background="@color/protein_color"
         app:layout_constraintBottom_toTopOf="@id/cholesterol_title"
         app:layout_constraintLeft_toRightOf="@id/transfat_title"
         app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
@@ -401,7 +401,7 @@
         android:layout_width="33dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
-        android:background="#e152e1"
+        android:background="@color/fat_color"
         app:layout_constraintBottom_toTopOf="@id/saturated_fatty_acid_title"
         app:layout_constraintLeft_toRightOf="@id/transfat_title"
         app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
@@ -434,7 +434,7 @@
         android:layout_width="13dp"
         android:layout_height="@dimen/introduction_title_size"
         android:layout_marginLeft="12dp"
-        android:background="#a1c301"
+        android:background="@color/sodium_color"
         app:layout_constraintBottom_toTopOf="@id/transfat_title"
         app:layout_constraintLeft_toRightOf="@id/transfat_title"
         app:layout_constraintTop_toBottomOf="@id/transfat_title" />

@@ -1,16 +1,17 @@
-package kr.ac.ssu.myrecipe.Camera;
+package kr.ac.ssu.myrecipe.Camera.Crop;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.bumptech.glide.Glide;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -23,60 +24,87 @@ import kr.ac.ssu.myrecipe.R;
 
 public class UploadActivity extends AppCompatActivity {
 
-    private static final String TAG = "UploadActivity" ;
-    ImageView imageView;
-    ImageView scanView;
+    static Bitmap mImage;
+
+    private ImageView imageView;
 
 
 
     int serverResponseCode = 0;
-    /************* Php script path ****************/
     String upLoadServerUri = "http://13.209.6.94/upload_act.php";
     /**********  File Path *************/
     File mFile = null;
     String uploadFilePath=null;
     String uploadFileName = null;
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_upload);
+
+        imageView = ((ImageView) findViewById(R.id.resultImageView));
+
+        Intent intent = getIntent();
+        if (mImage != null) {
+            imageView.setImageBitmap(mImage);
+            int sampleSize = intent.getIntExtra("SAMPLE_SIZE", 1);
+            double ratio = ((int) (10 * mImage.getWidth() / (double) mImage.getHeight())) / 10d;
+            int byteCount = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
+                byteCount = mImage.getByteCount() / 1024;
+            }
+            String desc =
+                    "("
+                            + mImage.getWidth()
+                            + ", "
+                            + mImage.getHeight()
+                            + "), Sample: "
+                            + sampleSize
+                            + ", Ratio: "
+                            + ratio
+                            + ", Bytes: "
+                            + byteCount
+                            + "K";
+            ((TextView) findViewById(R.id.resultImageText)).setText(desc);
+        } else {
+            Uri imageUri = intent.getParcelableExtra("URI");
+            if (imageUri != null) {
+                imageView.setImageURI(imageUri);
+            } else {
+                Toast.makeText(this, "No image is set to show", Toast.LENGTH_LONG).show();
+            }
+        }
 
         //이미지 파일 경로 획득
         mFile = this.getExternalFilesDir(null);
         uploadFilePath = mFile+"/";
-        uploadFileName = "pic.jpg";
+        uploadFileName = "pic_crop.jpg";
 
         new Thread(new Runnable() {
             public void run() {
                 uploadFile(uploadFilePath + "" + uploadFileName);
             }
         }).start();
-        scanView = findViewById(R.id.scan_view);
-        Glide.with(this).load(R.drawable.scan).into(scanView);
-        imageView=findViewById(R.id.upload_img);
-
-
 
     }
-    //촬영한 사진으로 이미지뷰 생성
-    //디렉터리 접근 -> 사진 유무 확인
+
     @Override
-    public void onResume() {
-        super.onResume();
-        String fullPath = uploadFilePath+uploadFileName;
-        Log.d(TAG, fullPath);
-        File imgFile = new File(fullPath);
-        //사진 유무 확인
-        if(imgFile.exists())
-        {
-            Matrix matrix = new Matrix();
-            matrix.postRotate(90);
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            int width = myBitmap.getWidth();
-            int height = myBitmap.getHeight();
-            Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
-            imageView.setImageBitmap(rotatedBitmap);
+    public void onBackPressed() {
+        releaseBitmap();
+        super.onBackPressed();
+    }
+
+    public void onImageViewClicked(View view) {
+        releaseBitmap();
+        finish();
+    }
+
+    private void releaseBitmap() {
+        if (mImage != null) {
+            mImage.recycle();
+            mImage = null;
         }
     }
 
@@ -90,7 +118,7 @@ public class UploadActivity extends AppCompatActivity {
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1024 * 1024; //1 * 1024 * 1024
-        File sourceFile = new File("/storage/emulated/0/Android/data/kr.ac.ssu.myrecipe/files/"+"pic.jpg");
+        File sourceFile = new File("/storage/emulated/0/Android/data/kr.ac.ssu.myrecipe/files/"+"pic_crop.jpg");
 
         if (!sourceFile.isFile()) {
             Log.e("uploadFile", "Source File not exist :"

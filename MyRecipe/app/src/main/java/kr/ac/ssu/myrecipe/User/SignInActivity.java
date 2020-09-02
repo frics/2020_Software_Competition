@@ -26,6 +26,9 @@ import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
+import kr.ac.ssu.myrecipe.recipe.RecipeOrderList;
+import kr.ac.ssu.myrecipe.ServerConnect.RequestHandler;
+import kr.ac.ssu.myrecipe.ServerConnect.URLs;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -150,6 +153,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             ThreadTask.OnTaskCompleted listener = new ThreadTask.OnTaskCompleted() {
                                 @Override
                                 public void onTaskCompleted(String str) {
+                                    // 완성도 순 레시피리스트 세팅
+                                    RecipeOrderList.RenewOrder(getApplicationContext());
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }

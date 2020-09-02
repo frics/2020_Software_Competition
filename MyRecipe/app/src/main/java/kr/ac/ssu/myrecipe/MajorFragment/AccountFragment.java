@@ -5,10 +5,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.User.PushData;
+import kr.ac.ssu.myrecipe.ServerConnect.PushData;
 import kr.ac.ssu.myrecipe.User.SharedPrefManager;
 
 public class AccountFragment extends Fragment {
@@ -43,7 +47,7 @@ public class AccountFragment extends Fragment {
         id = SharedPrefManager.getString( mContext,SharedPrefManager.KEY_ID);
         DBName = SharedPrefManager.getString( mContext, SharedPrefManager.KEY_REF_DB);
 
-
+        setHasOptionsMenu(true);
 
         Log.e(TAG, nickname);
         Log.e(TAG, id);
@@ -75,6 +79,24 @@ public class AccountFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu,inflater); inflater.inflate(R.menu.account_menu,menu);
+    }
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId){
+            case R.id.action_search:
+                Toast.makeText(getActivity(), "설정", Toast.LENGTH_SHORT).show();//tab1 메뉴 아이콘 선택시 이벤트 설정
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     private void signOutProcess(){
         Log.e(TAG, "이제 다이얼로그 출력되야한다.");
