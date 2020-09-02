@@ -47,13 +47,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>
-        
+
         <activity
-            android:name=".Camera.UploadActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Camera.Crop.CropResultActivity">
+            android:name=".Camera.Crop.UploadActivity">
         </activity>
         <activity
             android:name=".Camera.Crop.CropActivity" >
