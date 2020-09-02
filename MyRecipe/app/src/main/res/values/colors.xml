@@ -15,4 +15,10 @@
     <color name="testBackground">#45EDEDED</color>
     <color name="grey">#e7e7e7</color>
     <color name="transparent">#00000000</color>
+
+    <color name="kcal_color">#9cb7b4</color>
+    <color name="carbon_color">#ccb9e6</color>
+    <color name="protein_color">#93c0d8</color>
+    <color name="fat_color">#eba6a6</color>
+    <color name="sodium_color">#f4ce7a</color>
 </resources>
