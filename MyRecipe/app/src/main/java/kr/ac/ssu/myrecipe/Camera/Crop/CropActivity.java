@@ -7,14 +7,19 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+
 import com.theartofdev.edmodo.cropper.CropImage;
+
 import kr.ac.ssu.myrecipe.R;
 
 public class CropActivity extends AppCompatActivity {
 
+    private static final String TAG = CropActivity.class.getSimpleName();
     private CropFragment mCurrentFragment;
 
     private Uri mCropImageUri;
@@ -29,12 +34,14 @@ public class CropActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop);
+        hideNavigationBar();
         Log.e("순서", "3");
 
         if (savedInstanceState == null) {
             setMainFragmentByPreset();
         }
     }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -94,6 +101,22 @@ public class CropActivity extends AppCompatActivity {
                         .show();
             }
         }
+    }
+
+    private void hideNavigationBar() {
+        int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+        int newUiOptions = uiOptions;
+        boolean isImmersiveModeEnabled =
+                ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
+        if (isImmersiveModeEnabled) {
+            Log.d(TAG, "Turning immersive mode mode off. ");
+        } else {
+            Log.d(TAG, "Turning immersive mode mode on.");
+        }
+        newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
 

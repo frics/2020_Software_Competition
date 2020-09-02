@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.UI.IconData;
 import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
+import kr.ac.ssu.myrecipe.Camera.GetReceiptActivity;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
@@ -104,7 +104,7 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                         ThreadTask.OnTaskCompleted listener = new ThreadTask.OnTaskCompleted() {
                             @Override
                             public void onTaskCompleted(String str) {
-                                ((ReceiptListActivity)context).finish();
+                                ((GetReceiptActivity)context).finish();
                             }
                             @Override
                             public void onTaskFailure(String str) {

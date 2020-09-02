@@ -35,7 +35,7 @@ import androidx.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
+import kr.ac.ssu.myrecipe.Camera.GetReceiptActivity;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
@@ -53,8 +53,8 @@ public class RefrigeratorFragment extends Fragment{
     private ImageButton search_button;
     private LinearLayout nested_layout;
     private EditText tag;
-    private TextView category;
-    private TextView tagNumber;
+    private String cate;
+    private int tagNumber;
     private RefrigeratorAdapter refrigeratorAdapter;
     private CategoryAdapter categoryAdapter;
     private RefrigeratorDataBase db;
@@ -108,7 +108,7 @@ public class RefrigeratorFragment extends Fragment{
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ReceiptListActivity.class);
+                Intent intent = new Intent(getActivity(), GetReceiptActivity.class);
                 startActivity(intent);
             }
         });
@@ -230,11 +230,12 @@ public class RefrigeratorFragment extends Fragment{
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.add_dialog, null);
         tag = (EditText)view.findViewById(R.id.add_dialog_tag);
-        category = (TextView)view.findViewById(R.id.add_dialog_category);
-        tagNumber = (TextView)view.findViewById(R.id.add_dialog_tagNumber);
         final EditText material = (EditText)view.findViewById(R.id.add_dialog_material);
         final Button okay = (Button)view.findViewById(R.id.add_dialog_okay);
         final ImageButton close = (ImageButton)view.findViewById(R.id.add_dialog_close);
+        TextView title = (TextView)view.findViewById(R.id.add_dialog_title);
+
+        title.setText("재료추가");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);
@@ -257,8 +258,8 @@ public class RefrigeratorFragment extends Fragment{
                     RefrigeratorData dbdata = new RefrigeratorData();
                     dbdata.setTag(tag.getText().toString());
                     dbdata.setName(material.getText().toString());
-                    dbdata.setTagNumber(Integer.parseInt(tagNumber.getText().toString()));
-                    dbdata.setCategory(category.getText().toString());
+                    dbdata.setTagNumber(tagNumber);
+                    dbdata.setCategory(cate);
                     if(db.Dao().findData(dbdata.getName()) == null)
                         db.Dao().insert(dbdata);
                     else
@@ -327,9 +328,9 @@ public class RefrigeratorFragment extends Fragment{
         adapter.setOnItemClickListener(new TagListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
+                cate =  adapter.filteredList.get(pos).getCategory();
+                tagNumber =  adapter.filteredList.get(pos).getTagNumber();
                 tag.setText(adapter.filteredList.get(pos).getTag());
-                category.setText(adapter.filteredList.get(pos).getCategory());
-                tagNumber.setText("" + adapter.filteredList.get(pos).getTagNumber());
                 dialog.dismiss();
             }
         });

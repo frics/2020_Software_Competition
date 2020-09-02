@@ -2,46 +2,52 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBlack"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
-        android:id="@+id/resultImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="CROPED IMAGE" />
 
-
-    <TextView
-        android:id="@+id/upload_title"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/upload_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/colorBlack"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textAlignment="center"
-        android:text="영수증에서 정보를 읽어오는 중입니다."
-        android:textColor="@color/colorWhite"
-        android:textSize="15dp"
-        android:textStyle="bold" />
+        android:background="@color/colorTint"
+        android:paddingVertical="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/upload_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="영수증 스캔"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:textSize="25dp"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/resultImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/upload_btn_view"
+        app:layout_constraintEnd_toStartOf="@id/right_tint"
+        app:layout_constraintStart_toEndOf="@id/left_tint"
+        app:layout_constraintTop_toBottomOf="@id/upload_toolbar"
+        android:contentDescription="CROPED IMAGE" />
 
 
     <LinearLayout
         android:id="@+id/left_tint"
         android:layout_width="50dp"
         android:layout_height="0dp"
-        android:background="@color/colorBlack"
-        app:layout_constraintTop_toBottomOf="@id/upload_title"
-        app:layout_constraintBottom_toTopOf="@id/upload_bottom"
+        android:background="@color/colorTint"
+        app:layout_constraintTop_toBottomOf="@id/upload_toolbar"
+        app:layout_constraintBottom_toTopOf="@id/upload_btn_view"
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="horizontal" />
 
@@ -49,38 +55,47 @@
         android:id="@+id/right_tint"
         android:layout_width="50dp"
         android:layout_height="0dp"
-        android:background="@color/colorBlack"
-        app:layout_constraintTop_toBottomOf="@id/upload_title"
-        app:layout_constraintBottom_toTopOf="@id/upload_bottom"
+        android:background="@color/colorTint"
+        app:layout_constraintTop_toBottomOf="@id/upload_toolbar"
+        app:layout_constraintBottom_toTopOf="@id/upload_btn_view"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal" />
 
-    <TextView
-        android:id="@+id/resultImageText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:background="#7000"
-        android:textIsSelectable="true"
-        app:layout_constraintTop_toBottomOf="@id/upload_title"
-        app:layout_constraintStart_toEndOf="@id/left_tint"
-        app:layout_constraintEnd_toStartOf="@id/right_tint"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/upload_bottom"
+        android:id="@+id/upload_btn_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBlack"
-        android:paddingTop="30dp"
-        android:paddingBottom="30dp"
+        android:background="@color/colorTint"
+        android:paddingVertical="35dp"
+        android:paddingHorizontal="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/recapture_btn"
+            android:text="다시 찍기"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/crop_btn"
+            android:text="사진 사용"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

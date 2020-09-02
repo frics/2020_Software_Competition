@@ -18,6 +18,7 @@
             android:gravity="center_horizontal"
             android:text="재료 추가"
             android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -65,17 +66,9 @@
                 android:layout_marginRight="30dp"
                 android:layout_gravity="center"
                 android:focusableInTouchMode="false"
-                android:hint="태그를 선택하세요"/>
-            <TextView
-                android:id="@+id/add_dialog_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
-            <TextView
-                android:id="@+id/add_dialog_tagNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:hint="태그를 선택하세요"
+                android:theme="@style/EditTheme"
+                android:outlineSpotShadowColor="@color/colorPrimary"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/add_dialog_layout2"
@@ -98,13 +91,15 @@
                 android:layout_weight="0.7"
                 android:layout_marginRight="30dp"
                 android:layout_gravity="center"
+                android:theme="@style/EditTheme"
                 android:hint="재료명을 입력하세요"/>
         </LinearLayout>
 
         <Button
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:background="@drawable/button_background"
             android:id="@+id/add_dialog_okay"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="확인"
             android:textSize="20dp"
