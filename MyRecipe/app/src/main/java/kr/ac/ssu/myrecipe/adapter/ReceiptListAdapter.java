@@ -239,6 +239,7 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                     Integer category = iconData.textToicon.get(holder.categoryString.getText().toString());
                     holder.category.setImageResource(category);
                     mData.get(position).setCategory(holder.categoryString.getText().toString());
+                    mData.get(position).setTagNumber(adapter.filteredList.get(pos).getTagNumber());
                 }
                 dialog.dismiss();
             }
