@@ -101,8 +101,14 @@ public class OpenRecipeListCSV {
                 break;
         }
 
+        int cnt = 0;
         // 나의 레시피 레시피와 동기화
-        for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++)
-            Recipe.myRecipeList[i] = (Recipe)Recipe.recipeList[i].clone();
+        for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++) {
+            Recipe.myRecipeList[i] = (Recipe) Recipe.recipeList[i].clone();
+
+            // 씹버귿 ㅣ버그 문..
+            if(Recipe.recipeList[i].tag_list.size() != Recipe.recipeList[i].ingredient.size())
+                Log.d("SHIT", cnt++ +"/"+i+"/"+Recipe.recipeList[i].name);
+        }
     }
 }

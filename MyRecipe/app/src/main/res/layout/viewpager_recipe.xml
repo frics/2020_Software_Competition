@@ -29,6 +29,23 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/viewpager_scrap_num"
+            android:layout_width="34dp"
+            android:layout_height="13dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/design_scrap_num"
+            android:gravity="center|center_vertical"
+            android:text="1.1k"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/viewpager_scrap_button"
+            app:layout_constraintHorizontal_bias="0.7"
+            app:layout_constraintLeft_toLeftOf="@id/viewpager_scrap_button"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewpager_scrap_button" />
+
         <kr.ac.ssu.myrecipe.UI.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
             android:id="@+id/viewpager_food_name"
             android:layout_width="wrap_content"
