@@ -19,7 +19,7 @@ import kr.ac.ssu.myrecipe.Camera.Capture.CameraActivity;
 
 
 public class MainActivity extends AppCompatActivity {
-    AppBarConfiguration appBarConfiguration;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

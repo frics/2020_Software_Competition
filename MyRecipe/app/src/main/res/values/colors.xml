@@ -15,4 +15,5 @@
     <color name="testBackground">#45EDEDED</color>
     <color name="grey">#e7e7e7</color>
     <color name="transparent">#00000000</color>
+    <color name="textGrey">#454545</color>
 </resources>
