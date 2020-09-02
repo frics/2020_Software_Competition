@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -38,6 +39,9 @@ import kr.ac.ssu.myrecipe.recipe.RecipeIntroduction;
 import kr.ac.ssu.myrecipe.recipe.RecipeListFragment;
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class HomeFragment extends Fragment {
     static public String recent_recipes;
     private ArrayList<Recipe> itemList, rankList;
@@ -45,6 +49,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView totalListView, recentListView;
     private AutoScrollViewPager viewPager;
     public RecipeListAdapter recentAdapter;
+    private RelativeLayout relativeLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +70,12 @@ public class HomeFragment extends Fragment {
         recentListView.setLayoutManager(recentLayoutManager);
         MyListDecoration decoration = new MyListDecoration();
         ArrayList<Recipe> recent_list = getRecentRecipeList();
+
+        if (recent_list.size() == 0)
+            relativeLayout.setVisibility(GONE);
+        else
+            relativeLayout.setVisibility(VISIBLE);
+
         recentAdapter = new RecipeListAdapter(getContext(), recent_list, onClickOrigin);
         recentListView.setAdapter(recentAdapter);
         recentListView.addItemDecoration(decoration);
@@ -81,6 +92,7 @@ public class HomeFragment extends Fragment {
         viewPager = view.findViewById(R.id.popular_recipe_viewpager);
         totalListView = view.findViewById(R.id.total_recipe_listview);
         recentListView = view.findViewById(R.id.recent_listview);
+        relativeLayout = view.findViewById(R.id.recent_recipe_view);
     }
 
     public void setAdapter() { // RecyclerView 어댑터 세팅
@@ -96,12 +108,14 @@ public class HomeFragment extends Fragment {
         viewPager.startAutoScroll(); // 자동 스크롤 on
         viewPager.setInterval(6500); // 스크롤 간격
         viewPager.setScrollDurationFactor(3); // 스크롤 넘어가는 속도
+        viewPager.setPageMargin(50);
         RecipePagerAdapter viewPagerAdapter = new RecipePagerAdapter(getContext(), rankList, onClickOrigin);
         viewPager.setAdapter(viewPagerAdapter);
     }
 
     private ArrayList<Recipe> getRecentRecipeList() {
         ArrayList<Recipe> list = new ArrayList<>();
+        Log.d("DEBUG", "getRecentRecipeList: " + recent_recipes);
         String[] string_list = recent_recipes.split(",");
 
         if (string_list[0].compareTo("") == 0) // 최근 본 리스트가 없는 경우

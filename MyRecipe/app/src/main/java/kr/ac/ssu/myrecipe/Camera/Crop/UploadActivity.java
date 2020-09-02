@@ -5,13 +5,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -20,10 +22,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
 
 public class UploadActivity extends AppCompatActivity {
 
+    private static final String TAG = UploadActivity.class.getSimpleName();
     static Bitmap mImage;
 
     private ImageView imageView;
@@ -43,31 +47,21 @@ public class UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_upload);
+        hideNavigationBar();
 
         imageView = ((ImageView) findViewById(R.id.resultImageView));
+
+        Toolbar toolbar =  findViewById(R.id.upload_toolbar);
+        setSupportActionBar(toolbar);
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.bringToFront();
 
         Intent intent = getIntent();
         if (mImage != null) {
             imageView.setImageBitmap(mImage);
-            int sampleSize = intent.getIntExtra("SAMPLE_SIZE", 1);
-            double ratio = ((int) (10 * mImage.getWidth() / (double) mImage.getHeight())) / 10d;
-            int byteCount = 0;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
-                byteCount = mImage.getByteCount() / 1024;
-            }
-            String desc =
-                    "("
-                            + mImage.getWidth()
-                            + ", "
-                            + mImage.getHeight()
-                            + "), Sample: "
-                            + sampleSize
-                            + ", Ratio: "
-                            + ratio
-                            + ", Bytes: "
-                            + byteCount
-                            + "K";
-            ((TextView) findViewById(R.id.resultImageText)).setText(desc);
         } else {
             Uri imageUri = intent.getParcelableExtra("URI");
             if (imageUri != null) {
@@ -91,15 +85,52 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        releaseBitmap();
-        super.onBackPressed();
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.cam_menu, menu);
+        return true;
     }
 
-    public void onImageViewClicked(View view) {
-        releaseBitmap();
-        finish();
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        Intent intent;
+        switch (curId) {
+            case android.R.id.home:
+                Log.e(TAG, "크롭으로 간다");
+                Toast.makeText( this,"go to crop", Toast.LENGTH_SHORT).show();
+                releaseBitmap();
+                finish();
+                onBackPressed();
+                //startActivity(new Intent(this, CropActivity.class));
+                break;
+
+            case R.id.go_to_main:
+                Log.e(TAG, "메인으로 간다!!!!");
+                releaseBitmap();
+                finish();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
+    private void hideNavigationBar() {
+        int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+        int newUiOptions = uiOptions;
+        boolean isImmersiveModeEnabled =
+                ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
+        if (isImmersiveModeEnabled) {
+            Log.d(TAG, "Turning immersive mode mode off. ");
+        } else {
+            Log.d(TAG, "Turning immersive mode mode on.");
+        }
+        newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
+    }
+
+
 
     private void releaseBitmap() {
         if (mImage != null) {

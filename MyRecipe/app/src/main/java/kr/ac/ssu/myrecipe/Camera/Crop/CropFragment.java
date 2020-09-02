@@ -10,9 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +28,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import kr.ac.ssu.myrecipe.Camera.Capture.CameraActivity;
 import kr.ac.ssu.myrecipe.R;
 
 
-public class CropFragment extends Fragment implements CropImageView.OnCropImageCompleteListener {
+public class CropFragment extends Fragment implements CropImageView.OnCropImageCompleteListener, View.OnClickListener{
 
     private static final String TAG = CropFragment.class.getSimpleName();
     File mFile = null;
@@ -75,11 +78,26 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
         Toolbar toolbar =  rootView.findViewById(R.id.crop_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
         toolbar.bringToFront();
 
+        setHasOptionsMenu(true);
+
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu,inflater); inflater.inflate(R.menu.cam_menu,menu);
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        if (curId == R.id.go_to_main) {
+            getActivity().finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -87,22 +105,16 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
         super.onViewCreated(view, savedInstanceState);
 
         mCropImageView = view.findViewById(R.id.cropImageView);
-
         mCropImageView.setOnCropImageCompleteListener(this);
+        view.findViewById(R.id.recapture_btn).setOnClickListener(this);
+        view.findViewById(R.id.crop_btn).setOnClickListener(this);
 
         mFile = new File(getActivity().getExternalFilesDir(null), "pic_crop.jpg");
         uploadFilePath = mFile+"/";
         uploadFileName = "pic.jpg";
-        Button btn = view.findViewById(R.id.crop_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCropImageView.getCroppedImageAsync();
-            }
-        });
 
         if (savedInstanceState == null) {
-            //mCropImageView.setImageUriAsync(uri);
+
            makePhotoView();
         }
     }
@@ -132,6 +144,7 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
             mCropImageView.setCropShape(CropImageView.CropShape.RECTANGLE);
             mCropImageView.setGuidelines(CropImageView.Guidelines.ON);
             mCropImageView.setFixedAspectRatio(false);
+           // mCropImageView.setMaxZoom(8);
             mCropImageView.setMultiTouchEnabled(true);
             mCropImageView.setShowCropOverlay(true);
             mCropImageView.setShowProgressBar(false);
@@ -139,6 +152,21 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
             mCropImageView.setFlippedHorizontally(false);
             mCropImageView.setFlippedVertically(false);
 
+        }
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.recapture_btn: {
+                getActivity().finish();
+                Intent intent = new Intent(getActivity(), CameraActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.crop_btn:{
+                mCropImageView.getCroppedImageAsync();
+                break;
+            }
         }
     }
 

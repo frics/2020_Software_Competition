@@ -41,7 +41,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".Camera.ReceiptListActivity" />
+            android:name=".Camera.GetReceiptActivity" />
         <activity
             android:name=".Camera.Capture.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -49,10 +49,14 @@
         </activity>
 
         <activity
-            android:name=".Camera.Crop.UploadActivity">
+            android:name=".Camera.Crop.UploadActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".Camera.Crop.CropActivity" >
+            android:name=".Camera.Crop.CropActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".recipe.RecipeIntroduction" />

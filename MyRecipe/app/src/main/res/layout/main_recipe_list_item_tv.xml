@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/main_food_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -27,7 +27,19 @@
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
+        android:maxLines="1"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@id/main_food_image"
+        app:layout_constraintRight_toLeftOf="@id/main_scrap"
+        app:layout_constraintTop_toTopOf="parent"/>
+    
+    <ImageView
+        android:id="@+id/main_scrap"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_grey_heart"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
