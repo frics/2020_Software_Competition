@@ -61,9 +61,36 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!---
-    찬양이가 추가 리사이클러 뷰든 뭐든!
-    -->
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/account_tab"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/colorPrimary">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_Item1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="스크랩"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_Item2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장바구니"/>
+    </com.google.android.material.tabs.TabLayout>
+    <View
+        android:id="@+id/refri_view1"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#5A5A5A"/>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/account_viewpager"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

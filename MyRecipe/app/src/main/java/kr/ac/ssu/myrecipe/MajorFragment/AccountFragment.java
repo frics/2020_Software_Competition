@@ -18,15 +18,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.ServerConnect.PushData;
 import kr.ac.ssu.myrecipe.User.SharedPrefManager;
+import kr.ac.ssu.myrecipe.adapter.AccountVPAdapter;
 
 public class AccountFragment extends Fragment {
 
     private static final String TAG =  AccountFragment.class.getSimpleName();
-
     private TextView TvNickname;
     private Context mContext;
     private TextView TvId;
@@ -35,7 +38,8 @@ public class AccountFragment extends Fragment {
     private String id;
     private String nickname;
     private String DBName;
-
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
     public static  AccountFragment newInstance() {
         return new  AccountFragment();
     }
@@ -47,7 +51,14 @@ public class AccountFragment extends Fragment {
         id = SharedPrefManager.getString( mContext,SharedPrefManager.KEY_ID);
         DBName = SharedPrefManager.getString( mContext, SharedPrefManager.KEY_REF_DB);
 
-        setHasOptionsMenu(true);
+        viewPager = view.findViewById(R.id.account_viewpager);
+        tabLayout = view.findViewById(R.id.account_tab);
+        //viewPager 선언및 연동
+        AccountVPAdapter vpAdapter = new AccountVPAdapter(getChildFragmentManager());
+        viewPager.setAdapter(vpAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setText("스크랩");
+        tabLayout.getTabAt(1).setText("장바구니");
 
         Log.e(TAG, nickname);
         Log.e(TAG, id);

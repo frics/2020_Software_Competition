@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
     <LinearLayout
         android:id="@+id/refri_layout"
@@ -99,7 +100,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/refri_recycler"
         android:layout_width="match_parent"
-        android:layout_height="510dp"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@id/refri_view2"
         app:layout_constraintLeft_toLeftOf="parent"/>

@@ -30,7 +30,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
-                android:hint="태그를 입력해주세요" />
+                android:hint="태그를 입력해주세요"
+                android:theme="@style/EditTheme"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
