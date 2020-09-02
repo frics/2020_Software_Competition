@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.adapter.ReceiptListAdapter;
 
-public class ReceiptListActivity extends AppCompatActivity {
+public class GetReceiptActivity extends AppCompatActivity {
     private ReceiptListAdapter FoodAdapter;
     private ArrayList<ReceiptListAdapter.Data> foodList;
     @Override

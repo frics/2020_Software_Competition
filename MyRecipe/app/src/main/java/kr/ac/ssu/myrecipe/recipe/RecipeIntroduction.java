@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sothree.slidinguppanel.ScrollableViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -137,7 +138,7 @@ public class RecipeIntroduction extends AppCompatActivity {
         ingredientRecyclerView.setLayoutManager(ingredientLayoutManager);
         recipeRecyclerView.setLayoutManager(recipeLayoutManager);
 
-        IngredientListAdapter adapter = new IngredientListAdapter(this, datalist);
+        IngredientListAdapter adapter = new IngredientListAdapter(this, datalist, recipe);
         RecipeOrderListAdapter adapter1 = new RecipeOrderListAdapter(this, recipe.recipe_order);
 
         ingredientRecyclerView.setAdapter(adapter);
@@ -214,6 +215,8 @@ public class RecipeIntroduction extends AppCompatActivity {
 
         recentlist = num + "," + recentlist;
         HomeFragment.recent_recipes = recentlist;
+        HomeFragment.recent_recipes = HomeFragment.recent_recipes.replaceAll(",,",",");
+
         editor.putString("recentlist", recentlist);
         editor.commit();
     }

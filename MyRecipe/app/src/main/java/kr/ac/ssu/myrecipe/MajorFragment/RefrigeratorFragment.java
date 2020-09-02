@@ -35,7 +35,7 @@ import androidx.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.ac.ssu.myrecipe.Camera.ReceiptListActivity;
+import kr.ac.ssu.myrecipe.Camera.GetReceiptActivity;
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
@@ -108,7 +108,7 @@ public class RefrigeratorFragment extends Fragment{
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ReceiptListActivity.class);
+                Intent intent = new Intent(getActivity(), GetReceiptActivity.class);
                 startActivity(intent);
             }
         });
