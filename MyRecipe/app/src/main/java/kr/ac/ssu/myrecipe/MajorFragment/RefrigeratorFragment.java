@@ -10,6 +10,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,10 +62,11 @@ public class RefrigeratorFragment extends Fragment{
     private TextView text;
     private ArrayList<TagListAdapter.Item> taglist;
     private ArrayList<String> categoryList;
+    private Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_refrigerator, container, false);
-        final Context context = getContext();
+        context = getContext();
         imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         recyclerview = (RecyclerView)v.findViewById(R.id.refri_recycler);
         categoryRecycler = (RecyclerView)v.findViewById(R.id.refri_recycler_horizon);
@@ -75,6 +80,8 @@ public class RefrigeratorFragment extends Fragment{
         ImageButton nested_close = (ImageButton) v.findViewById(R.id.refri_nested_close);
         ImageButton add_button = (ImageButton)v.findViewById(R.id.refri_add);
         ImageButton temp = (ImageButton)v.findViewById(R.id.refri_temp);
+
+        setHasOptionsMenu(true);
 
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,13 +103,7 @@ public class RefrigeratorFragment extends Fragment{
                 }
             }
         });
-        //add버튼 리스너 장착
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddDialog(context);
-            }
-        });
+
         //영수증 임시버튼
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +130,31 @@ public class RefrigeratorFragment extends Fragment{
         });
         return v;
     }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu,inflater); inflater.inflate(R.menu.refrigerator_menu,menu);
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId){
+            case R.id.action_ref_search:
+                Toast.makeText(getActivity(), "검색", Toast.LENGTH_SHORT).show();//검색 메뉴 아이콘 선택시 이벤트 설정
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+                break;
+            case R.id.ref_add:
+                showAddDialog(context);
+                Toast.makeText(getActivity(), "검색", Toast.LENGTH_SHORT).show();//추가 메뉴 아이콘 선택시 이벤트 설정
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     @Override
     public void onResume() {
