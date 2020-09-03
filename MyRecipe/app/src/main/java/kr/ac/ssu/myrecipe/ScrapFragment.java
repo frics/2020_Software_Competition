@@ -35,9 +35,14 @@ public class ScrapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_scrap, container, false);
 
         setViewById(view);
-        setAdapter();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAdapter();
     }
 
     private void setViewById(View view) {

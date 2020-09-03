@@ -84,10 +84,14 @@ public class RecipeIntroduction extends AppCompatActivity {
         // 스크랩 여부 확인 후 뷰 세팅
         db = Room.databaseBuilder(this, ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
         ScrapListData data = db.Dao().findData(recipe.num+1);
-        if(data.getScraped() == 1)
+        if(data.getScraped() == 1) {
             scrapButton.setImageDrawable(red);
-        else
+            scrapButton.setTag(true);
+        }
+        else {
             scrapButton.setImageDrawable(grey);
+            scrapButton.setTag(false);
+        }
     }
 
     private void makeResponsiveUI() { // 메인 레시피 반응형 UI 생성 함수
@@ -243,16 +247,20 @@ public class RecipeIntroduction extends AppCompatActivity {
             if (v == backButton) // 백 버튼
                 finish();
             else if (v == scrapButton) { // 스크랩 버튼
-                Drawable grey = getDrawable(R.drawable.ic_grey_heart);
-                Drawable red = getDrawable(R.drawable.ic_red_heart);
 
-                if (!check) {
-                    scrapButton.setImageDrawable(red);
-                    check = true;
-                } else {
+                ScrapListData data = db.Dao().findData(recipe.num+1);
+
+                if ((boolean)v.getTag()) {
                     scrapButton.setImageDrawable(grey);
-                    check = false;
+                    v.setTag(false);
+                    data.setScraped(0);
+                } else {
+                    scrapButton.setImageDrawable(red);
+                    v.setTag(true);
+                    data.setScraped(1);
                 }
+                db.Dao().update(data);
+
             } else if (v == ingredientTitle) { // 재료 클릭 시
                 ingredientBar.setVisibility(View.VISIBLE);
                 ingredientLayout.setVisibility(View.VISIBLE);

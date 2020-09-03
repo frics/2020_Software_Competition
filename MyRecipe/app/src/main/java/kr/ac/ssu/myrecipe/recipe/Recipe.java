@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Recipe implements Serializable, Cloneable { // 레시피 클래스
 
     // 레시피리스트 및 랭킹리스트
-    public static final int TOTAL_RECIPE_NUM = 1200, RANK_RECIPE_NUM = 30;
+    public static final int TOTAL_RECIPE_NUM = 1160, RANK_RECIPE_NUM = 30;
     public static Recipe[] recipeList, RankingList;
     public static int[] orderTable;
 

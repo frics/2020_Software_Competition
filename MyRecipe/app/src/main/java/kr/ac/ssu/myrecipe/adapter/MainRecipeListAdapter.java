@@ -2,6 +2,7 @@ package kr.ac.ssu.myrecipe.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
@@ -24,6 +26,7 @@ import kr.ac.ssu.myrecipe.recipe.Recipe;
 
 public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAdapter.ViewHolder> implements Filterable {
 
+    private Recipe item;
     private ScrapListDataBase db;
     private Drawable grey, red;
 
@@ -51,7 +54,7 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
 
     @Override
     public void onBindViewHolder(MainRecipeListAdapter.ViewHolder holder, int position) {
-        Recipe item = FilteredList.get(position);
+        item = FilteredList.get(position);
 
         holder.itemView.setTag(item.num); // 태그설정
         Glide.with(context) // 이미지 설정
@@ -64,10 +67,13 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
         // 스크랩 여부 확인 후 뷰 세팅
         db = Room.databaseBuilder(context, ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
         ScrapListData data = db.Dao().findData(item.num + 1);
-        if (data.getScraped() == 1)
-            holder.scrap_button.setImageDrawable(red);
-        else
-            holder.scrap_button.setImageDrawable(grey);
+        if (data.getScraped() == 1) {
+            holder.scrapButton.setImageDrawable(red);
+            holder.scrapButton.setTag(true);
+        } else {
+            holder.scrapButton.setImageDrawable(grey);
+            holder.scrapButton.setTag(false);
+        }
 
         // 재료리스트 삽입
         String lists = new String();
@@ -122,17 +128,41 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView food_image, scrap_button;
+        private ImageView food_image, scrapButton;
         private TextView food_name, food_percent, ingredients;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(onClickItem);
             food_image = itemView.findViewById(R.id.main_food_image);
-            scrap_button = itemView.findViewById(R.id.main_scrap);
+            scrapButton = itemView.findViewById(R.id.main_scrap);
+
+            scrapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        item = FilteredList.get(pos);
+                    }
+                    ScrapListData data = db.Dao().findData(item.num + 1);
+                    if ((boolean) v.getTag()) {
+                        scrapButton.setImageDrawable(grey);
+                        v.setTag(false);
+                        data.setScraped(0);
+                    } else {
+                        scrapButton.setImageDrawable(red);
+                        v.setTag(true);
+                        data.setScraped(1);
+                    }
+                    db.Dao().update(data);
+
+                }
+            });
+
             food_name = itemView.findViewById(R.id.main_food_title);
             food_percent = itemView.findViewById(R.id.main_food_percent);
             ingredients = itemView.findViewById(R.id.main_food_ingredients);
         }
     }
+
 }

@@ -2,6 +2,7 @@ package kr.ac.ssu.myrecipe.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.viewpager.widget.PagerAdapter;
 
@@ -25,6 +27,7 @@ import kr.ac.ssu.myrecipe.recipe.Recipe;
 public class RecipePagerAdapter extends PagerAdapter {
     private ScrapListDataBase db;
     private Drawable grey, red;
+    private ImageView scrabButton;
 
     private LayoutInflater inflater;
     private ArrayList<Recipe> itemList;
@@ -50,7 +53,7 @@ public class RecipePagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         inflater = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
 
@@ -59,7 +62,7 @@ public class RecipePagerAdapter extends PagerAdapter {
         v.setOnClickListener(onClickItem);
 
         ImageView imageView = v.findViewById(R.id.viewpager_food_image);
-        ImageView scrabButton = v.findViewById(R.id.viewpager_scrap_button);
+        scrabButton = v.findViewById(R.id.viewpager_scrap_button);
         TextView scrabText = v.findViewById(R.id.viewpager_scrap_num);
         TextView nameText = v.findViewById(R.id.viewpager_food_name);
 
@@ -74,16 +77,40 @@ public class RecipePagerAdapter extends PagerAdapter {
         ScrapListData data = db.Dao().findData(itemList.get(position).num + 1);
 
 
-        if (data.getScraped() == 1)
+        if (data.getScraped() == 1) {
             scrabButton.setImageDrawable(red);
-        else
+            scrabButton.setTag(true);
+        } else {
             scrabButton.setImageDrawable(grey);
+            scrabButton.setTag(false);
+        }
+
+        final int pos = position;
+        scrabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScrapListData data = db.Dao().findData(itemList.get(pos).num + 1);
+
+                if ((boolean) v.getTag()) {
+                    ImageView tmp = (ImageView) v;
+                    tmp.setImageDrawable(grey);
+                    v.setTag(false);
+                    data.setScraped(0);
+                } else {
+                    ImageView tmp = (ImageView) v;
+                    tmp.setImageDrawable(red);
+                    v.setTag(true);
+                    data.setScraped(1);
+                }
+                db.Dao().update(data);
+            }
+        });
 
         String str;
         if (data.getTotalNum() < 1000)
             str = data.getTotalNum() + "";
         else
-            str = ((double)(data.getTotalNum() - (data.getTotalNum() % 100)) / 1000)+ "k";
+            str = ((double) (data.getTotalNum() - (data.getTotalNum() % 100)) / 1000) + "k";
 
         scrabText.setText(str);
 
@@ -95,4 +122,5 @@ public class RecipePagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.invalidate();
     }
+
 }

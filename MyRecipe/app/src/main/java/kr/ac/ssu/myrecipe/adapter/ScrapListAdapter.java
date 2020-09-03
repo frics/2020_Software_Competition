@@ -24,6 +24,7 @@ import kr.ac.ssu.myrecipe.recipe.Recipe;
 
 public class ScrapListAdapter extends RecyclerView.Adapter<ScrapListAdapter.ViewHolder> {
 
+    int item;
     private ScrapListDataBase db;
     private Drawable grey, red;
 
@@ -49,7 +50,7 @@ public class ScrapListAdapter extends RecyclerView.Adapter<ScrapListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        int item = itemList.get(position);
+        item = itemList.get(position);
         Log.d("TAG", "onBindViewHolder: " + item);
         holder.nameText.setText(Recipe.recipeList[item].name);
         holder.percentText.setText(Recipe.recipeList[item].percent + "%");
@@ -62,10 +63,14 @@ public class ScrapListAdapter extends RecyclerView.Adapter<ScrapListAdapter.View
         // 스크랩 여부 확인 후 뷰 세팅
         db = Room.databaseBuilder(context, ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
         ScrapListData data = db.Dao().findData(Recipe.recipeList[item].num + 1);
-        if (data.getScraped() == 1)
-            holder.scrap_button.setImageDrawable(red);
-        else
-            holder.scrap_button.setImageDrawable(grey);
+        if (data.getScraped() == 1) {
+            holder.scrapButton.setTag(true);
+            holder.scrapButton.setImageDrawable(red);
+        }
+        else {
+            holder.scrapButton.setTag(false);
+            holder.scrapButton.setImageDrawable(grey);
+        }
     }
 
     @Override
@@ -75,7 +80,7 @@ public class ScrapListAdapter extends RecyclerView.Adapter<ScrapListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameText, percentText;
-        public ImageView imageview, scrap_button;
+        public ImageView imageview, scrapButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -83,7 +88,30 @@ public class ScrapListAdapter extends RecyclerView.Adapter<ScrapListAdapter.View
             nameText = itemView.findViewById(R.id.scrap_list_food_name);
             percentText = itemView.findViewById(R.id.scrap_list_food_percent);
             imageview = itemView.findViewById(R.id.scrap_list_food_image);
-            scrap_button = itemView.findViewById(R.id.scrap_list_scrap_button);
+            scrapButton = itemView.findViewById(R.id.scrap_list_scrap_button);
+            scrapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        item = itemList.get(pos);
+                    }
+
+                    ScrapListData data = db.Dao().findData(item+1);
+
+                    if ((boolean) v.getTag()) {
+                        scrapButton.setImageDrawable(grey);
+                        v.setTag(false);
+                        data.setScraped(0);
+                    } else {
+                        scrapButton.setImageDrawable(red);
+                        v.setTag(true);
+                        data.setScraped(1);
+                    }
+                    db.Dao().update(data);
+
+                }
+            });
         }
     }
 }
