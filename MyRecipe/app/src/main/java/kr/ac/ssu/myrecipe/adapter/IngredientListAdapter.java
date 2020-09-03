@@ -67,6 +67,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
             }
         });
 
+        Log.d("TAG", "야 범인잡아라 ! ! !");
         for (int i = 0; i < dbData.size(); i++) {
             Log.d("TAG", "onBindViewHolder: " + recipe.tag_list.get(position));
             if (dbData.get(i).getTag().compareTo(recipe.tag_list.get(position)) == 0) {
