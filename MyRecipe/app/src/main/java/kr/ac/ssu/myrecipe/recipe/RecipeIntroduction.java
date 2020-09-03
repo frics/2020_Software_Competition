@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.MajorFragment.HomeFragment;
 import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListDataBase;
 import kr.ac.ssu.myrecipe.adapter.IngredientListAdapter;
 import kr.ac.ssu.myrecipe.adapter.RecipeOrderListAdapter;
 
@@ -35,6 +38,8 @@ public class RecipeIntroduction extends AppCompatActivity {
     private boolean check = false;
     private int maxWidth; // 영양성분 그래프 뷰 길이
     private Recipe recipe;
+    private ScrapListDataBase db;
+    private Drawable grey, red;
 
     // 데이터 표시 뷰
     private View recipeBar, ingredientBar, kcalBar, carbonBar, proteinBar, fatBar, sodiumBar, max_bar;
@@ -61,8 +66,9 @@ public class RecipeIntroduction extends AppCompatActivity {
         pushRecentRecipeList();
     }
 
-    private void setMainView() { // 음식 사진 및 이름 세팅
+    private void setMainView() { // 소개 화면 메인 뷰 세팅
         foodimage = this.findViewById(R.id.food_image);
+        scrapButton = this.findViewById(R.id.intro_heart);
         textView = this.findViewById(R.id.food_name);
         percentText = this.findViewById(R.id.food_percentage);
         Glide.with(this)
@@ -71,6 +77,17 @@ public class RecipeIntroduction extends AppCompatActivity {
                 .into(foodimage);
         textView.setText(recipe.name);
         percentText.setText(recipe.percent + "%");
+
+        grey = getDrawable(R.drawable.ic_grey_heart);
+        red = getDrawable(R.drawable.ic_red_heart);
+
+        Log.d("TAG", "setMainView: "+recipe.num);
+        db = Room.databaseBuilder(this, ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
+        ScrapListData data = db.Dao().findData(recipe.num);
+        if(data.getScraped() == 1)
+            scrapButton.setImageDrawable(red);
+        else
+            scrapButton.setImageDrawable(grey);
     }
 
     private void makeResponsiveUI() { // 메인 레시피 반응형 UI 생성 함수
@@ -90,7 +107,6 @@ public class RecipeIntroduction extends AppCompatActivity {
         // 정보 뷰들 동기화
         slidingPaneLayout = this.findViewById(R.id.sliding_layout);
         backButton = this.findViewById(R.id.intro_arrow);
-        scrapButton = this.findViewById(R.id.intro_heart);
         ingredientTitle = this.findViewById(R.id.ingredients_title);
         recipeTitle = this.findViewById(R.id.recipe_title);
         ingredientBar = this.findViewById(R.id.ingredients_bar);
