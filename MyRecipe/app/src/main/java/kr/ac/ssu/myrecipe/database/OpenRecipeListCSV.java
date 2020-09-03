@@ -63,6 +63,7 @@ public class OpenRecipeListCSV {
                         for (int j = 0; j < ingredients.length; j++) { // 재료명과 재료양을 split
                             int pos = ingredients[j].length();
 
+                         //   Log.d("TAG", "readDataFromCsv: " + i +"/"+ingredients[j]);
                             while (ingredients[j].charAt(--pos) != ' ') ; // 재료명과 재료양을 구분
 
                             Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredients[j].substring(0, pos),
@@ -101,8 +102,14 @@ public class OpenRecipeListCSV {
                 break;
         }
 
+        int cnt = 0;
         // 나의 레시피 레시피와 동기화
-        for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++)
-            Recipe.myRecipeList[i] = (Recipe)Recipe.recipeList[i].clone();
+        for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++) {
+          //  Recipe.myRecipeList[i] = (Recipe) Recipe.recipeList[i].clone();
+
+            // 씹버귿 ㅣ버그 문..
+            if(Recipe.recipeList[i].tag_list.size() != Recipe.recipeList[i].ingredient.size())
+                Log.d("SHIT", cnt++ +"/"+i+"/"+Recipe.recipeList[i].name);
+        }
     }
 }

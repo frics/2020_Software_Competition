@@ -81,9 +81,18 @@ public class HomeFragment extends Fragment {
         recentListView.addItemDecoration(decoration);
     }
 
-    private void makeItemList(){
-        itemList = new ArrayList<>(Arrays.asList(Recipe.myRecipeList));
+    private void makeItemList() {
+        itemList = new ArrayList<>();
         rankList = new ArrayList<>(Arrays.asList(Recipe.RankingList));
+
+        // 테이블에서 매핑
+        for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++)
+            for (int j = 0; j < Recipe.TOTAL_RECIPE_NUM; j++) {
+                if(Recipe.orderTable[i] == Recipe.recipeList[j].num) {
+                    itemList.add(Recipe.recipeList[j]);
+                    break;
+                }
+            }
     }
 
     private void setViewById(View view) { // View에 id 세팅
@@ -101,7 +110,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager totalLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         totalListView.setLayoutManager(totalLayoutManager);
-        RecipeListAdapter totalAdapter = new RecipeListAdapter(getContext(), itemList, onClickItem);
+        RecipeListAdapter totalAdapter = new RecipeListAdapter(getContext(), itemList, onClickOrigin);
         totalListView.setAdapter(totalAdapter);
         totalListView.addItemDecoration(decoration);
 
@@ -127,16 +136,6 @@ public class HomeFragment extends Fragment {
         return list;
     }
 
-    private View.OnClickListener onClickItem = new View.OnClickListener() {
-        // 레시피 소개 액티비티 전환
-        @Override
-        public void onClick(View v) { // 완성도 정렬 레시피
-            Intent intent = new Intent(getContext(), RecipeIntroduction.class);
-            intent.putExtra("recipe", itemList.get((int) v.getTag()));
-            startActivity(intent);
-        }
-    };
-
     private View.OnClickListener onClickOrigin = new View.OnClickListener() {
         // 레시피 소개 액티비티 전환
         @Override
@@ -159,5 +158,6 @@ public class HomeFragment extends Fragment {
             transaction.commit();
         }
     };
+
 }
 

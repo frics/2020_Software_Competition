@@ -8,10 +8,14 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.myrecipe.ShoppingListDB.ShoppingListData;
 import kr.ac.ssu.myrecipe.User.SharedPrefManager;
 import kr.ac.ssu.myrecipe.User.SignInActivity;
 import kr.ac.ssu.myrecipe.database.OpenRecipeListCSV;
@@ -67,5 +71,7 @@ public class LaunchActivity extends AppCompatActivity {
 
         // 완성도 순 레시피리스트 세팅
         RecipeOrderList.RenewOrder(getApplicationContext());
+
+
     }
 }

@@ -18,15 +18,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.ServerConnect.PushData;
 import kr.ac.ssu.myrecipe.User.SharedPrefManager;
+import kr.ac.ssu.myrecipe.adapter.AccountVPAdapter;
+import kr.ac.ssu.myrecipe.adapter.RecipeListAdapter;
+import kr.ac.ssu.myrecipe.adapter.ScrapListAdapter;
 
 public class AccountFragment extends Fragment {
 
-    private static final String TAG =  AccountFragment.class.getSimpleName();
-
+    private static final String TAG = AccountFragment.class.getSimpleName();
     private TextView TvNickname;
     private Context mContext;
     private TextView TvId;
@@ -35,26 +42,35 @@ public class AccountFragment extends Fragment {
     private String id;
     private String nickname;
     private String DBName;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
-    public static  AccountFragment newInstance() {
-        return new  AccountFragment();
+
+    public static AccountFragment newInstance() {
+        return new AccountFragment();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
         mContext = getContext();
-        nickname = SharedPrefManager.getString( mContext, SharedPrefManager.KEY_NICKNAME);
-        id = SharedPrefManager.getString( mContext,SharedPrefManager.KEY_ID);
-        DBName = SharedPrefManager.getString( mContext, SharedPrefManager.KEY_REF_DB);
+        nickname = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_NICKNAME);
+        id = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_ID);
+        DBName = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_REF_DB);
 
-        setHasOptionsMenu(true);
+        viewPager = view.findViewById(R.id.account_viewpager);
+        tabLayout = view.findViewById(R.id.account_tab);
+        //viewPager 선언및 연동
+        AccountVPAdapter vpAdapter = new AccountVPAdapter(getChildFragmentManager());
+        viewPager.setAdapter(vpAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setText("스크랩");
+        tabLayout.getTabAt(1).setText("장바구니");
 
         Log.e(TAG, nickname);
         Log.e(TAG, id);
         Log.e(TAG, DBName);
 
-
-        TvNickname =view.findViewById(R.id.info_nickname);
+        TvNickname = view.findViewById(R.id.info_nickname);
         TvId = view.findViewById(R.id.info_id);
         TvNickname.setText(nickname);
         TvId.setText(id);
@@ -72,7 +88,7 @@ public class AccountFragment extends Fragment {
         backUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PushData pushData = new PushData(getContext(),PushData.BACKUP, DBName);
+                PushData pushData = new PushData(getContext(), PushData.BACKUP, DBName);
                 pushData.execute();
             }
         });
@@ -80,13 +96,18 @@ public class AccountFragment extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu,inflater); inflater.inflate(R.menu.account_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.account_menu, menu);
     }
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
-        switch (curId){
+        switch (curId) {
             case R.id.action_search:
                 Toast.makeText(getActivity(), "설정", Toast.LENGTH_SHORT).show();//tab1 메뉴 아이콘 선택시 이벤트 설정
                 break;
@@ -96,9 +117,7 @@ public class AccountFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-    private void signOutProcess(){
+    private void signOutProcess() {
         Log.e(TAG, "이제 다이얼로그 출력되야한다.");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("로그아웃 하시겠습니까?")
@@ -106,7 +125,7 @@ public class AccountFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         //사용자 Preference 삭제
                         SharedPrefManager.logout(getContext());
-                        PushData pushData = new PushData(getContext(),PushData.LOGOUT, DBName);
+                        PushData pushData = new PushData(getContext(), PushData.LOGOUT, DBName);
                         pushData.execute();
 
                     }
