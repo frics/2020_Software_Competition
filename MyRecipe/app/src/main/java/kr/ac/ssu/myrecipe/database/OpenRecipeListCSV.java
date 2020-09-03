@@ -63,6 +63,7 @@ public class OpenRecipeListCSV {
                         for (int j = 0; j < ingredients.length; j++) { // 재료명과 재료양을 split
                             int pos = ingredients[j].length();
 
+                         //   Log.d("TAG", "readDataFromCsv: " + i +"/"+ingredients[j]);
                             while (ingredients[j].charAt(--pos) != ' ') ; // 재료명과 재료양을 구분
 
                             Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredients[j].substring(0, pos),

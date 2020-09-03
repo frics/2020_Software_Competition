@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    private View.OnClickListener onClickOrigin = new View.OnClickListener() {
+    public View.OnClickListener onClickOrigin = new View.OnClickListener() {
         // 레시피 소개 액티비티 전환
         @Override
         public void onClick(View v) { // id값 정렬 레시피
