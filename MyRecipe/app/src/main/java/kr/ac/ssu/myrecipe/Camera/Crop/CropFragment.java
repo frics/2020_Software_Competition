@@ -1,5 +1,6 @@
 package kr.ac.ssu.myrecipe.Camera.Crop;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -60,7 +61,8 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
 
     /** Set the initial rectangle to use. */
     public void setInitialCropRect() {
-        mCropImageView.setCropRect(new Rect(100, 300, 500, 1200));
+        mCropImageView.setCropRect(
+                new Rect(100, 300, 500, 1200));
     }
 
     /** Reset crop window to initial rectangle. */
@@ -122,6 +124,7 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
 
 
 
+    @SuppressLint("ResourceAsColor")
     public void makePhotoView(){
         String path = getContext().getExternalFilesDir(null)+"/pic.jpg";
         Log.e(TAG, path);
@@ -131,7 +134,7 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
         if(imgFile.exists())
         {
             Matrix matrix = new Matrix();
-            matrix.postRotate(90);
+            matrix.postRotate(0);
 
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             int width = myBitmap.getWidth();
@@ -144,6 +147,7 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
             mCropImageView.setCropShape(CropImageView.CropShape.RECTANGLE);
             mCropImageView.setGuidelines(CropImageView.Guidelines.ON);
             mCropImageView.setFixedAspectRatio(false);
+           // mCropImageView.setBackgroundColor(90000000);
            // mCropImageView.setMaxZoom(8);
             mCropImageView.setMultiTouchEnabled(true);
             mCropImageView.setShowCropOverlay(true);
@@ -151,6 +155,7 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
             mCropImageView.setAutoZoomEnabled(true);
             mCropImageView.setFlippedHorizontally(false);
             mCropImageView.setFlippedVertically(false);
+            mCropImageView.resetCropRect();
 
         }
     }
@@ -158,7 +163,7 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.recapture_btn: {
-                getActivity().finish();
+                ((AppCompatActivity)getActivity()).finish();
                 Intent intent = new Intent(getActivity(), CameraActivity.class);
                 startActivity(intent);
                 break;
