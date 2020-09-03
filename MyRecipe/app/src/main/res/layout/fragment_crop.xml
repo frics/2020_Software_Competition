@@ -12,7 +12,7 @@
         android:id="@+id/crop_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorTint"
+
         android:paddingVertical="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -29,31 +29,15 @@
             android:textSize="25dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/left_tint"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:background="@color/colorTint"
-        app:layout_constraintTop_toBottomOf="@id/crop_toolbar"
-        app:layout_constraintBottom_toTopOf="@id/crop_btn_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/right_tint"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:background="@color/colorTint"
-        app:layout_constraintTop_toBottomOf="@id/crop_toolbar"
-        app:layout_constraintBottom_toTopOf="@id/crop_btn_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal" />
 
 
     <com.theartofdev.edmodo.cropper.CropImageView
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cropImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        custom:cropBackgroundColor="@color/colorTint"
+        custom:cropInitialCropWindowPaddingRatio="0.15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +47,7 @@
         android:id="@+id/crop_btn_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorTint"
+
         android:paddingVertical="35dp"
         android:paddingHorizontal="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
