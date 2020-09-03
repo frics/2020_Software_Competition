@@ -26,6 +26,8 @@ import kr.ac.ssu.myrecipe.R;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
+import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListDataBase;
 import kr.ac.ssu.myrecipe.recipe.RecipeOrderList;
 import kr.ac.ssu.myrecipe.ServerConnect.RequestHandler;
 import kr.ac.ssu.myrecipe.ServerConnect.URLs;
@@ -155,6 +157,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 public void onTaskCompleted(String str) {
                                     // 완성도 순 레시피리스트 세팅
                                     RecipeOrderList.RenewOrder(getApplicationContext());
+                                    //임시 스크랩 레시피 디비 세팅
+                                    ScrapListDataBase db;
+                                    db = Room.databaseBuilder(getApplicationContext(), ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
+                                    ScrapListData dbdata = new ScrapListData();
+                                    for (int i = 1; i <= 1200; i++) {
+                                        dbdata = new ScrapListData();
+                                        dbdata.setId(i);
+                                        dbdata.setTotalNum(i * 153);
+                                        dbdata.setScraped(0);
+                                        if (i % 100 == 0)
+                                            dbdata.setScraped(1);
+
+                                        Log.d(TAG, "onTaskCompleted: " + i);
+                                        if(db.Dao().findData(dbdata.getId()) == null)
+                                            db.Dao().insert(dbdata);
+                                    }
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }
