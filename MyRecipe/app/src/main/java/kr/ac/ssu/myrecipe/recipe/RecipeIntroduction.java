@@ -67,6 +67,9 @@ public class RecipeIntroduction extends AppCompatActivity {
     }
 
     private void setMainView() { // 소개 화면 메인 뷰 세팅
+        grey = getDrawable(R.drawable.ic_grey_heart);
+        red = getDrawable(R.drawable.ic_red_heart);
+
         foodimage = this.findViewById(R.id.food_image);
         scrapButton = this.findViewById(R.id.intro_heart);
         textView = this.findViewById(R.id.food_name);
@@ -78,12 +81,9 @@ public class RecipeIntroduction extends AppCompatActivity {
         textView.setText(recipe.name);
         percentText.setText(recipe.percent + "%");
 
-        grey = getDrawable(R.drawable.ic_grey_heart);
-        red = getDrawable(R.drawable.ic_red_heart);
-
-        Log.d("TAG", "setMainView: "+recipe.num);
+        // 스크랩 여부 확인 후 뷰 세팅
         db = Room.databaseBuilder(this, ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
-        ScrapListData data = db.Dao().findData(recipe.num);
+        ScrapListData data = db.Dao().findData(recipe.num+1);
         if(data.getScraped() == 1)
             scrapButton.setImageDrawable(red);
         else

@@ -1,6 +1,7 @@
 package kr.ac.ssu.myrecipe.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListDataBase;
 import kr.ac.ssu.myrecipe.recipe.Recipe;
 
 public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAdapter.ViewHolder> implements Filterable {
+
+    private ScrapListDataBase db;
+    private Drawable grey, red;
 
     private Context context;
     private View.OnClickListener onClickItem;
@@ -30,6 +37,8 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
         this.unFilteredList = itemList;
         this.FilteredList = itemList;
         this.onClickItem = onClickItem;
+        this.grey = context.getDrawable(R.drawable.ic_grey_heart);
+        this.red = context.getDrawable(R.drawable.ic_red_heart);
     }
 
     @Override
@@ -50,7 +59,15 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
                 .error(R.drawable.basic)
                 .into(holder.food_image);
         holder.food_name.setText(item.name); // 음식명 설정
-        holder.food_percent.setText(item.percent+"%"); // 퍼센트 설정
+        holder.food_percent.setText(item.percent + "%"); // 퍼센트 설정
+
+        // 스크랩 여부 확인 후 뷰 세팅
+        db = Room.databaseBuilder(context, ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
+        ScrapListData data = db.Dao().findData(item.num + 1);
+        if (data.getScraped() == 1)
+            holder.scrap_button.setImageDrawable(red);
+        else
+            holder.scrap_button.setImageDrawable(grey);
 
         // 재료리스트 삽입
         String lists = new String();
@@ -105,13 +122,14 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView food_image;
+        private ImageView food_image, scrap_button;
         private TextView food_name, food_percent, ingredients;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(onClickItem);
             food_image = itemView.findViewById(R.id.main_food_image);
+            scrap_button = itemView.findViewById(R.id.main_scrap);
             food_name = itemView.findViewById(R.id.main_food_title);
             food_percent = itemView.findViewById(R.id.main_food_percent);
             ingredients = itemView.findViewById(R.id.main_food_ingredients);

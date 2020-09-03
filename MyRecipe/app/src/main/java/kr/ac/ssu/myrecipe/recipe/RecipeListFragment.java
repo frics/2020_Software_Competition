@@ -46,7 +46,16 @@ public class RecipeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
-        itemList = new ArrayList<>(Arrays.asList(Recipe.myRecipeList));
+        itemList = new ArrayList<>();
+
+        // 테이블에서 매핑
+        for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++)
+            for (int j = 0; j < Recipe.TOTAL_RECIPE_NUM; j++) {
+                if (Recipe.orderTable[i] == Recipe.recipeList[j].num) {
+                    itemList.add(Recipe.recipeList[j]);
+                    break;
+                }
+            }
 
         setSearchBar(view);
         setRecyclerView(view);
@@ -119,8 +128,9 @@ public class RecipeListFragment extends Fragment {
     private View.OnClickListener onClickItem = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            // 레시피 소개 액티비티 전환
             Intent intent = new Intent(getContext(), RecipeIntroduction.class);
-            intent.putExtra("recipe", itemList.get((int) v.getTag()));
+            intent.putExtra("recipe", Recipe.recipeList[(int) v.getTag()]);
             startActivity(intent);
         }
     };
