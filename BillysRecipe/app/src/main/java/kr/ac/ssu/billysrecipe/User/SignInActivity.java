@@ -161,7 +161,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                     ScrapListDataBase db;
                                     db = Room.databaseBuilder(getApplicationContext(), ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
                                     ScrapListData dbdata = new ScrapListData();
-                                    for (int i = 1; i <= 1200; i++) {
+                                    for (int i = 1; i <= 1100; i++) {
                                         dbdata = new ScrapListData();
                                         dbdata.setId(i);
                                         dbdata.setTotalNum(i * 153);

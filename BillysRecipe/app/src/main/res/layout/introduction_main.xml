@@ -35,7 +35,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/food_image" />
 
-    <kr.ac.ssu.billysrecipe.UI.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
+    <kr.ac.ssu.billysrecipe.UI.TextBorderEffect
+        xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.billysrecipe"
         android:id="@+id/food_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +52,8 @@
         textoutline:textStrokeColor="@color/grey"
         textoutline:textStrokeWidth="3.0" />
 
-    <kr.ac.ssu.billysrecipe.UI.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
+    <kr.ac.ssu.billysrecipe.UI.TextBorderEffect
+        xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.billysrecipe"
         android:id="@+id/food_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
