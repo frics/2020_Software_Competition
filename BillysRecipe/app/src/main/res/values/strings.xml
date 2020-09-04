@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">빌리의 레시피</string>
+    <string name="title_home">홈</string>
+    <string name="title_undefined">미정</string>
+    <string name="title_refrigerator">냉장고</string>
+    <string name="title_account">내 정보</string>
+
+
+    <string name="title_activity_camera">CameraActivity</string>
+
+
+    <string name="picture">Picture</string>
+    <string name="description_info">Info</string>
+    <string name="request_permission">This sample needs camera permission.</string>
+    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
+    <string name="intro_message">intro message</string>
+    <string name="side_tinting">side tinting</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_preview">Preview</string>
+    <string name="title_cpatured">Captured</string>
+    <string name="title_captured">Captured</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="signin">로그인</string>
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="signup">회원가입</string>
+    <string name="nickname">닉네임</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+</resources>
