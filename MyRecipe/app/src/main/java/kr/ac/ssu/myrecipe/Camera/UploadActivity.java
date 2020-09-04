@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.Camera.Crop;
+package kr.ac.ssu.myrecipe.Camera;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +26,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import kr.ac.ssu.myrecipe.Camera.Capture.CameraActivity;
 import kr.ac.ssu.myrecipe.MainActivity;
 import kr.ac.ssu.myrecipe.R;
 
@@ -74,7 +73,7 @@ public class UploadActivity extends AppCompatActivity  {
         getReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "tlqkf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.d(TAG, "로딩 다이얼로그 실행중(데이터 받으면 종료)");
                 final AppCompatDialog progressDialog = new AppCompatDialog(mContext);
                 progressDialog.setCancelable(false);
                 progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));

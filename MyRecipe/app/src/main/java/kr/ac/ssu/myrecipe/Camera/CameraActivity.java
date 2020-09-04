@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.Camera.Capture;
+package kr.ac.ssu.myrecipe.Camera;
 
 
 import android.content.Context;
@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import kr.ac.ssu.myrecipe.Camera.Crop.CropActivity;
 import kr.ac.ssu.myrecipe.R;
 
 public class CameraActivity extends AppCompatActivity {

@@ -44,18 +44,18 @@
         <activity
             android:name=".Camera.GetReceiptActivity" />
         <activity
-            android:name=".Camera.Capture.CameraActivity"
+            android:name=".Camera.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".Camera.Crop.UploadActivity"
+            android:name=".Camera.UploadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".Camera.Crop.CropActivity"
+            android:name=".Camera.CropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>

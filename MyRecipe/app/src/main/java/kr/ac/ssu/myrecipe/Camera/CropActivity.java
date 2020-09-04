@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.Camera.Crop;
+package kr.ac.ssu.myrecipe.Camera;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

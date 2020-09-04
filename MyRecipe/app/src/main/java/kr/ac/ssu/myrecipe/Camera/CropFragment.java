@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.Camera.Crop;
+package kr.ac.ssu.myrecipe.Camera;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import kr.ac.ssu.myrecipe.Camera.Capture.CameraActivity;
 import kr.ac.ssu.myrecipe.R;
 
 
