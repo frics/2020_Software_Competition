@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,13 +27,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.UI.IconData;
-import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.Camera.GetReceiptActivity;
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.ThreadTask;
-import kr.ac.ssu.myrecipe.ServerConnect.GetTag;
+import kr.ac.ssu.billysrecipe.UI.IconData;
+import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.Camera.GetReceiptActivity;
+import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
+import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
+import kr.ac.ssu.billysrecipe.RefrigerRatorDB.ThreadTask;
+import kr.ac.ssu.billysrecipe.ServerConnect.GetTag;
 
 public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.ViewHolder> {
     private ArrayList<Data> mData = null;

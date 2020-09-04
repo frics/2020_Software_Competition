@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.recipe;
+package kr.ac.ssu.billysrecipe.recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sothree.slidinguppanel.ScrollableViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -18,7 +17,6 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,12 +24,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.MajorFragment.HomeFragment;
-import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListData;
-import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListDataBase;
-import kr.ac.ssu.myrecipe.adapter.IngredientListAdapter;
-import kr.ac.ssu.myrecipe.adapter.RecipeOrderListAdapter;
+import kr.ac.ssu.billysrecipe.MajorFragment.HomeFragment;
+import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.adapter.IngredientListAdapter;
+import kr.ac.ssu.billysrecipe.adapter.RecipeOrderListAdapter;
 
 public class RecipeIntroduction extends AppCompatActivity {
 

@@ -1,7 +1,6 @@
-package kr.ac.ssu.myrecipe.recipe;
+package kr.ac.ssu.billysrecipe.recipe;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.room.Room;
 
@@ -11,8 +10,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
+import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
+import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 
 public class RecipeOrderList { // 레시피 리스트 컨트롤 클래스
 

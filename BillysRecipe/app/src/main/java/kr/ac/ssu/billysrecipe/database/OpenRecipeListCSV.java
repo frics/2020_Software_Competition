@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.database;
+package kr.ac.ssu.billysrecipe.database;
 
 import android.util.Log;
 
@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import kr.ac.ssu.myrecipe.recipe.Recipe;
+import kr.ac.ssu.billysrecipe.recipe.Recipe;
 
 public class OpenRecipeListCSV {
 

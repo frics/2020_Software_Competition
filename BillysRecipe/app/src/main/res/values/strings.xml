@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyRecipe</string>
+    <string name="app_name">빌리의 레시피</string>
     <string name="title_home">홈</string>
     <string name="title_undefined">미정</string>
     <string name="title_refrigerator">냉장고</string>

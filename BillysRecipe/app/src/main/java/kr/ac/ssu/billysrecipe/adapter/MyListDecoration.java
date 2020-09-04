@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import android.graphics.Rect;
 import android.view.View;

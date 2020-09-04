@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.recipe.Recipe;
+import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.recipe.Recipe;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolder> {
 

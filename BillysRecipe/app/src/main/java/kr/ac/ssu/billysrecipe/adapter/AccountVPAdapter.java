@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.ScrapFragment;
-import kr.ac.ssu.myrecipe.ShopingListFragment;
+import kr.ac.ssu.billysrecipe.ScrapFragment;
+import kr.ac.ssu.billysrecipe.ShopingListFragment;
 
 public class AccountVPAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> items;

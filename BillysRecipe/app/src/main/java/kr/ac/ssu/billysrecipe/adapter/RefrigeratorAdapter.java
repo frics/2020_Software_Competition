@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.billysrecipe.R;
 
 public class RefrigeratorAdapter extends RecyclerView.Adapter<RefrigeratorAdapter.ViewHolder> implements Filterable {
     public ArrayList<Data> filteredList;

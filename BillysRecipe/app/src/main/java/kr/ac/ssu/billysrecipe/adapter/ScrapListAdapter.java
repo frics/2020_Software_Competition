@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,13 +14,12 @@ import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListData;
-import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListDataBase;
-import kr.ac.ssu.myrecipe.recipe.Recipe;
+import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.recipe.Recipe;
 
 public class ScrapListAdapter extends RecyclerView.Adapter<ScrapListAdapter.ViewHolder> {
 

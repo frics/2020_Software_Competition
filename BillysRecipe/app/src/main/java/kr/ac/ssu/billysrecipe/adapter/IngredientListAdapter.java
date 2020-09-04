@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,11 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.ac.ssu.myrecipe.MainActivity;
-import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorData;
-import kr.ac.ssu.myrecipe.RefrigerRatorDB.RefrigeratorDataBase;
-import kr.ac.ssu.myrecipe.recipe.Recipe;
+import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
+import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
+import kr.ac.ssu.billysrecipe.recipe.Recipe;
 
 public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAdapter.ViewHolder> {
 

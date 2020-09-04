@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.UI.IconData;
-import kr.ac.ssu.myrecipe.R;
+import kr.ac.ssu.billysrecipe.UI.IconData;
+import kr.ac.ssu.billysrecipe.R;
 
 
 public class TagListAdapter extends RecyclerView.Adapter<TagListAdapter.ViewHolder> implements Filterable {

@@ -1,8 +1,7 @@
-package kr.ac.ssu.myrecipe.adapter;
+package kr.ac.ssu.billysrecipe.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.viewpager.widget.PagerAdapter;
 
@@ -19,10 +16,10 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListData;
-import kr.ac.ssu.myrecipe.ScrapListDB.ScrapListDataBase;
-import kr.ac.ssu.myrecipe.recipe.Recipe;
+import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.recipe.Recipe;
 
 public class RecipePagerAdapter extends PagerAdapter {
     private ScrapListDataBase db;

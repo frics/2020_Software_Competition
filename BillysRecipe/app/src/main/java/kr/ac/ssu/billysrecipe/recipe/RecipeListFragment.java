@@ -1,4 +1,4 @@
-package kr.ac.ssu.myrecipe.recipe;
+package kr.ac.ssu.billysrecipe.recipe;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,10 +20,9 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import kr.ac.ssu.myrecipe.R;
-import kr.ac.ssu.myrecipe.adapter.MainRecipeListAdapter;
+import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.adapter.MainRecipeListAdapter;
 
 public class RecipeListFragment extends Fragment {
 
