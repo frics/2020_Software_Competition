@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBlack"
-    tools:context="kr.ac.ssu.myrecipe.Camera.CameraActivity">
+    tools:context="kr.ac.ssu.billysrecipe.Camera.CameraActivity">
 
 
     <androidx.appcompat.widget.Toolbar

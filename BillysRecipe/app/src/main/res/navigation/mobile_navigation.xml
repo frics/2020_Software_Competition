@@ -7,26 +7,26 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="kr.ac.ssu.myrecipe.MajorFragment.HomeFragment"
+        android:name="kr.ac.ssu.billysrecipe.MajorFragment.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
 
     <fragment
         android:id="@+id/navigation_refrigerator"
-        android:name="kr.ac.ssu.myrecipe.MajorFragment.RefrigeratorFragment"
+        android:name="kr.ac.ssu.billysrecipe.MajorFragment.RefrigeratorFragment"
         android:label="@string/title_refrigerator"
         tools:layout="@layout/fragment_refrigerator" />
 
     <fragment
         android:id="@+id/navigation_market"
-        android:name="kr.ac.ssu.myrecipe.MajorFragment.MarketFragment"
+        android:name="kr.ac.ssu.billysrecipe.MajorFragment.MarketFragment"
         android:label="마트"
         tools:layout="@layout/fragment_market" />
 
     <fragment
         android:id="@+id/navigation_account"
-        android:name="kr.ac.ssu.myrecipe.MajorFragment.AccountFragment"
+        android:name="kr.ac.ssu.billysrecipe.MajorFragment.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" />
 

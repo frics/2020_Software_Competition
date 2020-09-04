@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <kr.ac.ssu.myrecipe.UI.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
+    <kr.ac.ssu.billysrecipe.UI.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
         android:id="@+id/scrap_list_food_percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/food_name" />
 
 
-    <kr.ac.ssu.myrecipe.UI.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
+    <kr.ac.ssu.billysrecipe.UI.TextBorderEffect xmlns:textoutline="http://schemas.android.com/apk/res/kr.ac.ssu.myrecipe"
         android:id="@+id/scrap_list_food_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
