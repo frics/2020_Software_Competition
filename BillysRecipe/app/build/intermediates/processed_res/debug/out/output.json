@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "applicationId": "kr.ac.ssu.billysrecipe",
+  "variantType": "BASE_APK",
+  "elements": [
+    {
+      "outputType": {
+        "type": "PROCESSED_RES"
+      },
+      "apkData": {
+        "type": "MAIN",
+        "splits": [],
+        "versionCode": 1,
+        "versionName": "1.0",
+        "outputFile": "app-debug.apk",
+        "fullName": "debug",
+        "baseName": "debug",
+        "dirName": ""
+      },
+      "path": "resources-debug.ap_",
+      "properties": {
+        "packageId": "kr.ac.ssu.billysrecipe",
+        "split": "",
+        "minSdkVersion": "23"
+      }
+    }
+  ]
+}
