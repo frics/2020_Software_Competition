@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint_ingredients"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -61,7 +60,7 @@
         android:id="@+id/title_kcal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="칼로리"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintBottom_toTopOf="@id/content_kcal"
@@ -73,7 +72,7 @@
         android:id="@+id/title_carbon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="탄수화물"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider1"
@@ -84,7 +83,7 @@
         android:id="@+id/title_protein"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="단백질"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider2"
@@ -95,7 +94,7 @@
         android:id="@+id/title_fat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="지방"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider3"
@@ -106,7 +105,7 @@
         android:id="@+id/title_sodium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="나트륨"
         android:textSize="@dimen/introduction_title_size"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider4"
@@ -118,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:text="242"
+        android:text="132"
         android:textColor="@color/black"
         android:textSize="@dimen/introduction_content_size"
         android:textStyle="bold"
@@ -141,13 +140,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:text="36.6"
+        android:text="4.2"
         android:textColor="@color/black"
         android:textSize="@dimen/introduction_content_size"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider1"
         app:layout_constraintRight_toLeftOf="@id/intro_content_divider2"
-        app:layout_constraintTop_toBottomOf="@id/title_carbon" />
+        app:layout_constraintTop_toBottomOf="@id/title_carbon"
+        app:layout_constraintBottom_toTopOf="@id/measure_carbon"/>
 
     <View
         android:id="@+id/intro_content_divider2"
@@ -164,7 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:text="6.5"
+        android:text="9.9"
         android:textColor="@color/black"
         android:textSize="@dimen/introduction_content_size"
         android:textStyle="bold"
@@ -187,7 +187,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="7.8"
+        android:text="8.1"
         android:textColor="@color/black"
         android:textSize="@dimen/introduction_content_size"
         android:textStyle="bold"
@@ -200,7 +200,7 @@
         android:layout_width="1.5dp"
         android:layout_height="45dp"
         android:background="@color/grey"
-        app:layout_constraintBottom_toBottomOf="@id/content_protein"
+        app:layout_constraintBottom_toBottomOf="@id/content_fat"
         app:layout_constraintLeft_toLeftOf="@id/content_fat"
         app:layout_constraintRight_toRightOf="@id/content_sodium"
         app:layout_constraintTop_toTopOf="@id/content_fat" />
@@ -210,7 +210,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="500.8"
+        android:text="298.7"
         android:textColor="@color/black"
         android:textSize="@dimen/introduction_content_size"
         android:textStyle="bold"
@@ -293,7 +293,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="20dp"
         android:text="칼로리"
-        android:textSize="@dimen/introduction_title_size"
+        android:textSize="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/warning_nutrition" />
 
@@ -326,7 +326,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
         android:text="탄수화물"
-        android:textSize="@dimen/introduction_title_size"
+        android:textSize="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sugar_title" />
 
@@ -359,7 +359,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
         android:text="단백질"
-        android:textSize="@dimen/introduction_title_size"
+        android:textSize="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sodium_title" />
 
@@ -392,7 +392,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
         android:text="지방"
-        android:textSize="@dimen/introduction_title_size"
+        android:textSize="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cholesterol_title" />
 
@@ -425,7 +425,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
         android:text="나트륨"
-        android:textSize="@dimen/introduction_title_size"
+        android:textSize="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/saturated_fatty_acid_title" />
 
