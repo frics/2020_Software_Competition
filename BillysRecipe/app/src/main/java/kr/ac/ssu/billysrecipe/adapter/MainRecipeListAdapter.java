@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.ServerConnect.SendScrap;
 import kr.ac.ssu.billysrecipe.recipe.Recipe;
 
 public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAdapter.ViewHolder> implements Filterable {
@@ -153,6 +154,9 @@ public class MainRecipeListAdapter extends RecyclerView.Adapter<MainRecipeListAd
                         data.setScraped(1);
                     }
                     db.Dao().update(data);
+
+                    SendScrap sendScrap = new SendScrap(context, data);
+                    sendScrap.execute();
 
                 }
             });

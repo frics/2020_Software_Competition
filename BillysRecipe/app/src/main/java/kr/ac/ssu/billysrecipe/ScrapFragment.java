@@ -47,29 +47,20 @@ public class ScrapFragment extends Fragment {
     }
 
     private void setAdapter() {
-        // 임시 구조 세팅
         db = Room.databaseBuilder(getContext(), ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
         List<ScrapListData> dbData = db.Dao().getAll();
         ArrayList<Integer> tmp = new ArrayList<>();
 
-    /*    ScrapListData data = new ScrapListData();
-        for(int i = 0 ; i < 300; i++) {
-            data.setId(i);
-            data.setTotalNum(1540);
-            data.setScraped(0);
-            db.Dao().update(data);
-        }
-*/
-        Log.d("TAG", "setAdapter: "+dbData.size());
         for(int i = 0 ; i < dbData.size(); i++) {
-         //   Log.d("TAG", "setAdapter: " + dbData.get(i).getId());
             if (dbData.get(i).getScraped() == 1 ) {
                 tmp.add(dbData.get(i).getId()-1);
-                Log.d("TAG", "setAdapter: " + dbData.get(i).getId());
             }
         }
-      //  Log.d("TAG", "setAdapter: "+tmp.size());
-
+/*
+        for(int i = 0 ; i < Recipe.TOTAL_RECIPE_NUM; i++){
+            if(Recipe.orderTable)
+        }
+*/
         LinearLayoutManager scrapLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
 

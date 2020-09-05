@@ -6,4 +6,5 @@ public class URLs {
     public static final String URL_LOGIN= ROOT_URL + "signin";
     public static final String URL_DB_BACKUP = "http://13.209.6.94/UserSignOut.php";
     public static final String URL_GET_TAG ="http://13.209.6.94/getTag.php";
+    public static final String URL_SCRAP ="http://13.209.6.94/ScrapChange.php";
 }

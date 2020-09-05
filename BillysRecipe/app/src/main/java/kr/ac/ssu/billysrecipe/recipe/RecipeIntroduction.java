@@ -28,6 +28,7 @@ import kr.ac.ssu.billysrecipe.MajorFragment.HomeFragment;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.ServerConnect.SendScrap;
 import kr.ac.ssu.billysrecipe.adapter.IngredientListAdapter;
 import kr.ac.ssu.billysrecipe.adapter.RecipeOrderListAdapter;
 
@@ -258,6 +259,9 @@ public class RecipeIntroduction extends AppCompatActivity {
                     data.setScraped(1);
                 }
                 db.Dao().update(data);
+
+                SendScrap sendScrap = new SendScrap(getApplicationContext(), data);
+                sendScrap.execute();
 
             } else if (v == ingredientTitle) { // 재료 클릭 시
                 ingredientBar.setVisibility(View.VISIBLE);
