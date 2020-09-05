@@ -20,7 +20,7 @@ public class PushData extends AsyncTask<Void, Void, String> {
     private Context context;
     private int flag;
     private String dbname;
-    private String id;
+
     public final static int BACKUP = 1;
     public final static int LOGOUT = 0;
 
@@ -30,11 +30,10 @@ public class PushData extends AsyncTask<Void, Void, String> {
         void onTaskFailure(String str);
     }
 
-    public PushData(Context context, int flag, String dbname, String id) {
+    public PushData(Context context, int flag, String dbname) {
         this.context = context;
         this.flag = flag;
         this.dbname = dbname;
-        this.id = id;
 
     }
 
@@ -62,32 +61,13 @@ public class PushData extends AsyncTask<Void, Void, String> {
             e.printStackTrace();
         }
 
-        /************SCRAP BACKUP**************/
-        JSONArray scrapArray = new JSONArray();
-        try{
-            //android 내부 Scrap 디비 받아오기
-            for(int i = 0; i < 10/*디비 사이즈*/; i++){
-                JSONObject ScrapjsonObject = new JSONObject();
-                //서버 전송 json
-                ScrapjsonObject.put("serial_num", "여기다 데이터 받아서 넣으면 됨");
-                scrapArray.put(ScrapjsonObject);
-            }
-            Log.e("test",scrapArray.toString());
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
-        /***************************************/
 
         String refJson = refArray.toString();
-        String scrapJson = scrapArray.toString();
 
         HashMap<String, String> params = new HashMap<>();
         params.put("refJson", refJson);
         params.put("dbname", dbname);
 
-        params.put("scrapJson", scrapJson);
-        params.put("id", id);
         Log.e("CHECKCHECK", dbname+"");
 
         return requestHandler.sendPostRequest(URLs.URL_DB_BACKUP, params);
