@@ -19,20 +19,17 @@ import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
 
 public class SendScrap extends AsyncTask<Void, Void, String> {
-    private Context context;
+
+    private Context mContext;
     private ScrapListData scrapListData;
     private String id;
     private String serial_num;
 
-    public interface OnTaskCompleted {
-        void onTaskCompleted(String str);
-        void onTaskFailure(String str);
-    }
 
     public SendScrap(Context context, ScrapListData scrapListData) {
-        this.context = context;
+        this.mContext = context;
         this.scrapListData = scrapListData;
-        this.id = SharedPrefManager.getString(this.context, SharedPrefManager.KEY_ID);
+        this.id = SharedPrefManager.getString(this.mContext, SharedPrefManager.KEY_ID);
         this.serial_num = scrapListData.getId()+"";
     }
 

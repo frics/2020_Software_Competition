@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.ServerConnect.GetScrapCount;
 import kr.ac.ssu.billysrecipe.ServerConnect.PushData;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
 import kr.ac.ssu.billysrecipe.User.SignInActivity;
@@ -90,6 +91,13 @@ public class AccountFragment extends Fragment {
                 pushData.execute();
             }
         });
+
+
+
+        /************* 스크랩 카운트 사용법 *******************/
+        /****Example serial_num = 1000으로 설정해서 test함 ***/
+        GetScrapCount getScrapCount = new GetScrapCount(1000);
+        getScrapCount.execute();
 
         return view;
     }
