@@ -1,8 +1,10 @@
 package kr.ac.ssu.billysrecipe.ServerConnect;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.room.Room;
 
@@ -13,10 +15,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 
+import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
+import kr.ac.ssu.billysrecipe.User.SignInActivity;
 
 public class PushData extends AsyncTask<Void, Void, String> {
+    private static final String TAG = "DB bakcup";
     private Context context;
     private int flag;
     private String dbname;
@@ -43,6 +50,7 @@ public class PushData extends AsyncTask<Void, Void, String> {
         JSONArray refArray = new JSONArray();
         try{
             RefrigeratorDataBase db = Room.databaseBuilder(context, RefrigeratorDataBase.class, "refrigerator.db").build();
+
             List<RefrigeratorData> datalist = db.Dao().sortData();
             for(int i = 0; i < datalist.size(); i++){
                 JSONObject jsonObject = new JSONObject();
@@ -54,8 +62,11 @@ public class PushData extends AsyncTask<Void, Void, String> {
                 jsonObject.put("tagNumber","" + datalist.get(i).getTagNumber());
                 refArray.put(jsonObject);
             }
-            if(flag == LOGOUT)
+            if(flag == LOGOUT) {
+                ScrapListDataBase scrabDB = Room.databaseBuilder(context, ScrapListDataBase.class, "scraplist.db").build();
                 db.Dao().deleteAll();
+                scrabDB.Dao().deleteAll();
+            }
             Log.e("test",refArray.toString());
         }catch (JSONException e){
             e.printStackTrace();
@@ -80,5 +91,28 @@ public class PushData extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        try {
+
+            Log.d(TAG, "json object"+s);
+            JSONObject object = new JSONObject(s);
+
+            //if no error in response
+            if (!object.getBoolean("error")) {
+                Log.e(TAG, object.getString("message"));
+                if(flag == LOGOUT) {
+                    //사용자 Preference 삭제
+                    SharedPrefManager.logout(context);
+                    //내부 디비 삭제
+
+                    ((MainActivity)context).finish();
+                    context.startActivity(new Intent(context, SignInActivity.class));
+                }
+            }else {
+                Toast.makeText(context, "로그아웃 실패", Toast.LENGTH_SHORT).show();
+                Log.e(TAG,object.getString("message"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

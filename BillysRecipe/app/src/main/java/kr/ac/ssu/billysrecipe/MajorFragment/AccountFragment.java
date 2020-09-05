@@ -2,6 +2,7 @@ package kr.ac.ssu.billysrecipe.MajorFragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.google.android.material.tabs.TabLayout;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.ServerConnect.PushData;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
+import kr.ac.ssu.billysrecipe.User.SignInActivity;
 import kr.ac.ssu.billysrecipe.adapter.AccountVPAdapter;
 
 public class AccountFragment extends Fragment {
@@ -119,11 +121,10 @@ public class AccountFragment extends Fragment {
         builder.setMessage("로그아웃 하시겠습니까?")
                 .setPositiveButton("예", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //사용자 Preference 삭제
-                        SharedPrefManager.logout(getContext());
+                        //데이터 백업
+                        Log.e(TAG, DBName);
                         PushData pushData = new PushData(getContext(), PushData.LOGOUT, DBName);
                         pushData.execute();
-
                     }
                 })
                 .setNegativeButton("아니요", new DialogInterface.OnClickListener() {

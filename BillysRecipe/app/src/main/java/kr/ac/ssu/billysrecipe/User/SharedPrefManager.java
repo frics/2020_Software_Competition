@@ -54,7 +54,6 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        context.startActivity(new Intent(context, SignInActivity.class));
     }
 }
 
