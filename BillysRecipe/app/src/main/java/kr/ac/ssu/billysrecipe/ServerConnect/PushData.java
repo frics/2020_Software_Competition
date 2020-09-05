@@ -63,16 +63,14 @@ public class PushData extends AsyncTask<Void, Void, String> {
                 refArray.put(jsonObject);
             }
             if(flag == LOGOUT) {
-                ScrapListDataBase scrabDB = Room.databaseBuilder(context, ScrapListDataBase.class, "scraplist.db").build();
+                ScrapListDataBase scrapDB = Room.databaseBuilder(context, ScrapListDataBase.class, "scraplist.db").build();
                 db.Dao().deleteAll();
-                scrabDB.Dao().deleteAll();
+                scrapDB.Dao().deleteAll();
             }
             Log.e("test",refArray.toString());
         }catch (JSONException e){
             e.printStackTrace();
         }
-
-
         String refJson = refArray.toString();
 
         HashMap<String, String> params = new HashMap<>();
@@ -103,7 +101,6 @@ public class PushData extends AsyncTask<Void, Void, String> {
                     //사용자 Preference 삭제
                     SharedPrefManager.logout(context);
                     //내부 디비 삭제
-
                     ((MainActivity)context).finish();
                     context.startActivity(new Intent(context, SignInActivity.class));
                 }
