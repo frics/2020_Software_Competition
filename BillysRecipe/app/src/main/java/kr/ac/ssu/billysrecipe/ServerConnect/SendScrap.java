@@ -52,7 +52,7 @@ public class SendScrap extends AsyncTask<Void, Void, String> {
         }
         Log.e("마잌췤 원투원투", id+ ", "+ serial_num);
 
-        return requestHandler.sendPostRequest(URLs.URL_SCRAP, params);
+        return requestHandler.sendPostRequest(URLs.URL_SCRAP_CHANGE, params);
     }
 
     @Override
