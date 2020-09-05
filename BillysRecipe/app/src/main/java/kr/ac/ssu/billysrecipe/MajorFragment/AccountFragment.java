@@ -84,7 +84,7 @@ public class AccountFragment extends Fragment {
         backUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PushData pushData = new PushData(getContext(), PushData.BACKUP, DBName, UserID);
+                PushData pushData = new PushData(getContext(), PushData.BACKUP, DBName);
                 pushData.execute();
             }
         });
@@ -121,7 +121,7 @@ public class AccountFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         //사용자 Preference 삭제
                         SharedPrefManager.logout(getContext());
-                        PushData pushData = new PushData(getContext(), PushData.LOGOUT, DBName, UserID);
+                        PushData pushData = new PushData(getContext(), PushData.LOGOUT, DBName);
                         pushData.execute();
 
                     }
