@@ -8,10 +8,12 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
 import kr.ac.ssu.billysrecipe.User.SignInActivity;
 import kr.ac.ssu.billysrecipe.database.OpenRecipeListCSV;
@@ -56,7 +58,7 @@ public class LaunchActivity extends AppCompatActivity {
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(getResources().openRawResource(R.raw.recipelist));
             OpenRecipeListCSV.readDataFromCsv(inputStreamReader); // 전체 레시피 동기화
-            RecipeOrderList.InitRank();  // 인기 레시피 순위 동기화
+
         } catch (IOException | CloneNotSupportedException e) {
             e.printStackTrace();
         }

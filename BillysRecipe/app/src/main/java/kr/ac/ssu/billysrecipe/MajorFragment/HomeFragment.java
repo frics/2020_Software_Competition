@@ -15,19 +15,24 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
 import kr.ac.ssu.billysrecipe.adapter.RecipeListAdapter;
 import kr.ac.ssu.billysrecipe.adapter.MyListDecoration;
 import kr.ac.ssu.billysrecipe.adapter.RecipePagerAdapter;
 import kr.ac.ssu.billysrecipe.recipe.Recipe;
 import kr.ac.ssu.billysrecipe.recipe.RecipeIntroduction;
 import kr.ac.ssu.billysrecipe.recipe.RecipeListFragment;
+import kr.ac.ssu.billysrecipe.recipe.RecipeOrderList;
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager;
 
 import static android.view.View.GONE;
@@ -45,6 +50,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        ScrapListDataBase db;
+        db = Room.databaseBuilder(getContext(), ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
+        List<ScrapListData> dbData = db.Dao().sortRank();
+        try {
+            RecipeOrderList.InitRank(dbData);  // 인기 레시피 순위 동기화
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
 
         makeItemList();
         setViewById(view);
