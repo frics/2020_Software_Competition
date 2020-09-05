@@ -56,15 +56,7 @@ public class AccountFragment extends Fragment {
         UserID = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_ID);
         DBName = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_REF_DB);
 
-        viewPager = view.findViewById(R.id.account_viewpager);
-        tabLayout = view.findViewById(R.id.account_tab);
-        //viewPager 선언및 연동
-        AccountVPAdapter vpAdapter = new AccountVPAdapter(getChildFragmentManager());
-        viewPager.setAdapter(vpAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText("스크랩");
-        tabLayout.getTabAt(1).setText("장바구니");
-
+        setHasOptionsMenu(true);
         Log.e(TAG, nickname);
         Log.e(TAG, UserID);
         Log.e(TAG, DBName);
@@ -92,6 +84,14 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        viewPager = view.findViewById(R.id.account_viewpager);
+        tabLayout = view.findViewById(R.id.account_tab);
+        //viewPager 선언및 연동
+        AccountVPAdapter vpAdapter = new AccountVPAdapter(getChildFragmentManager());
+        viewPager.setAdapter(vpAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setText("스크랩");
+        tabLayout.getTabAt(1).setText("장바구니");
 
 
         /************* 스크랩 카운트 사용법 *******************/
@@ -113,12 +113,8 @@ public class AccountFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
-        switch (curId) {
-            case R.id.action_search:
-                Toast.makeText(getActivity(), "설정", Toast.LENGTH_SHORT).show();//tab1 메뉴 아이콘 선택시 이벤트 설정
-                break;
-            default:
-                break;
+        if (curId == R.id.action_setting) {
+            Toast.makeText(getActivity(), "설정", Toast.LENGTH_SHORT).show();//tab1 메뉴 아이콘 선택시 이벤트 설정
         }
         return super.onOptionsItemSelected(item);
     }
