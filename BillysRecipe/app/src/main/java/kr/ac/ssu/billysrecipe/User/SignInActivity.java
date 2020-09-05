@@ -115,8 +115,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     //Log.e(TAG, jsonArray+"");
                     JSONObject response = object.getJSONObject("response");
                     Log.d(TAG+"response", "response : "+response+"");
-                    JSONObject refResponse = object.getJSONObject("ref");
-                    Log.e(TAG+"refResponse", "ref : "+refResponse+"");
+                    JSONObject refResponse = object.getJSONObject("refResponse");
+                    Log.e(TAG+"refResponse", "refResponse : "+refResponse+"");
+                    JSONObject scrapResponse = object.getJSONObject("scrapResponse");
+                    Log.e(TAG+"scrapResponse", "scrapResponse : "+scrapResponse);
 
                     if(!response.getBoolean("error")){
 
@@ -145,12 +147,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 data.setName(refrigerator.getJSONObject(i).getString("name"));
                                 data.setTagNumber(refrigerator.getJSONObject(i).getInt("tagNumber"));
                                 list.add(data);
+                            }
 
-                                /***********refrigerator.getJSONObject(i) JSON 포멧 냉장고 데이터를 삽입하면 된다.
-                                 *
-                                 *
-                                 *************************************************************/
-                                //Log.e(TAG + "refrigerator 1", i + " : " + refrigerator.getJSONObject(i));
+                            JSONArray scrap = object.getJSONArray("scrap");
+                            Log.e(TAG+"scrap", "scrap : "+scrap);
+                            for(int i=0; i<scrap.length(); i++){
+                                Log.d("Scrap List", scrap.getJSONObject(i).getString("serial_num"));
+                                //스크랩 리스트 serial_num 받아와서 디비에 삽입
                             }
                             ThreadTask.OnTaskCompleted listener = new ThreadTask.OnTaskCompleted() {
                                 @Override
