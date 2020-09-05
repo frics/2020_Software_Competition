@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
@@ -56,11 +58,17 @@ public class ScrapFragment extends Fragment {
                 tmp.add(dbData.get(i).getId()-1);
             }
         }
-/*
+
+        int start = 0;
         for(int i = 0 ; i < Recipe.TOTAL_RECIPE_NUM; i++){
-            if(Recipe.orderTable)
+            for(int j = start; j < tmp.size(); j++) {
+                if (Recipe.orderTable[i] == tmp.get(j)) {
+                    Collections.swap(tmp, start, j);
+                    start++;
+                }
+            }
         }
-*/
+
         LinearLayoutManager scrapLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
 

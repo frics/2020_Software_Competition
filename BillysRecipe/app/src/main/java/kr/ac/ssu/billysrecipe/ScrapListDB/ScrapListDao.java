@@ -19,6 +19,9 @@ public interface ScrapListDao {
     @Query("SELECT * FROM ScrapListData ORDER BY id ASC")
     List<ScrapListData> sortData();
 
+    @Query("SELECT * FROM ScrapListData ORDER BY totalNum DESC")
+    List<ScrapListData> sortRank();
+
     @Query("DELETE FROM ScrapListData")
     void deleteAll();
 

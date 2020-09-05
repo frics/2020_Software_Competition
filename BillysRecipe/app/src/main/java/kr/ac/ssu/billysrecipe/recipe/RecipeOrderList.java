@@ -12,6 +12,7 @@ import java.util.List;
 
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 
 public class RecipeOrderList { // 레시피 리스트 컨트롤 클래스
 
@@ -59,13 +60,13 @@ public class RecipeOrderList { // 레시피 리스트 컨트롤 클래스
         }
     }
 
-    public static void InitRank() throws CloneNotSupportedException {
+    public static void InitRank(List<ScrapListData> rankList) throws CloneNotSupportedException {
         // 서버통신코드필요..
+
         // 수정 수정 수정
         for (int i = 0; i < 30; i++) {
-            Recipe.RankingList[i] = (Recipe) Recipe.recipeList[i * 2].clone();
+            Recipe.RankingList[i] = (Recipe) Recipe.recipeList[rankList.get(i).getId()-1].clone();
         }
-        Recipe.RankingList[2] = (Recipe) Recipe.recipeList[199].clone();
 
     }
 
