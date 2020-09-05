@@ -35,7 +35,7 @@ public class AccountFragment extends Fragment {
     private TextView TvId;
     private Button backUpBtn;
     private Button signoutBtn;
-    private String id;
+    private String UserID;
     private String nickname;
     private String DBName;
     private ViewPager viewPager;
@@ -50,7 +50,7 @@ public class AccountFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         mContext = getContext();
         nickname = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_NICKNAME);
-        id = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_ID);
+        UserID = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_ID);
         DBName = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_REF_DB);
 
         viewPager = view.findViewById(R.id.account_viewpager);
@@ -63,13 +63,13 @@ public class AccountFragment extends Fragment {
         tabLayout.getTabAt(1).setText("장바구니");
 
         Log.e(TAG, nickname);
-        Log.e(TAG, id);
+        Log.e(TAG, UserID);
         Log.e(TAG, DBName);
 
         TvNickname = view.findViewById(R.id.info_nickname);
         TvId = view.findViewById(R.id.info_id);
         TvNickname.setText(nickname);
-        TvId.setText(id);
+        TvId.setText(UserID);
 
         backUpBtn = view.findViewById(R.id.backup_btn);
         signoutBtn = view.findViewById(R.id.signout_btn);

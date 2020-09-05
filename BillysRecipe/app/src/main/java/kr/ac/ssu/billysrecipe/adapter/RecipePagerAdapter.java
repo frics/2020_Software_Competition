@@ -2,6 +2,7 @@ package kr.ac.ssu.billysrecipe.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.ServerConnect.SendScrap;
 import kr.ac.ssu.billysrecipe.recipe.Recipe;
 
 public class RecipePagerAdapter extends PagerAdapter {
@@ -74,6 +76,7 @@ public class RecipePagerAdapter extends PagerAdapter {
         ScrapListData data = db.Dao().findData(itemList.get(position).num + 1);
 
 
+        Log.d("TAG", "instantiateItem: " + data.getId());
         if (data.getScraped() == 1) {
             scrabButton.setImageDrawable(red);
             scrabButton.setTag(true);
@@ -100,6 +103,9 @@ public class RecipePagerAdapter extends PagerAdapter {
                     data.setScraped(1);
                 }
                 db.Dao().update(data);
+
+                SendScrap sendScrap = new SendScrap(context, data);
+                sendScrap.execute();
             }
         });
 

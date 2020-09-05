@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
@@ -47,28 +49,25 @@ public class ScrapFragment extends Fragment {
     }
 
     private void setAdapter() {
-        // 임시 구조 세팅
         db = Room.databaseBuilder(getContext(), ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
         List<ScrapListData> dbData = db.Dao().getAll();
         ArrayList<Integer> tmp = new ArrayList<>();
 
-    /*    ScrapListData data = new ScrapListData();
-        for(int i = 0 ; i < 300; i++) {
-            data.setId(i);
-            data.setTotalNum(1540);
-            data.setScraped(0);
-            db.Dao().update(data);
-        }
-*/
-        Log.d("TAG", "setAdapter: "+dbData.size());
         for(int i = 0 ; i < dbData.size(); i++) {
-         //   Log.d("TAG", "setAdapter: " + dbData.get(i).getId());
             if (dbData.get(i).getScraped() == 1 ) {
                 tmp.add(dbData.get(i).getId()-1);
-                Log.d("TAG", "setAdapter: " + dbData.get(i).getId());
             }
         }
-      //  Log.d("TAG", "setAdapter: "+tmp.size());
+
+        int start = 0;
+        for(int i = 0 ; i < Recipe.TOTAL_RECIPE_NUM; i++){
+            for(int j = start; j < tmp.size(); j++) {
+                if (Recipe.orderTable[i] == tmp.get(j)) {
+                    Collections.swap(tmp, start, j);
+                    start++;
+                }
+            }
+        }
 
         LinearLayoutManager scrapLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);

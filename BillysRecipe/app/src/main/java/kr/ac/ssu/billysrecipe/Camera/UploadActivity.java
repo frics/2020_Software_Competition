@@ -187,7 +187,7 @@ public class UploadActivity extends AppCompatActivity  {
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1024 * 1024; //1 * 1024 * 1024
-        File sourceFile = new File("/storage/emulated/0/Android/data/kr.ac.ssu.myrecipe/files/"+"pic_crop.jpg");
+        File sourceFile = new File(sourceFileUri);
 
         if (!sourceFile.isFile()) {
             Log.e("uploadFile", "Source File not exist :"
