@@ -113,6 +113,19 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+                /***여기서 찬양이가 로그인 다이얼로그 하나 생성해주면 좋을듯 **********/
+                //이게 백그라운드 돌아가는 와중에 실행 된다고 하는데
+                //우리는 postExecute에서 시간을 많이 잡아먹어서 여기다 띄우는게 맞는지
+                //preExecute에 띄우는게 맞는지 고민을 좀 해보고 테스트 해봐야할듯
+                //다이얼로그 종료 시점은 onPostExecute가 끝나서 MainActivity로 넘어갈때
+                /****************************************************/
+            }
+
+
+
+            @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 

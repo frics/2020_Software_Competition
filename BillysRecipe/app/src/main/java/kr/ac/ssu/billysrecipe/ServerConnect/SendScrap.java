@@ -19,19 +19,18 @@ import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
 
 public class SendScrap extends AsyncTask<Void, Void, String> {
-    private Context context;
+
+    private Context mContext;
     private ScrapListData scrapListData;
     private String id;
+    private String serial_num;
 
-    public interface OnTaskCompleted {
-        void onTaskCompleted(String str);
-        void onTaskFailure(String str);
-    }
 
     public SendScrap(Context context, ScrapListData scrapListData) {
-        this.context = context;
+        this.mContext = context;
         this.scrapListData = scrapListData;
-        this.id = SharedPrefManager.getString(this.context, SharedPrefManager.KEY_ID);
+        this.id = SharedPrefManager.getString(this.mContext, SharedPrefManager.KEY_ID);
+        this.serial_num = scrapListData.getId()+"";
     }
 
     @Override
@@ -40,13 +39,17 @@ public class SendScrap extends AsyncTask<Void, Void, String> {
         HashMap<String, String> params = new HashMap<>();
 
         params.put("id", id);
-        params.put("serial_num", ""+(scrapListData.getId()+1));
-        if(scrapListData.getScraped()==1)
-            params.put("isScraped", "true");
-        else
-            params.put("isScraped", "false");
+        params.put("serial_num", serial_num);
+        if(scrapListData.getScraped()==1) {
+            Log.e("isScraped", "true");
+            params.put("isScraped", String.valueOf(true));
+        }else {
+            Log.e("isScraped", "false");
+            params.put("isScraped", String.valueOf(false));
+        }
+        Log.e("마잌췤 원투원투", id+ ", "+ serial_num);
 
-        return requestHandler.sendPostRequest(URLs.URL_SCRAP, params);
+        return requestHandler.sendPostRequest(URLs.URL_SCRAP_CHANGE, params);
     }
 
     @Override
