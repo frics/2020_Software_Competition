@@ -1,13 +1,75 @@
-<androidx.drawerlayout.widget.DrawerLayout android:id="@+id/drawer_layout"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Camera.CropActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/crop_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/crop_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="영수증 스캔"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:textSize="25dp" />
+    </androidx.appcompat.widget.Toolbar>
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/crop_btn_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingVertical="35dp"
+        android:paddingHorizontal="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/recapture_btn"
+            android:text="다시 찍기"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/crop_btn"
+            android:text="사진 사용"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

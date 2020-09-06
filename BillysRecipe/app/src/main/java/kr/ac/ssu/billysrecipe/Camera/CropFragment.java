@@ -1,7 +1,6 @@
 package kr.ac.ssu.billysrecipe.Camera;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,15 +10,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -32,7 +26,7 @@ import java.io.IOException;
 import kr.ac.ssu.billysrecipe.R;
 
 
-public class CropFragment extends Fragment implements CropImageView.OnCropImageCompleteListener, View.OnClickListener{
+public class CropFragment extends Fragment implements CropImageView.OnCropImageCompleteListener{
 
     private static final String TAG = CropFragment.class.getSimpleName();
     File mFile = null;
@@ -41,7 +35,7 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
 
     // region: Fields and Consts
 
-    public CropImageView mCropImageView;
+    public static CropImageView mCropImageView;
     // endregion
 
     /** Returns a new instance of this fragment for the given section number. */
@@ -76,29 +70,7 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
         View rootView;
         rootView = inflater.inflate(R.layout.fragment_crop, container, false);
 
-        Toolbar toolbar =  rootView.findViewById(R.id.crop_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
-        toolbar.bringToFront();
-
-        setHasOptionsMenu(true);
-
         return rootView;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu,inflater); inflater.inflate(R.menu.cam_menu,menu);
-    }
-
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        int curId = item.getItemId();
-        if (curId == R.id.go_to_main) {
-            getActivity().finish();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -107,25 +79,20 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
 
         mCropImageView = view.findViewById(R.id.cropImageView);
         mCropImageView.setOnCropImageCompleteListener(this);
-        view.findViewById(R.id.recapture_btn).setOnClickListener(this);
-        view.findViewById(R.id.crop_btn).setOnClickListener(this);
 
         mFile = new File(getActivity().getExternalFilesDir(null), "pic_crop.jpg");
         uploadFilePath = mFile+"/";
         uploadFileName = "pic.jpg";
 
         if (savedInstanceState == null) {
-
            makePhotoView();
         }
     }
 
 
-
-
     @SuppressLint("ResourceAsColor")
     public void makePhotoView(){
-        String path = getContext().getExternalFilesDir(null)+"/pic.jpg";
+        String path = CropActivity.cropActivity.getExternalFilesDir(null)+"/pic.jpg";
         Log.e(TAG, path);
         Log.e(TAG, "IN makePhotoView");
         File imgFile = new File(path);
@@ -157,28 +124,6 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
             mCropImageView.resetCropRect();
 
         }
-    }
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.recapture_btn: {
-                ((AppCompatActivity)getActivity()).finish();
-                Intent intent = new Intent(getActivity(), CameraActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.crop_btn:{
-                mCropImageView.getCroppedImageAsync();
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        //mDemoPreset = CropDemoPreset.valueOf(getArguments().getString("DEMO_PRESET"));
-        ((CropActivity) activity).setCurrentFragment(this);
     }
 
     @Override
