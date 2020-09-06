@@ -1,6 +1,7 @@
 package kr.ac.ssu.billysrecipe.MajorFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -31,9 +32,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import org.apache.commons.collections4.Get;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.ac.ssu.billysrecipe.Camera.GetReceiptActivity;
+import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
@@ -71,6 +76,15 @@ public class RefrigeratorFragment extends Fragment{
         recyclerview.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         categoryRecycler.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,false));
         db = Room.databaseBuilder(getContext(),RefrigeratorDataBase.class, "refrigerator.db").allowMainThreadQueries().build();
+        Button button = (Button)v.findViewById(R.id.test_button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, GetReceiptActivity.class) ;
+                startActivity(intent) ;
+            }
+        });
 
         setHasOptionsMenu(true);
         return v;
