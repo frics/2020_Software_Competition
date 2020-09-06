@@ -34,6 +34,7 @@ import androidx.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
@@ -63,6 +64,8 @@ public class RefrigeratorFragment extends Fragment{
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_refrigerator, container, false);
+
+        MainActivity.isRecipeSetting= false; // 툴바 관련 변수
         context = getContext();
         imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         recyclerview = (RecyclerView)v.findViewById(R.id.refri_recycler);
@@ -406,5 +409,17 @@ public class RefrigeratorFragment extends Fragment{
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) { // 툴바 관련 메소드
+        if (!MainActivity.isRecipeSetting) {
+            for (int i = 0; i < menu.size(); i++) {
+                if (menu.getItem(i).getTitle().toString().compareTo("list_setting") == 0) {
+                    menu.getItem(i).setEnabled(false);
+                    menu.getItem(i).setVisible(false);
+                }
+            }
+        }
     }
 }

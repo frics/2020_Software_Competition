@@ -44,7 +44,7 @@ public class GetScrapCount extends AsyncTask<Void, Void, String>{
             if (!object.getBoolean("error")) {
                 Log.e(TAG, object.getString("message"));
                 this.scrapCount = object.getInt("scrap_cnt");
-                Log.e(TAG+ "cnt ", this.scrapCount+"");
+                Log.e(TAG+ "cnt ", this.scrapCount+""+"["+serial_num+"]");
             }else {
                 Log.e(TAG,object.getString("message"));
             }

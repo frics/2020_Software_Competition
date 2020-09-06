@@ -16,6 +16,9 @@ public interface RefrigeratorDao {
     @Query("SELECT * FROM refrigeratordata WHERE name = :target")
     RefrigeratorData findData(String target);
 
+    @Query("SELECT * FROM refrigeratordata WHERE category = :target")
+    List<RefrigeratorData> findDataByTag(String target);
+
     @Query("SELECT * FROM refrigeratordata ORDER BY category ASC")
     List<RefrigeratorData> sortData();
 

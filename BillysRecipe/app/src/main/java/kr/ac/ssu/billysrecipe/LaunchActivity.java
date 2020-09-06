@@ -13,11 +13,14 @@ import androidx.room.Room;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.ServerConnect.GetScrapCount;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
 import kr.ac.ssu.billysrecipe.User.SignInActivity;
 import kr.ac.ssu.billysrecipe.database.OpenRecipeListCSV;
 import kr.ac.ssu.billysrecipe.MajorFragment.HomeFragment;
+import kr.ac.ssu.billysrecipe.recipe.Recipe;
 import kr.ac.ssu.billysrecipe.recipe.RecipeOrderList;
 
 public class LaunchActivity extends AppCompatActivity {
@@ -54,6 +57,21 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     private void initForHomeFragment() {
+
+        ScrapListDataBase db;
+        ScrapListData data;
+        db = Room.databaseBuilder(getApplicationContext(), ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
+
+        /*
+        for (int i = 1; i <= Recipe.TOTAL_RECIPE_NUM; i++) {
+            GetScrapCount getScrapCount = new GetScrapCount(i);
+            getScrapCount.execute();
+            data = db.Dao().findData(i);
+            data.setTotalNum(getScrapCount.getCount());
+            db.Dao().update(data);
+        }
+         */
+
         // 레시피 리스트 내부 동기화
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(getResources().openRawResource(R.raw.recipelist));
