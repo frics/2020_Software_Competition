@@ -30,7 +30,7 @@ public class GetTag extends AsyncTask<Void, Void, String>{
     @Override
     protected String doInBackground(Void... voids) {
         RequestHandler requestHandler = new RequestHandler();
-        return requestHandler.sendPostRequest(URLs.URL_GET_TAG, null);
+        return requestHandler.sendPostRequest(URLs.URL_GET_TAG, null, RequestHandler.DATA_TRANSFER);
     }
     @Override
     protected void onPreExecute() {

@@ -21,6 +21,7 @@ public class CropActivity extends AppCompatActivity {
 
     private static final String TAG = CropActivity.class.getSimpleName();
     private CropFragment mCurrentFragment;
+    public static CropActivity cropActivity = null;
 
     private Uri mCropImageUri;
 
@@ -34,6 +35,9 @@ public class CropActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop);
+
+        cropActivity = this;
+
         hideNavigationBar();
         Log.e("순서", "3");
 
