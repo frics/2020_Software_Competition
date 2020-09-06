@@ -2,7 +2,6 @@ package kr.ac.ssu.billysrecipe.MajorFragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +27,6 @@ import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.ServerConnect.GetScrapCount;
 import kr.ac.ssu.billysrecipe.ServerConnect.PushData;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
-import kr.ac.ssu.billysrecipe.User.SignInActivity;
 import kr.ac.ssu.billysrecipe.adapter.AccountVPAdapter;
 
 public class AccountFragment extends Fragment {
@@ -59,6 +57,7 @@ public class AccountFragment extends Fragment {
         DBName = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_REF_DB);
 
         setHasOptionsMenu(true);
+
         Log.e(TAG, nickname);
         Log.e(TAG, UserID);
         Log.e(TAG, DBName);
@@ -121,6 +120,11 @@ public class AccountFragment extends Fragment {
         int curId = item.getItemId();
         if (curId == R.id.action_setting) {
             Toast.makeText(getActivity(), "설정", Toast.LENGTH_SHORT).show();//tab1 메뉴 아이콘 선택시 이벤트 설정
+            /************* 스크랩 카운트 사용법 *******************/
+            /****Example serial_num = 1000으로 설정해서 test함 ***/
+            GetScrapCount getScrapCount = new GetScrapCount();
+            getScrapCount.execute();
+
         }
         return super.onOptionsItemSelected(item);
     }

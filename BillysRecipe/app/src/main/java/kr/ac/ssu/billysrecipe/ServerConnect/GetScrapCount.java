@@ -3,34 +3,23 @@ package kr.ac.ssu.billysrecipe.ServerConnect;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 public class GetScrapCount extends AsyncTask<Void, Void, String>{
 
     private static final String TAG = GetScrapCount.class.getSimpleName();
-    private int serial_num;
-    private int scrapCount;
 
 
-    public GetScrapCount(int serial_num){
-        this.serial_num = serial_num;
-    }
-
-    public int  getCount(){
-        return this.scrapCount;
+    public GetScrapCount(){
+        super();
     }
 
     @Override
     protected String doInBackground(Void... voids) {
         RequestHandler requestHandler = new RequestHandler();
-        HashMap<String, String> params = new HashMap<>();
-
-        params.put("serial_num", String.valueOf(serial_num));
-
-        return requestHandler.sendPostRequest(URLs.URL_GET_SCRAP_COUNT, params);
+        return requestHandler.sendPostRequest(URLs.URL_GET_SCRAP_COUNT, null);
     }
 
     @Override
@@ -39,12 +28,17 @@ public class GetScrapCount extends AsyncTask<Void, Void, String>{
         try {
 
             JSONObject object = new JSONObject(s);
-
             //if no error in response
             if (!object.getBoolean("error")) {
                 Log.e(TAG, object.getString("message"));
-                this.scrapCount = object.getInt("scrap_cnt");
-                Log.e(TAG+ "cnt ", this.scrapCount+""+"["+serial_num+"]");
+                JSONArray scrapData = object.getJSONArray("scrap_data");
+                for(int i=0; i < scrapData.length(); i++){
+                    JSONObject index = scrapData.getJSONObject(i);
+                    String serialNum = index.getString("serial_num");
+                    String scrapCnt = index.getString("scrap_cnt");
+                    Log.e(i+1+"", serialNum + " : " + scrapCnt);
+                }
+
             }else {
                 Log.e(TAG,object.getString("message"));
             }

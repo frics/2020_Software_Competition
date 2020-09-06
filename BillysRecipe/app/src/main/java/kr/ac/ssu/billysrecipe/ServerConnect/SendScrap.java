@@ -4,22 +4,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.room.Room;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 
-import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
-import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
 
 public class SendScrap extends AsyncTask<Void, Void, String> {
 
+    private static final String TAG = SendScrap.class.getSimpleName();
     private Context mContext;
     private ScrapListData scrapListData;
     private String id;
@@ -60,5 +55,19 @@ public class SendScrap extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        try {
+            JSONObject object = new JSONObject(s);
+            if (!object.getBoolean("error") && !object.getBoolean("cntChangeError")) {
+                Log.e(TAG, object.getString("message"));
+                Log.e(TAG, object.getString("cntChangeMessage"));
+
+            }else {
+                Log.e(TAG,object.getString("message"));
+                Log.e(TAG, object.getString("cntChangeMessage"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }
