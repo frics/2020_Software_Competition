@@ -8,16 +8,14 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.MajorFragment.HomeFragment;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
 import kr.ac.ssu.billysrecipe.User.SignInActivity;
 import kr.ac.ssu.billysrecipe.database.OpenRecipeListCSV;
-import kr.ac.ssu.billysrecipe.MajorFragment.HomeFragment;
 import kr.ac.ssu.billysrecipe.recipe.RecipeOrderList;
 
 public class LaunchActivity extends AppCompatActivity {
@@ -38,16 +36,18 @@ public class LaunchActivity extends AppCompatActivity {
             public void run() {
 
                 initForHomeFragment(); // 홈프레그먼트 세팅을 위한 준비
-
+                Intent intent = null;
                 if (isSignin) {
                     Log.d(TAG, "메인 엑티비티로 이동");
-                    startActivity(new Intent(getApplication(), MainActivity.class));
+                    intent = new Intent(LaunchActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 } else {
                     Log.d(TAG, "로그인 엑티비티로 이동");
                     startActivity(new Intent(getApplication(), SignInActivity.class));
                 }
 
-                // 런 액티비티를 스택에서 제거.
+                // 런치 액티비티를 스택에서 제거.
                 LaunchActivity.this.finish();
             }
         }, SPLASH_DISPLAY_TIME);

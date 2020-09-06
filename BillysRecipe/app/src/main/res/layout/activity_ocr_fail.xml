@@ -1,26 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.wear.widget.BoxInsetLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/dark_grey"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Camera.OCRFailActivity"
-    tools:deviceIds="wear"
-    android:padding="@dimen/box_inset_layout_padding">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ocr_fail_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/inner_frame_layout_padding"
-        app:boxedEdges="all">
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:id="@+id/fail_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="영수증 인식에\n실패하였습니다"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/info_text"/>
+    <TextView
+        android:id="@+id/info_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="30dp"
+        android:text="제품명 부분을 잘 잘라내주세요"
+        android:textColor="@color/colorBlack"
+        android:textStyle="normal"
+        android:textSize="15dp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fail_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fail_img_view"/>
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_world" />
+    <ImageView
+        android:id="@+id/fail_img_view"
+        android:layout_width="250dp"
+        android:layout_height="300dp"
+        android:background="@color/colorPrimaryLight"
+        app:srcCompat="@drawable/logo_image"
+        app:layout_constraintTop_toBottomOf="@id/info_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    </FrameLayout>
-</androidx.wear.widget.BoxInsetLayout>
+
+    <Button
+        android:id="@+id/fail_recapture_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="55dp"
+        android:text="다시 촬영하기"
+        android:textSize="15dp"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:background="@drawable/rounded_btn"
+        app:layout_constraintTop_toBottomOf="@id/fail_img_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

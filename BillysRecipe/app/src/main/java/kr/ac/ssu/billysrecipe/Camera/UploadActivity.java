@@ -3,6 +3,7 @@ package kr.ac.ssu.billysrecipe.Camera;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -74,7 +75,7 @@ public class UploadActivity extends AppCompatActivity  {
                 Log.d(TAG, "로딩 다이얼로그 실행중(데이터 받으면 종료)");
                 final AppCompatDialog progressDialog = new AppCompatDialog(mContext);
                 progressDialog.setCancelable(false);
-                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 progressDialog.setContentView(R.layout.loading_dialog);
                 progressDialog.show();
                 final ImageView img_loading_frame = progressDialog.findViewById(R.id.iv_frame_loading);
@@ -95,6 +96,7 @@ public class UploadActivity extends AppCompatActivity  {
                 });
                 ImageTransfer imageTransfer = new ImageTransfer(mContext);
                 imageTransfer.execute();
+                CropActivity.cropActivity.finish();
                 finish();
                 startActivity(new Intent(mContext, OCRFailActivity.class));
             }
@@ -125,7 +127,7 @@ public class UploadActivity extends AppCompatActivity  {
                 break;
             case R.id.go_to_main:
                 Log.e(TAG, "메인으로 간다!!!!");
-                releaseBitmap();
+                //mImage=null;
                 finish();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

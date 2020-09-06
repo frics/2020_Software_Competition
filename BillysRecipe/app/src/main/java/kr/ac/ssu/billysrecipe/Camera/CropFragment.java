@@ -214,16 +214,16 @@ public class CropFragment extends Fragment implements CropImageView.OnCropImageC
         if (result.getError() == null) {
             android.content.Intent intent = new Intent(getActivity(), UploadActivity.class);
             intent.putExtra("SAMPLE_SIZE", result.getSampleSize());
-            if (result.getUri() != null) {
-                intent.putExtra("URI", result.getUri());
-            } else {
+
+                //업로드 엑티비티에 비트맵을 쏴줌
                 UploadActivity.mImage = result.getBitmap();
-            }
+
            //SaveBitmapToFileCache(result.getBitmap(), uploadFilePath);
             ImageSaver imageSaver = new ImageSaver(result.getBitmap(), mFile);
             Log.e(TAG, mFile+"");
             imageSaver.run();
-            startActivity(intent);
+            //getActivity().finish();
+            startActivity(new Intent(getActivity(), UploadActivity.class));
         } else {
             Log.e("AIC", "Failed to crop image", result.getError());
             Toast.makeText(
