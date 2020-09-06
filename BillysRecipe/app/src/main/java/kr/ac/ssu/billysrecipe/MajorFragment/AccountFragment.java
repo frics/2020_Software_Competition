@@ -22,6 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.ServerConnect.GetScrapCount;
 import kr.ac.ssu.billysrecipe.ServerConnect.PushData;
@@ -48,6 +49,7 @@ public class AccountFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        MainActivity.isRecipeSetting = false; // 툴바 관련 변수
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         mContext = getContext();
         nickname = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_NICKNAME);
@@ -92,17 +94,25 @@ public class AccountFragment extends Fragment {
         tabLayout.getTabAt(0).setText("스크랩");
         tabLayout.getTabAt(1).setText("장바구니");
 
-
-
         return view;
     }
-
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.account_menu, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) { // 툴바 관련 메소드
+        if (!MainActivity.isRecipeSetting) {
+            for (int i = 0; i < menu.size(); i++) {
+                if (menu.getItem(i).getTitle().toString().compareTo("list_setting") == 0) {
+                    menu.getItem(i).setEnabled(false);
+                    menu.getItem(i).setVisible(false);
+                }
+            }
+        }
     }
 
     @Override

@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -51,14 +55,20 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        MainActivity.isRecipeSetting = false; // 툴바 관련 변수
+
         ScrapListDataBase db;
         db = Room.databaseBuilder(getContext(), ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
+
         List<ScrapListData> dbData = db.Dao().sortRank();
+
         try {
             RecipeOrderList.InitRank(dbData);  // 인기 레시피 순위 동기화
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
+
+        setHasOptionsMenu(true);
 
         makeItemList();
         setViewById(view);
@@ -84,6 +94,7 @@ public class HomeFragment extends Fragment {
         recentAdapter = new RecipeListAdapter(getContext(), recent_list, onClickOrigin);
         recentListView.setAdapter(recentAdapter);
         recentListView.addItemDecoration(decoration);
+
     }
 
     private void makeItemList() {
@@ -93,7 +104,7 @@ public class HomeFragment extends Fragment {
         // 테이블에서 매핑
         for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++)
             for (int j = 0; j < Recipe.TOTAL_RECIPE_NUM; j++) {
-                if(Recipe.orderTable[i] == Recipe.recipeList[j].num) {
+                if (Recipe.orderTable[i] == Recipe.recipeList[j].num) {
                     itemList.add(Recipe.recipeList[j]);
                     break;
                 }
@@ -139,6 +150,18 @@ public class HomeFragment extends Fragment {
             list.add(Recipe.recipeList[Integer.parseInt(string_list[i])]);
 
         return list;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) { // 툴바 관련 메소드
+        if (!MainActivity.isRecipeSetting) {
+            for (int i = 0; i < menu.size(); i++) {
+                if (menu.getItem(i).getTitle().toString().compareTo("list_setting") == 0) {
+                    menu.getItem(i).setEnabled(false);
+                    menu.getItem(i).setVisible(false);
+                }
+            }
+        }
     }
 
     private View.OnClickListener onClickOrigin = new View.OnClickListener() {
