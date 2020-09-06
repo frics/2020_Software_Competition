@@ -57,6 +57,7 @@ public class AccountFragment extends Fragment {
         DBName = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_REF_DB);
 
         setHasOptionsMenu(true);
+
         Log.e(TAG, nickname);
         Log.e(TAG, UserID);
         Log.e(TAG, DBName);

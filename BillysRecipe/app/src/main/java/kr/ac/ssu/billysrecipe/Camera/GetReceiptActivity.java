@@ -25,7 +25,7 @@ public class GetReceiptActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receipt_list);
+        setContentView(R.layout.activity_get_receipt);
         RecyclerView food = (RecyclerView)findViewById(R.id.receipt_foodlist);
         Context context = this;
 
