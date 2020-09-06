@@ -3,6 +3,7 @@ package kr.ac.ssu.billysrecipe.adapter;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,9 @@ public class TodayGridAdapter extends BaseAdapter {
             convertView = inf.inflate(layout, null);
         final ImageView iv = convertView.findViewById(R.id.today_food_image);
         final ConstraintLayout layout = convertView.findViewById(R.id.constraint_layout);
+        GradientDrawable drawable = (GradientDrawable) context.getDrawable(R.drawable.background_rounding);
+        iv.setBackground(drawable);
+        iv.setClipToOutline(true);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
