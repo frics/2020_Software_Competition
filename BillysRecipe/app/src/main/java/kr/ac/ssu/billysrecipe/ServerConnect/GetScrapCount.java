@@ -19,7 +19,7 @@ public class GetScrapCount extends AsyncTask<Void, Void, String>{
     @Override
     protected String doInBackground(Void... voids) {
         RequestHandler requestHandler = new RequestHandler();
-        return requestHandler.sendPostRequest(URLs.URL_GET_SCRAP_COUNT, null);
+        return requestHandler.sendPostRequest(URLs.URL_GET_SCRAP_COUNT, null, RequestHandler.DATA_TRANSFER);
     }
 
     @Override
