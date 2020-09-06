@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -20,6 +21,7 @@ import kr.ac.ssu.billysrecipe.Camera.CameraActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static boolean isRecipeSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragment_layout);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-
     }
 
 
