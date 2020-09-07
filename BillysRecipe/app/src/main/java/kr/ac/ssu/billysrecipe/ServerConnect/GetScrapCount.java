@@ -45,5 +45,6 @@ public class GetScrapCount extends AsyncTask<Void, Void, String>{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 }
