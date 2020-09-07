@@ -3,15 +3,22 @@ package kr.ac.ssu.billysrecipe.Camera;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import kr.ac.ssu.billysrecipe.MainActivity;
@@ -28,6 +35,37 @@ public class UploadActivity extends AppCompatActivity  {
     private ImageView imageView;
     private Button recapture;
     private Button getReceipt;
+
+
+    public static AppCompatDialog loadingDialong(Context context){
+        AppCompatDialog progressDialog = new AppCompatDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        progressDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        progressDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        progressDialog.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN);
+        progressDialog.setContentView(R.layout.loading_dialog);
+        progressDialog.show();
+
+        final ImageView img_loading_frame = progressDialog.findViewById(R.id.iv_frame_loading);
+        final AnimationDrawable frameAnimation = (AnimationDrawable) img_loading_frame.getBackground();
+        img_loading_frame.post(new Runnable() {
+            @Override
+            public void run() {
+                frameAnimation.start();
+            }
+        });
+        final ImageView text_loading_frame = progressDialog.findViewById(R.id.tv_progress_message);
+        final AnimationDrawable textAnimation = (AnimationDrawable) text_loading_frame.getBackground();
+        img_loading_frame.post(new Runnable() {
+            @Override
+            public void run() {
+                textAnimation.start();
+            }
+        });
+        return progressDialog;
+    }
 
 
     @Override
@@ -69,10 +107,8 @@ public class UploadActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "로딩 다이얼로그 실행중(데이터 받으면 종료)");
-
                 ImageTransfer imageTransfer = new ImageTransfer(mContext);
                 imageTransfer.execute();
-                CropActivity.cropActivity.finish();
             }
         });
         if (mImage != null) {
