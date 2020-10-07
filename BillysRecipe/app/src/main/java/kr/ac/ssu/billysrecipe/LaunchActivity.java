@@ -8,14 +8,12 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import kr.ac.ssu.billysrecipe.MajorFragment.HomeFragment;
-import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
-import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.ServerConnect.GetScrapCount;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
 import kr.ac.ssu.billysrecipe.User.SignInActivity;
 import kr.ac.ssu.billysrecipe.database.OpenRecipeListCSV;
