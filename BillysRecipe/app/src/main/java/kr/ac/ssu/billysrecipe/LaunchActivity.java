@@ -58,19 +58,8 @@ public class LaunchActivity extends AppCompatActivity {
 
     private void initForHomeFragment() {
 
-        ScrapListDataBase db;
-        ScrapListData data;
-        db = Room.databaseBuilder(getApplicationContext(), ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
-
-        /*
-        for (int i = 1; i <= Recipe.TOTAL_RECIPE_NUM; i++) {
-            GetScrapCount getScrapCount = new GetScrapCount(i);
-            getScrapCount.execute();
-            data = db.Dao().findData(i);
-            data.setTotalNum(getScrapCount.getCount());
-            db.Dao().update(data);
-        }
-         */
+        GetScrapCount getScrapCount = new GetScrapCount(getApplicationContext());
+        getScrapCount.execute();
 
         // 레시피 리스트 내부 동기화
         try {

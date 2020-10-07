@@ -120,10 +120,7 @@ public class AccountFragment extends Fragment {
         int curId = item.getItemId();
         if (curId == R.id.action_setting) {
             Toast.makeText(getActivity(), "설정", Toast.LENGTH_SHORT).show();//tab1 메뉴 아이콘 선택시 이벤트 설정
-            /************* 스크랩 카운트 사용법 *******************/
-            /****Example serial_num = 1000으로 설정해서 test함 ***/
-            GetScrapCount getScrapCount = new GetScrapCount();
-            getScrapCount.execute();
+
 
         }
         return super.onOptionsItemSelected(item);

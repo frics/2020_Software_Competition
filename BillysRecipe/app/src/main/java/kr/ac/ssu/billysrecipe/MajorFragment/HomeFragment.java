@@ -30,6 +30,7 @@ import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
 import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.ServerConnect.GetScrapCount;
 import kr.ac.ssu.billysrecipe.adapter.RecipeListAdapter;
 import kr.ac.ssu.billysrecipe.adapter.MyListDecoration;
 import kr.ac.ssu.billysrecipe.adapter.RecipePagerAdapter;
@@ -62,11 +63,13 @@ public class HomeFragment extends Fragment {
 
         List<ScrapListData> dbData = db.Dao().sortRank();
 
+
         try {
             RecipeOrderList.InitRank(dbData);  // 인기 레시피 순위 동기화
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
+
 
         setHasOptionsMenu(true);
 

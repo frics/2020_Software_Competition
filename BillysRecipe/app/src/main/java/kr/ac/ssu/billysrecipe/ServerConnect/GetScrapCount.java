@@ -1,19 +1,36 @@
 package kr.ac.ssu.billysrecipe.ServerConnect;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.room.Room;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GetScrapCount extends AsyncTask<Void, Void, String>{
+import java.util.ArrayList;
+import java.util.List;
+
+import kr.ac.ssu.billysrecipe.R;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListData;
+import kr.ac.ssu.billysrecipe.ScrapListDB.ScrapListDataBase;
+import kr.ac.ssu.billysrecipe.recipe.Recipe;
+import kr.ac.ssu.billysrecipe.recipe.RecipeOrderList;
+
+public class GetScrapCount extends AsyncTask<Void, Void, String> {
 
     private static final String TAG = GetScrapCount.class.getSimpleName();
+    private JSONArray scrapData;
+    private Context context;
 
+    public GetScrapCount(Context context) {
+        this.context = context;
+    }
 
-    public GetScrapCount(){
-        super();
+    public JSONArray getJSONArray() {
+        return this.scrapData;
     }
 
     @Override
@@ -23,27 +40,35 @@ public class GetScrapCount extends AsyncTask<Void, Void, String>{
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        try {
 
+        try {
+            ScrapListDataBase db = Room.databaseBuilder(context, ScrapListDataBase.class, "scraplist.db").allowMainThreadQueries().build();
             JSONObject object = new JSONObject(s);
             //if no error in response
             if (!object.getBoolean("error")) {
                 Log.e(TAG, object.getString("message"));
-                JSONArray scrapData = object.getJSONArray("scrap_data");
-                for(int i=0; i < scrapData.length(); i++){
+                scrapData = object.getJSONArray("scrap_data");
+
+                for (int i = 0; i < scrapData.length(); i++) {
                     JSONObject index = scrapData.getJSONObject(i);
                     String serialNum = index.getString("serial_num");
                     String scrapCnt = index.getString("scrap_cnt");
-                    Log.e(i+1+"", serialNum + " : " + scrapCnt);
+                    Log.d("TAG", "SSIBAL" + i + 1 + "" + serialNum + " : " + scrapCnt);
+
+                    ScrapListData data;
+                    data = db.Dao().findData(Integer.parseInt(serialNum));
+                    data.setTotalNum(Integer.parseInt(scrapCnt));
+                    db.Dao().update(data);
                 }
 
-            }else {
-                Log.e(TAG,object.getString("message"));
+            } else {
+                Log.e(TAG, object.getString("message"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 }
