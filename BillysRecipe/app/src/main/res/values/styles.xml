@@ -24,4 +24,13 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/textGrey</item>
     </style>
+
+    <style name="loadingDlgTheme" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
+
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+
+    </style>
 </resources>
