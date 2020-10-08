@@ -28,10 +28,12 @@ public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<Recip
     private ArrayList<String> itemList;
     private RefrigeratorDataBase db;
     private Context context;
+    private RecipeSettingGridAdapter recipeSettingGridAdapter[];
 
     public RecipeSettingCategoryListAdapter(Context context, ArrayList<String> itemList) {
         this.context = context;
         this.itemList = itemList;
+        this.recipeSettingGridAdapter = new RecipeSettingGridAdapter[itemList.size()];
 
         db = Room.databaseBuilder(context, RefrigeratorDataBase.class, "refrigerator.db").allowMainThreadQueries().build();
 
@@ -76,8 +78,8 @@ public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<Recip
         for (int i = 0; i < dataList.size(); i++)
             tagList.add(dataList.get(i).getTag());
 
-        RecipeSettingGridAdapter recipeSettingGridAdapter = new RecipeSettingGridAdapter(context, R.layout.tag_row, tagList);
-        holder.gridView.setAdapter(recipeSettingGridAdapter);
+        recipeSettingGridAdapter[position] = new RecipeSettingGridAdapter(context, R.layout.tag_row, tagList);
+        holder.gridView.setAdapter(recipeSettingGridAdapter[position]);
     }
 
     @Override
@@ -96,5 +98,11 @@ public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<Recip
             imageview = itemView.findViewById(R.id.category_image);
             gridView = itemView.findViewById(R.id.category_gridView);
         }
+    }
+
+    public void selectAll(boolean Case) {
+        for(int i = 0; i < itemList.size(); i++)
+            if(recipeSettingGridAdapter[i] != null)
+                recipeSettingGridAdapter[i].selectAll(Case);
     }
 }

@@ -1,12 +1,15 @@
 package kr.ac.ssu.billysrecipe.recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +21,10 @@ import kr.ac.ssu.billysrecipe.adapter.RecipeListAdapter;
 import kr.ac.ssu.billysrecipe.adapter.RecipeSettingCategoryListAdapter;
 
 public class RecipeSettingActivity extends AppCompatActivity {
-
+    private TextView choice_button, okay_button;
     private RecyclerView categoryListView;
     RefrigeratorDataBase db;
+    boolean Case;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +52,33 @@ public class RecipeSettingActivity extends AppCompatActivity {
                 itemList.add(category_name);
         }
         Log.d("TAG", "onCreate: "+ itemList.size());
+
         categoryListView = findViewById(R.id.setting_category_listView);
         LinearLayoutManager settingLayoutManager = new LinearLayoutManager(getApplicationContext(),
                 LinearLayoutManager.VERTICAL, false);
         categoryListView.setLayoutManager(settingLayoutManager);
 
-        RecipeSettingCategoryListAdapter categoryListAdapter =
+        final RecipeSettingCategoryListAdapter categoryListAdapter =
                 new RecipeSettingCategoryListAdapter(getApplicationContext(), itemList);
         categoryListView.setAdapter(categoryListAdapter);
+
+         Case = true;
+        choice_button = findViewById(R.id.select_all_button);
+        choice_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categoryListAdapter.selectAll(Case);
+                Case = !Case;
+            }
+        });
+        okay_button = findViewById(R.id.finish_button);
+        okay_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RecipeOrderList.RenewOrder(getApplicationContext());
+                finish();
+            }
+        });
 
     }
 }

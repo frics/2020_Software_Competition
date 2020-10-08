@@ -1,6 +1,7 @@
 package kr.ac.ssu.billysrecipe.recipe;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Room;
 
@@ -18,6 +19,7 @@ public class RecipeOrderList { // 레시피 리스트 컨트롤 클래스
 
     public static void RenewOrder(Context context) {
         int pos;
+        Log.d("TAG", "RenewOrder: ");
         RefrigeratorDataBase db;
         db = Room.databaseBuilder(context, RefrigeratorDataBase.class, "refrigerator.db").allowMainThreadQueries().build();
         List<RefrigeratorData> dbData = db.Dao().sortData();
@@ -34,8 +36,18 @@ public class RecipeOrderList { // 레시피 리스트 컨트롤 클래스
 
             for (int i = 0; i < total_tag_num; i++) { // 태그와 현재 냉장고 리스트를 비교하여 완성도 측정
                 for (int k = 0; k < dbData.size(); k++) {
-                    if (Recipe.recipeList[pos].tag_list.get(i).compareTo(dbData.get(k).getTag()) == 0)
+                    if (Recipe.recipeList[pos].tag_list.get(i).compareTo(dbData.get(k).getTag()) == 0) {
                         count++;
+
+                        // 예외목록에 있으면 count 감소
+                        for(int l = 0; l < Recipe.exceptionList.size(); l++) {
+                            Log.d("TAG", "RenewOrder: " + Recipe.exceptionList.get(l));
+                            if (Recipe.recipeList[pos].tag_list.get(i).compareTo(Recipe.exceptionList.get(l)) == 0) {
+                                count--;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
 

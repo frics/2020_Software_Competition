@@ -55,12 +55,19 @@ public class GetScrapCount extends AsyncTask<Void, Void, String> {
                     JSONObject index = scrapData.getJSONObject(i);
                     String serialNum = index.getString("serial_num");
                     String scrapCnt = index.getString("scrap_cnt");
-                    Log.d("TAG", "SSIBAL" + i + 1 + "" + serialNum + " : " + scrapCnt);
+                    Log.d("TAG", "SSIBAL" + i + 1 + " " + serialNum + " : " + scrapCnt);
 
                     ScrapListData data;
                     data = db.Dao().findData(Integer.parseInt(serialNum));
-                    data.setTotalNum(Integer.parseInt(scrapCnt));
-                    db.Dao().update(data);
+
+                    if(data == null) {
+                        data.setTotalNum(Integer.parseInt(scrapCnt));
+                        data.setId(Integer.parseInt(serialNum));
+                        db.Dao().insert(data);
+                    } else {
+                        data.setTotalNum(Integer.parseInt(scrapCnt));
+                        db.Dao().update(data);
+                    }
                 }
 
             } else {

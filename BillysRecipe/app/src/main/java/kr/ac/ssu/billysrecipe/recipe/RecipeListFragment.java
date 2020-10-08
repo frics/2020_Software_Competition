@@ -37,6 +37,7 @@ public class RecipeListFragment extends Fragment {
     private ImageView clearButton;
     private MainRecipeListAdapter adapter;
     private RecyclerView RecyclerView;
+    View view;
 
     public static RecipeListFragment newInstance() {
         return new RecipeListFragment();
@@ -49,12 +50,21 @@ public class RecipeListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
-        itemList = new ArrayList<>();
+        view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
         MainActivity.isRecipeSetting = true;
 
+        setSearchBar(view);
+        setFloatingActionButton(view);
+        setHasOptionsMenu(true);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         // 테이블에서 매핑
+        itemList = new ArrayList<>();
         for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++)
             for (int j = 0; j < Recipe.TOTAL_RECIPE_NUM; j++) {
                 if (Recipe.orderTable[i] == Recipe.recipeList[j].num) {
@@ -62,14 +72,8 @@ public class RecipeListFragment extends Fragment {
                     break;
                 }
             }
-
-        setSearchBar(view);
         setRecyclerView(view);
-        setFloatingActionButton(view);
-        setHasOptionsMenu(true);
-        return view;
     }
-
 
     private void setSearchBar(View view) {
         editText = (EditText) view.findViewById(R.id.edittext);
