@@ -88,6 +88,7 @@ public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<Recip
         holder.foldButton.setTag(true);
         final GridView gridView = holder.gridView;
         final RecipeSettingGridAdapter recipeSettingaAdapter =  recipeSettingGridAdapter[position];
+
         holder.foldButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
