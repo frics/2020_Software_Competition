@@ -40,7 +40,6 @@ public class RecipeSettingActivity extends AppCompatActivity {
 
             boolean isExist = false;
             String category_name = dbData.get(i).getCategory();
-            Log.d("TAG", "onCreate: "+ category_name);
 
             for (int j = 0; j < itemList.size(); j++) {
                 if (itemList.get(j).compareTo(category_name) == 0) {
@@ -51,7 +50,6 @@ public class RecipeSettingActivity extends AppCompatActivity {
             if (!isExist)
                 itemList.add(category_name);
         }
-        Log.d("TAG", "onCreate: "+ itemList.size());
 
         categoryListView = findViewById(R.id.setting_category_listView);
         LinearLayoutManager settingLayoutManager = new LinearLayoutManager(getApplicationContext(),
@@ -62,7 +60,7 @@ public class RecipeSettingActivity extends AppCompatActivity {
                 new RecipeSettingCategoryListAdapter(getApplicationContext(), itemList);
         categoryListView.setAdapter(categoryListAdapter);
 
-         Case = true;
+        Case = true;
         choice_button = findViewById(R.id.select_all_button);
         choice_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,4 +79,10 @@ public class RecipeSettingActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
 }

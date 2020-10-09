@@ -8,10 +8,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
+import com.otaliastudios.cameraview.controls.Grid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
 import kr.ac.ssu.billysrecipe.recipe.Recipe;
+import kr.ac.ssu.billysrecipe.recipe.SettingGridView;
 
 public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<RecipeSettingCategoryListAdapter.ViewHolder> {
 
@@ -50,7 +53,7 @@ public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<Recip
         category_hashMap.put("면/통조림", 10);
         category_hashMap.put("반찬/샐러드", 11);
         category_hashMap.put("냉동/간편요리", 12);
-        category_hashMap.put("유제품", 13);
+        category_hashMap.put("유제품/아이스크림", 13);
         category_hashMap.put("가루/오일", 14);
         category_hashMap.put("소스", 15);
     }
@@ -72,6 +75,7 @@ public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<Recip
         holder.nameText.setText(item);
         holder.imageview.setImageResource(id);
 
+
         List<RefrigeratorData> dataList = db.Dao().findDataByTag(item);
         ArrayList<String> tagList = new ArrayList<>();
 
@@ -80,6 +84,26 @@ public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<Recip
 
         recipeSettingGridAdapter[position] = new RecipeSettingGridAdapter(context, R.layout.tag_row, tagList);
         holder.gridView.setAdapter(recipeSettingGridAdapter[position]);
+
+        holder.foldButton.setTag(true);
+        final GridView gridView = holder.gridView;
+        final RecipeSettingGridAdapter recipeSettingaAdapter =  recipeSettingGridAdapter[position];
+        holder.foldButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if((Boolean)view.getTag()) {
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.plus_button));
+                    view.setTag(false);
+                    gridView.setVisibility(View.GONE);
+                } else {
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.minus_button));
+                    view.setTag(true);
+                    gridView.setAdapter(recipeSettingaAdapter);
+                    gridView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -89,14 +113,15 @@ public class RecipeSettingCategoryListAdapter extends RecyclerView.Adapter<Recip
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameText;
-        public ImageView imageview;
-        public GridView gridView;
+        public ImageView imageview, foldButton;
+        public SettingGridView gridView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             nameText = itemView.findViewById(R.id.category_name);
             imageview = itemView.findViewById(R.id.category_image);
             gridView = itemView.findViewById(R.id.category_gridView);
+            foldButton = itemView.findViewById(R.id.fold_button);
         }
     }
 
