@@ -1,19 +1,13 @@
 package kr.ac.ssu.billysrecipe.adapter;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -102,7 +96,6 @@ public class RecipeSettingGridAdapter extends BaseAdapter {
 
     public void selectAll(boolean Case) {
         for(int i = 0; i < itemList.size(); i++){
-            Log.d("TAG", "selectAll: " + itemList.get(i));
             if(Case) {
                 names[i].setBackground(ContextCompat.getDrawable(context, R.drawable.tag_round_box));
                 names[i].setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLight));
