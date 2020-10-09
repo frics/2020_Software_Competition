@@ -69,7 +69,6 @@ public class ShopingListFragment extends Fragment {
         items = new ArrayList<>();
         List<ShoppingListData> dbData = db.Dao().getAll();
 
-
         for(int i = 0; i < dbData.size(); i++){
             ShoppingListAdapter.Item item = new ShoppingListAdapter.Item();
             item.setName(dbData.get(i).getName());

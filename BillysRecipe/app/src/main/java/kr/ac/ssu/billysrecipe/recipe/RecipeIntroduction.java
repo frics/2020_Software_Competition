@@ -19,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,8 @@ public class RecipeIntroduction extends AppCompatActivity {
     private Recipe recipe;
     private ScrapListDataBase db;
     private Drawable grey, red;
+    private Button shoppingButton;
+    private IngredientListAdapter adapter;
 
     // 데이터 표시 뷰
     private View recipeBar, ingredientBar, kcalBar, carbonBar, proteinBar, fatBar, sodiumBar, max_bar;
@@ -116,6 +119,13 @@ public class RecipeIntroduction extends AppCompatActivity {
         recipeBar = this.findViewById(R.id.recipe_bar);
         recipeLayout = findViewById(R.id.constraint_recipe);
         ingredientLayout = findViewById(R.id.constraint_ingredients);
+        shoppingButton = findViewById(R.id.addButton);
+        shoppingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.addShoppingList();
+            }
+        });
 
         kcalText = findViewById(R.id.content_kcal);
         carbonText = findViewById(R.id.content_carbon);
@@ -157,7 +167,7 @@ public class RecipeIntroduction extends AppCompatActivity {
         ingredientRecyclerView.setLayoutManager(ingredientLayoutManager);
         recipeRecyclerView.setLayoutManager(recipeLayoutManager);
 
-        IngredientListAdapter adapter = new IngredientListAdapter(this, datalist, recipe);
+        adapter = new IngredientListAdapter(this, datalist, recipe);
         RecipeOrderListAdapter adapter1 = new RecipeOrderListAdapter(this, recipe.recipe_order);
 
         ingredientRecyclerView.setAdapter(adapter);

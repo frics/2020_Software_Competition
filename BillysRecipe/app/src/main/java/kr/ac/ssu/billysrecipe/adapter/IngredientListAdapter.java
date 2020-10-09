@@ -26,11 +26,13 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     private ArrayList<Recipe.Ingredient> itemList;
     private Recipe recipe;
     private Context context;
+    private ArrayList<String> shoppingList;
 
     public IngredientListAdapter(Context context, ArrayList<Recipe.Ingredient> itemList, Recipe recipe) {
         this.context = context;
         this.itemList = itemList;
         this.recipe = recipe;
+        this.shoppingList = new ArrayList<>();
     }
 
     @Override
@@ -42,7 +44,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         Recipe.Ingredient item = itemList.get(position);
 
         RefrigeratorDataBase db;
@@ -57,12 +59,13 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
                 if((boolean)view.getTag() == true) {
                     view.setTag(false);
                     view.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.grey)));
+                    shoppingList.remove(recipe.tag_list.get(position));
                 }
                 else{
                     view.setTag(true);
-                    view.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.colorPrimary)));
+                    view.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.colorPrimaryLight)));
+                    shoppingList.add(recipe.tag_list.get(position));
                 }
-
             }
         });
 
@@ -73,6 +76,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
                 Log.d("TAG", "onBindViewHolder: " + recipe.tag_list.get(position));
                 holder.check_button.setTag(true);
                 holder.check_button.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.colorPrimary)));
+                holder.check_button.setClickable(false);
                 break;
             }
         }
@@ -96,5 +100,11 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
             ingredient_name = itemView.findViewById(R.id.ingredient_name);
             ingredient_quantity = itemView.findViewById(R.id.ingredient_quantity);
         }
+    }
+
+    // 장바구니 추가 메소드
+    public void addShoppingList() {
+        for(int i = 0; i < shoppingList.size(); i++)
+            Log.d("TAG", "shoppinglist : " + shoppingList.get(i));
     }
 }
