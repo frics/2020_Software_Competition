@@ -2,7 +2,6 @@ package kr.ac.ssu.billysrecipe.MajorFragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,11 +22,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.ServerConnect.GetScrapCount;
 import kr.ac.ssu.billysrecipe.ServerConnect.PushData;
 import kr.ac.ssu.billysrecipe.User.SharedPrefManager;
-import kr.ac.ssu.billysrecipe.User.SignInActivity;
 import kr.ac.ssu.billysrecipe.adapter.AccountVPAdapter;
 
 public class AccountFragment extends Fragment {
@@ -50,6 +49,7 @@ public class AccountFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        MainActivity.isRecipeSetting = false; // 툴바 관련 변수
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         mContext = getContext();
         nickname = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_NICKNAME);
@@ -57,6 +57,7 @@ public class AccountFragment extends Fragment {
         DBName = SharedPrefManager.getString(mContext, SharedPrefManager.KEY_REF_DB);
 
         setHasOptionsMenu(true);
+
         Log.e(TAG, nickname);
         Log.e(TAG, UserID);
         Log.e(TAG, DBName);
@@ -93,16 +94,8 @@ public class AccountFragment extends Fragment {
         tabLayout.getTabAt(0).setText("스크랩");
         tabLayout.getTabAt(1).setText("장바구니");
 
-
-        /************* 스크랩 카운트 사용법 *******************/
-        /****Example serial_num = 1000으로 설정해서 test함 ***/
-        GetScrapCount getScrapCount = new GetScrapCount(1000);
-        getScrapCount.execute();
-
         return view;
     }
-
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -111,10 +104,24 @@ public class AccountFragment extends Fragment {
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) { // 툴바 관련 메소드
+        if (!MainActivity.isRecipeSetting) {
+            for (int i = 0; i < menu.size(); i++) {
+                if (menu.getItem(i).getTitle().toString().compareTo("list_setting") == 0) {
+                    menu.getItem(i).setEnabled(false);
+                    menu.getItem(i).setVisible(false);
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
         if (curId == R.id.action_setting) {
             Toast.makeText(getActivity(), "설정", Toast.LENGTH_SHORT).show();//tab1 메뉴 아이콘 선택시 이벤트 설정
+
+
         }
         return super.onOptionsItemSelected(item);
     }

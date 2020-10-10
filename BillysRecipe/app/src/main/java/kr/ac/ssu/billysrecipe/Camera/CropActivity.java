@@ -7,20 +7,28 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import kr.ac.ssu.billysrecipe.R;
 
-public class CropActivity extends AppCompatActivity {
+public class CropActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = CropActivity.class.getSimpleName();
     private CropFragment mCurrentFragment;
+    public static CropActivity cropActivity = null;
+
+    private Button recaptureBtn;
+    private Button cropBtn;
 
     private Uri mCropImageUri;
 
@@ -34,6 +42,21 @@ public class CropActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop);
+
+        cropActivity = this;
+
+        Toolbar toolbar =  findViewById(R.id.crop_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
+        toolbar.bringToFront();
+
+        findViewById(R.id.recapture_btn).setOnClickListener(this);
+        findViewById(R.id.crop_btn).setOnClickListener(this);
+
+        //setHasOptionsMenu(true);
+
         hideNavigationBar();
         Log.e("순서", "3");
 
@@ -41,6 +64,37 @@ public class CropActivity extends AppCompatActivity {
             setMainFragmentByPreset();
         }
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.recapture_btn: {
+                finish();
+                Intent intent = new Intent(this, CameraActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.crop_btn:{
+                CropFragment.mCropImageView.getCroppedImageAsync();
+                break;
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.cam_menu, menu);
+        return true;
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        if (curId == R.id.go_to_main) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     @Override

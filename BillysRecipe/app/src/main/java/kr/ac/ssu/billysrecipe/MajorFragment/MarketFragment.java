@@ -3,6 +3,7 @@ package kr.ac.ssu.billysrecipe.MajorFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.billysrecipe.adapter.CategoryAdapter;

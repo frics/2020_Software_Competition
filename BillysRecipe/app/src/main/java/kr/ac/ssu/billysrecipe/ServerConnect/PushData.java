@@ -79,7 +79,7 @@ public class PushData extends AsyncTask<Void, Void, String> {
 
         Log.e("CHECKCHECK", dbname+"");
 
-        return requestHandler.sendPostRequest(URLs.URL_DB_BACKUP, params);
+        return requestHandler.sendPostRequest(URLs.URL_DB_BACKUP, params, RequestHandler.DATA_TRANSFER);
     }
     @Override
     protected void onPreExecute() {

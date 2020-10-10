@@ -18,6 +18,18 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/addButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="64dp"
+        android:layout_height="22dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/button_background"
+        android:text="장바구니 추가"
+        android:textSize="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredient_list"
         android:layout_width="match_parent"
@@ -144,10 +156,10 @@
         android:textColor="@color/black"
         android:textSize="@dimen/introduction_content_size"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/measure_carbon"
         app:layout_constraintLeft_toRightOf="@id/intro_content_divider1"
         app:layout_constraintRight_toLeftOf="@id/intro_content_divider2"
-        app:layout_constraintTop_toBottomOf="@id/title_carbon"
-        app:layout_constraintBottom_toTopOf="@id/measure_carbon"/>
+        app:layout_constraintTop_toBottomOf="@id/title_carbon" />
 
     <View
         android:id="@+id/intro_content_divider2"
@@ -455,8 +467,8 @@
         android:id="@+id/graph_x"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="12dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="12dp"
         android:layout_marginRight="32dp"
         android:background="@color/grey"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -467,9 +479,9 @@
         android:id="@+id/real_graph"
         android:layout_width="0dp"
         android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@id/graph_x"
         app:layout_constraintLeft_toLeftOf="@id/good"
-        app:layout_constraintRight_toLeftOf="@id/error"
-        app:layout_constraintBottom_toTopOf="@id/graph_x"/>
+        app:layout_constraintRight_toLeftOf="@id/error" />
 
     <TextView
         android:id="@+id/good"
@@ -510,7 +522,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/graph_x"/>
+        app:layout_constraintTop_toBottomOf="@id/graph_x" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

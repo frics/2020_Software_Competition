@@ -108,7 +108,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                 //returing the response
                 Log.d(TAG, URLs.URL_LOGIN);
-                return requestHandler.sendPostRequest(URLs.URL_LOGIN, params);
+                return requestHandler.sendPostRequest(URLs.URL_LOGIN, params, RequestHandler.DATA_TRANSFER);
             }
 
             @Override

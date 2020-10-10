@@ -9,6 +9,7 @@ public class Recipe implements Serializable, Cloneable { // 레시피 클래스
     public static final int TOTAL_RECIPE_NUM = 1160, RANK_RECIPE_NUM = 30;
     public static Recipe[] recipeList, RankingList;
     public static int[] orderTable;
+    public static ArrayList<String> exceptionList;
 
     public int num; // 번호
     public String name; // 음식명
@@ -43,6 +44,7 @@ public class Recipe implements Serializable, Cloneable { // 레시피 클래스
         recipeList = new Recipe[TOTAL_RECIPE_NUM];
         orderTable = new int[TOTAL_RECIPE_NUM];
         RankingList = new Recipe[RANK_RECIPE_NUM];
+        exceptionList = new ArrayList<>();
 
         for (int i = 0; i < TOTAL_RECIPE_NUM; i++) {
             recipeList[i] = new Recipe();

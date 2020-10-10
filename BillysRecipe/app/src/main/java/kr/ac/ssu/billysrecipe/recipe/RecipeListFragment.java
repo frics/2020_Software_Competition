@@ -8,19 +8,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import kr.ac.ssu.billysrecipe.MainActivity;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.adapter.MainRecipeListAdapter;
 
@@ -31,6 +37,7 @@ public class RecipeListFragment extends Fragment {
     private ImageView clearButton;
     private MainRecipeListAdapter adapter;
     private RecyclerView RecyclerView;
+    View view;
 
     public static RecipeListFragment newInstance() {
         return new RecipeListFragment();
@@ -43,11 +50,21 @@ public class RecipeListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+        view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
-        itemList = new ArrayList<>();
+        MainActivity.isRecipeSetting = true;
 
+        setSearchBar(view);
+        setFloatingActionButton(view);
+        setHasOptionsMenu(true);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         // 테이블에서 매핑
+        itemList = new ArrayList<>();
         for (int i = 0; i < Recipe.TOTAL_RECIPE_NUM; i++)
             for (int j = 0; j < Recipe.TOTAL_RECIPE_NUM; j++) {
                 if (Recipe.orderTable[i] == Recipe.recipeList[j].num) {
@@ -55,12 +72,7 @@ public class RecipeListFragment extends Fragment {
                     break;
                 }
             }
-
-        setSearchBar(view);
         setRecyclerView(view);
-        setFloatingActionButton(view);
-
-        return view;
     }
 
     private void setSearchBar(View view) {
@@ -111,6 +123,36 @@ public class RecipeListFragment extends Fragment {
         RecyclerView.setLayoutManager(LayoutManager);
         adapter = new MainRecipeListAdapter(view.getContext(), itemList, onClickItem);
         RecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.recipe_list_menu, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+
+        if (MainActivity.isRecipeSetting) {
+            for (int i = 0; i < menu.size(); i++) {
+                if (menu.getItem(i).getTitle().toString().compareTo("list_setting") == 0) {
+                    menu.getItem(i).setEnabled(true);
+                    menu.getItem(i).setVisible(true);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (MainActivity.isRecipeSetting) {
+            Intent intent = new Intent(getContext(), RecipeSettingActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setFloatingActionButton(View view) {

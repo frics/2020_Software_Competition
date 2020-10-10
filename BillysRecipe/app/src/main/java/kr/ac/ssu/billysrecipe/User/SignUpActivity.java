@@ -99,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 params.put("nickname", nickname);
 
                 //returing the response
-                return requestHandler.sendPostRequest(URLs.URL_REGISTER, params);
+                return requestHandler.sendPostRequest(URLs.URL_REGISTER, params,RequestHandler.DATA_TRANSFER);
             }
 
             @Override
