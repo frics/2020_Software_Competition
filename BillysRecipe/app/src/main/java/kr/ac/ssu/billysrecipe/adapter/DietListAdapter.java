@@ -10,13 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import kr.ac.ssu.billysrecipe.R;
 
 public class DietListAdapter extends RecyclerView.Adapter<DietListAdapter.ViewHolder> {
     private ArrayList<Data> items;
-
+    private Context context;
     public DietListAdapter(ArrayList<Data> items) {
         this.items = items;
     }
@@ -24,7 +26,7 @@ public class DietListAdapter extends RecyclerView.Adapter<DietListAdapter.ViewHo
     @NonNull
     @Override
     public DietListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.diet_item, parent, false);
         DietListAdapter.ViewHolder vh = new DietListAdapter.ViewHolder(view);
@@ -48,7 +50,11 @@ public class DietListAdapter extends RecyclerView.Adapter<DietListAdapter.ViewHo
             holder.mealtime.setText("저녁");
             holder.view.setVisibility(View.GONE);
         }
-        //holder.photo.setImageResource();
+
+        Glide.with(context)
+                .load(items.get(position).photo)
+                .error(R.drawable.basic)
+                .into(holder.photo);
         holder.calorie.setText(items.get(position).kcal + "kcal");
         holder.name.setText(items.get(position).name);
     }
