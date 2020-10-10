@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -16,9 +17,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.ac.ssu.billysrecipe.Camera.GetReceiptActivity;
 import kr.ac.ssu.billysrecipe.R;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorData;
 import kr.ac.ssu.billysrecipe.RefrigerRatorDB.RefrigeratorDataBase;
+import kr.ac.ssu.billysrecipe.RefrigerRatorDB.ThreadTask;
+import kr.ac.ssu.billysrecipe.ServerConnect.GetTag;
+import kr.ac.ssu.billysrecipe.ShoppingListDB.ShoppingListData;
+import kr.ac.ssu.billysrecipe.ShoppingListDB.ShoppingListDataBase;
+import kr.ac.ssu.billysrecipe.ShoppingListDB.ThreadTask2;
 import kr.ac.ssu.billysrecipe.recipe.Recipe;
 
 public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAdapter.ViewHolder> {
@@ -48,8 +55,11 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
         Recipe.Ingredient item = itemList.get(position);
 
         RefrigeratorDataBase db;
+        ShoppingListDataBase db2;
         db = Room.databaseBuilder(context, RefrigeratorDataBase.class, "refrigerator.db").allowMainThreadQueries().build();
+        db2 = Room.databaseBuilder(context, ShoppingListDataBase.class, "shoppinglist.db").allowMainThreadQueries().build();
         List<RefrigeratorData> dbData = db.Dao().sortData();
+        List<ShoppingListData> dbData2 = db2.Dao().sortData();
 
         holder.check_button.setTag(false);
         holder.check_button.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.grey)));
@@ -74,10 +84,15 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
             Log.d("TAG", "onBindViewHolder: " + recipe.tag_list.get(position));
             if (dbData.get(i).getTag().compareTo(recipe.tag_list.get(position)) == 0) {
                 Log.d("TAG", "onBindViewHolder: " + recipe.tag_list.get(position));
-                holder.check_button.setTag(true);
                 holder.check_button.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.colorPrimary)));
                 holder.check_button.setClickable(false);
                 break;
+            }
+        }
+        for(int i = 0; i < dbData2.size(); i++){
+            if(dbData2.get(i).getTag().compareTo(recipe.tag_list.get(position)) == 0){
+                holder.check_button.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.colorPrimaryLight)));
+                holder.check_button.setClickable(false);
             }
         }
 
@@ -104,7 +119,44 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
 
     // 장바구니 추가 메소드
     public void addShoppingList() {
-        for(int i = 0; i < shoppingList.size(); i++)
-            Log.d("TAG", "shoppinglist : " + shoppingList.get(i));
+        final ArrayList<TagListAdapter.Item> taglist = new ArrayList<>();;
+        final ArrayList<ShoppingListData> shopdata = new ArrayList<>();
+        GetTag.OnTaskCompleted listener = new GetTag.OnTaskCompleted() {
+            //태그 리스트 정상
+            @Override
+            public void onTaskCompleted(String str) {
+                ShoppingListDataBase db = Room.databaseBuilder(context, ShoppingListDataBase.class, "shoppinglist.db").build();
+                for(int i = 0; i < shoppingList.size(); i++) {
+                    for(int j = 0; j < taglist.size(); j++){
+                        if(shoppingList.get(i).equals(taglist.get(j).getTag())){
+                            ShoppingListData data = new ShoppingListData();
+                            data.setName(shoppingList.get(i));
+                            data.setTag(taglist.get(j).getTag());
+                            data.setTagNumber(taglist.get(j).getTagNumber());
+                            shopdata.add(data);
+                            break;
+                        }
+                    }
+                }
+                //Shopinglist 백그라운드 저장
+                ThreadTask2.OnTaskCompleted listener = new ThreadTask2.OnTaskCompleted() {
+                    @Override
+                    public void onTaskCompleted(String str) {
+                        Toast.makeText(context,"장바구니에 추가되었습니다!",Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onTaskFailure(String str) {
+                        Log.e("IngredientAdapter","ThreadTask2 Failure!");
+                    }
+                };
+                new ThreadTask2(db.Dao(), listener).execute(shopdata);
+            }
+            @Override
+            public void onTaskFailure(String str) {
+                Log.e("IngredientAdapter","GetTag Failure!");
+            }
+        };
+        //백그라운드 수행
+        new GetTag(taglist,listener).execute();
     }
 }
