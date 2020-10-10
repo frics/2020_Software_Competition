@@ -1,5 +1,6 @@
 package kr.ac.ssu.billysrecipe.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -10,11 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -93,12 +96,11 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                                 data.setName(mData.get(i).getName());
                                 data.setTagNumber(mData.get(i).getTagNumber());
                                 list.add(data);
-                                //new RefrigeratorInsert(db.Dao()).execute();
                                 //서버 전송 json
                                 jsonObject.put("category", mData.get(i).category);
                                 jsonObject.put("name", mData.get(i).getName());
                                 jsonObject.put("tag", mData.get(i).getTag());
-                                wrapObject.put("refrigerator" + (i + 1), jsonObject);
+                                wrapObject.put("classification" + i , jsonObject);
                             }
                         }
                         ThreadTask.OnTaskCompleted listener = new ThreadTask.OnTaskCompleted() {
@@ -153,20 +155,41 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
             holder.name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final EditText et = new EditText(context);
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View v = inflater.inflate(R.layout.rename_dialog, null);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setView(v);
+                    // Dialog 사이즈 조절 하기
+                    final AlertDialog dialog = builder.create();
+                    WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+                    params.width = 200;
+                    params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                    final EditText et = (EditText)v.findViewById(R.id.rename_edit);
+                    final Button ok = (Button)v.findViewById(R.id.rename_ok);
+                    final Button no = (Button)v.findViewById(R.id.rename_no);
                     et.setText(holder.name.getText());
-                    final AlertDialog.Builder alt_bld = new AlertDialog.Builder(context);
-                    alt_bld.setMessage("재료명을 입력해주세요")
-                            .setView(et)
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    String value = et.getText().toString();
-                                    holder.name.setText(value);
-                                    mData.get(position).setName(value);
-                                }
-                            });
-                    AlertDialog alert = alt_bld.create();
-                    alert.show();
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String value = et.getText().toString();
+                            if(value.length() == 0){
+                                Toast.makeText(context,"재료명을 입력해주세요.",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            holder.name.setText(value);
+                            mData.get(position).setName(value);
+                            dialog.dismiss();
+                        }
+                    });
+                    no.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
                 }
             });
         }
@@ -208,15 +231,15 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
             public void onItemClick(View v, int pos) {
                 IconData iconData = new IconData();
                 holder.tag.setText(adapter.filteredList.get(pos).getTag());
-                holder.categoryString.setText(adapter.filteredList.get(pos).getCategory());
                 String pre = item.getTag();
                 String post = holder.tag.getText().toString();
 
                 if(pre.equals("태그없음") && !post.equals("태그없음")){
                     Data newdata = new Data();
-                    newdata.setCategory(holder.categoryString.getText().toString());
-                    newdata.setTag(holder.tag.getText().toString());
+                    newdata.setCategory(adapter.filteredList.get(pos).getCategory());
+                    newdata.setTag(adapter.filteredList.get(pos).getTag());
                     newdata.setName(item.getName());
+                    newdata.setTagNumber(adapter.filteredList.get(pos).getTagNumber());
                     //먼저 추가하고
                     mData.add(LinePos,newdata);
                     //한칸 밀렸으니 positon+1삭제
@@ -228,7 +251,7 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                     Data newdata = new Data();
                     newdata.setCategory("카테고리 없음");
                     newdata.setName(item.getName());
-                    newdata.setTag(holder.tag.getText().toString());
+                    newdata.setTag(adapter.filteredList.get(pos).getTag());
                     //먼저 삭제하고
                     mData.remove(position);
                     //한칸 당겨졌으니 그 자리에 그대로 삽입
@@ -236,9 +259,10 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
                     notifyDataSetChanged();
                 }
                 else{
-                    Integer category = iconData.textToicon.get(holder.categoryString.getText().toString());
+                    Integer category = iconData.textToicon.get(adapter.filteredList.get(pos).getCategory());
                     holder.category.setImageResource(category);
-                    mData.get(position).setCategory(holder.categoryString.getText().toString());
+                    mData.get(position).setCategory(adapter.filteredList.get(pos).getCategory());
+                    mData.get(position).setTag(adapter.filteredList.get(pos).getTag());
                     mData.get(position).setTagNumber(adapter.filteredList.get(pos).getTagNumber());
                 }
                 dialog.dismiss();
@@ -256,13 +280,10 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView category;
         TextView name;
-        TextView categoryString;
         TextView tag;
-        TextView price;
         LinearLayout layout;
         View view;
         ConstraintLayout constrain;
-        TextView sum;
         Button button;
 
         ViewHolder(View itemView) {
@@ -270,7 +291,6 @@ public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.
 
             // 뷰 객체에 대한 참조. (hold strong reference)
             category = itemView.findViewById(R.id.receipt_item_category);
-            categoryString = itemView.findViewById(R.id.receipt_item_categoryString);
             name = itemView.findViewById(R.id.receipt_item_name);
             tag = itemView.findViewById(R.id.receipt_item_tag);
             //구분자 or 데이터

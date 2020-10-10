@@ -2,6 +2,8 @@ package kr.ac.ssu.billysrecipe.User;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,9 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.room.Room;
 
 import org.json.JSONArray;
@@ -34,7 +38,6 @@ import kr.ac.ssu.billysrecipe.ServerConnect.RequestHandler;
 import kr.ac.ssu.billysrecipe.ServerConnect.URLs;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
-
     private static final String TAG = SignInActivity.class.getSimpleName();
     ;
     private EditText editTextId;
@@ -42,6 +45,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private Button signInBtn;
     private Button signUpBtn;
     private Context context;
+    private AppCompatDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +114,28 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                // 로딩 다이얼로그 설정
+                progressDialog = new AppCompatDialog(context);
+                progressDialog.setCancelable(false);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                progressDialog.setContentView(R.layout.loading_dialog);
+                progressDialog.show();
+                final ImageView img_loading_frame = (ImageView) progressDialog.findViewById(R.id.iv_frame_loading);
+                final AnimationDrawable frameAnimation = (AnimationDrawable) img_loading_frame.getBackground();
+                img_loading_frame.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        frameAnimation.start();
+                    }
+                });
+                final ImageView text_loading_frame = (ImageView) progressDialog.findViewById(R.id.tv_progress_message);
+                final AnimationDrawable textAnimation = (AnimationDrawable) text_loading_frame.getBackground();
+                img_loading_frame.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textAnimation.start();
+                    }
+                });
             }
 
             @Override
@@ -190,7 +216,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 public void onTaskCompleted(String str) {
                                     // 완성도 순 레시피리스트 세팅
                                     RecipeOrderList.RenewOrder(getApplicationContext());
-
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }
